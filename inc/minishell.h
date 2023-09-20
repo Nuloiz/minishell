@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nschutz <nschutz@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/09/18 14:15:39 by nschutz          ###   ########.fr       */
+/*   Updated: 2023/09/20 21:55:23 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,14 @@
 # include <string.h>
 # include <math.h>
 # include <fcntl.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../tools/ft_printf/ft_printf.h"
+// # include <readline/readline.h>
+// # include <readline/history.h>
+// # include "/Users/dnebatz/goinfre/.brew/opt/readline/include/readline/readline.h"
+// # include  "../../../../../goinfre/.brew/opt/readline/include/readline/readline.h"
+// # include  "../../../../../goinfre/.brew/opt/readline/include/readline/history.h"
+# include <readline.h>
+# include <history.h>
+# include <ft_printf.h>
 
 typedef struct s_input
 {
