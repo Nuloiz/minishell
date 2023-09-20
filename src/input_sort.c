@@ -30,7 +30,7 @@ static t_list	**linked_list_start(char *line, char **envp, t_list **input)
 	int		num;
 	int		i;
 	t_list	*new;
-	char	**cmd;
+	//char	**cmd;
 
 	num = 0;
 	i = 0;
