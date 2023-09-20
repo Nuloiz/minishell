@@ -32,7 +32,7 @@ static t_list	**linked_list_start(char *line, char **envp, t_list **input)
 	t_list	*new;
 	char	**cmd;
 
-	num = 0;
+	//num = 0;
 	i = 0;
 	cmd = mod_split(line, ' ');
 	while (cmd[num])
