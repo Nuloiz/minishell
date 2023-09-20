@@ -17,8 +17,8 @@ int	main(int argc, char **argv, char **envp)
 	char	*line;
 
 	argv = NULL;
-	line = readline(0);
-	input_sort(line, envp);
-	free(line);
+	//line = readline(0);
+	//input_sort(line, envp);
+	//free(line);
 	return (argc);
 }

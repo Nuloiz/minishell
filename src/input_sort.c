@@ -58,7 +58,7 @@ static t_list	**linked_list_start(char *line, char **envp, t_list **input)
 
 int	input_sort(char *line, char **envp)
 {
-	t_list	*input;
+	t_input	*input;
 
 	linked_list_start(line, envp, &input);
 	return (1);

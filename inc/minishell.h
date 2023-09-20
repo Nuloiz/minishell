@@ -22,11 +22,11 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../tools/libft/libft.h"
+# include "../tools/ft_printf/ft_printf.h"
 
-typedef struct s_list
+typedef struct s_input
 {
-	struct s_list	*next;
+	struct s_input	*next;
 	char			*word;
 	int				type;
 	//COMMAND	= 1;
@@ -37,13 +37,13 @@ typedef struct s_list
 	//QUOTES	= 6;
 	//REDIRECT	= 7;
 	//PARAM		= 8;
-}				t_list;
+}				t_input;
 
 int		main(int argc, char **argv, char **envp);
 int		input_sort(char *line, char **envp);
-void	ft_lstadd_front(t_list **lst, t_list *new);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-t_list	*ft_lstlast(t_list *lst);
+void	mod_lstadd_front(t_input **lst, t_list *new);
+void	mod_lstadd_back(t_input **lst, t_list *new);
+t_list	*mod_lstlast(t_input *lst);
 int		input_type(char *s, char *s_one, char **envp);
 int		is_op(char s);
 int		is_pipe(char s);

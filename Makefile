@@ -9,16 +9,16 @@ SRC := main.c input_sort.c input_type.c input_type_strncmp.c linked_list_utils.c
 SRC_DIR := src
 OBJ_DIR := obj
 
-INCLUDES := -I inc -I tools/libft
+INCLUDES := -I inc -I tools/ft_printf
 
 OBJ := $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@make -C tools/libft
+	@make -C tools/ft_printf
 	@$(CC) -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline \
-	$(CFLAGS) $(OBJ) -o $(NAME) tools/libft/libft.a
+	$(CFLAGS) $(OBJ) -o $(NAME) tools/ft_printf/libftprintf.a
 	@echo "Linking $(NAME)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/
@@ -28,11 +28,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@make -C tools/libft clean
+	@make -C tools/ft_printf clean
 
 fclean: clean
 	@rm -f $(NAME)
-	@make -C tools/libft fclean
+	@make -C tools/ft_printf fclean
 
 re: fclean all
 
