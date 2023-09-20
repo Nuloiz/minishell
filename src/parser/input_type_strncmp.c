@@ -12,16 +12,16 @@
 
 #include "minishell.h"
 
-int	is_op(char s)
+int	is_op(char *s)
 {
-	if (s == '-' || s == '+')
+	if ((s[0] == '-'  && !s[1]) || s[0] == '+')
 		return (1);
 	return (0);
 }
 
-int	is_pipe(char s)
+int	is_pipe(char *s)
 {
-	if (s == '|')
+	if (s[0] == '|' && !s[1])
 		return (1);
 	return (0);
 }
@@ -33,9 +33,9 @@ int	is_quote(char s)
 	return (0);
 }
 
-int	is_red(char s)
+int	is_red(char *s)
 {
-	if (s == '<' || s == '>')
+	if (ft_strchr(s, '<') || ft_strchr(s, '>'))
 		return (1);
 	return (0);
 }

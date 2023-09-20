@@ -34,7 +34,7 @@ static int	mod_possplit(const char *s, char c)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == c)
+		if (s[i] == c || s[i] == 34 || s[i] == 39)
 			return (i);
 		else
 			i++;
