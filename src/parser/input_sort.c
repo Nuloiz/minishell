@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-static t_list	*new_node(char *s, char *s_one, char **envp)
+static t_input	*new_node(char *s, char *s_one, char **envp)
 {
-	t_list	*new;
+	t_input	*new;
 
-	new = ft_calloc(1, sizeof(t_list));
+	new = ft_calloc(1, sizeof(t_input));
 	if (!new)
 		return (NULL);
 	new->type = input_type(s, s_one, envp);
@@ -25,12 +25,12 @@ static t_list	*new_node(char *s, char *s_one, char **envp)
 	return (new);
 }
 
-static t_list	**linked_list_start(char *line, char **envp, t_list **input)
+static t_input	**linked_list_start(char *line, char **envp, t_input **input)
 {
 	int		num;
 	int		i;
-	t_list	*new;
-	//char	**cmd;
+	t_input	*new;
+	char	**cmd;
 
 	num = 0;
 	i = 0;
@@ -45,7 +45,7 @@ static t_list	**linked_list_start(char *line, char **envp, t_list **input)
 			new = new_node(cmd[i], cmd[i - 1], envp);
 		if (!new)
 			return (NULL);
-		ft_lstadd_back(input, new);
+		mod_lstadd_back(input, new);
 		i++;
 	}
 	while ((*input)->next)

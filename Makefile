@@ -4,7 +4,9 @@ CC := gcc
 
 CFLAGS := -Wall -Wextra -Werror -g
 # CFLAGS := $(CFLAGS) -fsanitize=address
-SRC := main.c input_sort.c input_type.c input_type_strncmp.c linked_list_utils.c free.c modified_libft_func.c
+SRC := 	main.c free.c \
+		parser/input_sort.c parser/input_type.c parser/input_type_strncmp.c \
+		modified/modified_split_func.c modified/modified_lst_func.c
 
 SRC_DIR := src
 OBJ_DIR := obj
@@ -23,6 +25,8 @@ $(NAME): $(OBJ)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/
 	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)/parser
+	@mkdir -p $(OBJ_DIR)/modified
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
 	@echo "Compiling $<"
 

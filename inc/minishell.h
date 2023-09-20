@@ -41,9 +41,8 @@ typedef struct s_input
 
 int		main(int argc, char **argv, char **envp);
 int		input_sort(char *line, char **envp);
-void	mod_lstadd_front(t_input **lst, t_list *new);
-void	mod_lstadd_back(t_input **lst, t_list *new);
-t_list	*mod_lstlast(t_input *lst);
+void	mod_lstadd_back(t_input **lst, t_input *new);
+t_input	*mod_lstlast(t_input *lst);
 int		input_type(char *s, char *s_one, char **envp);
 int		is_op(char s);
 int		is_pipe(char s);
