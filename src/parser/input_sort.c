@@ -25,16 +25,14 @@ static t_input	*new_node(char *s, char *s_one, char **envp)
 	return (new);
 }
 
-static t_input	**linked_list_start(char *line, char **envp, t_input **input)
+static t_input	**linked_list_start(char **cmd, char **envp, t_input **input)
 {
 	int		num;
 	int		i;
 	t_input	*new;
-	char	**cmd;
 
 	//num = 0;
 	i = 0;
-	cmd = mod_split(line, ' ');
 	while (cmd[num])
 		num++;
 	while (i < num)
@@ -48,9 +46,9 @@ static t_input	**linked_list_start(char *line, char **envp, t_input **input)
 		mod_lstadd_back(input, new);
 		i++;
 	}
-	while ((*input)->next)
+	while ((*input))
 	{
-		ft_printf("%i", (*input)->type);
+		ft_printf("Word:%s	/	Type:%i\n", (*input)->word, (*input)->type);
 		*input = (*input)->next;
 	}
 	return (input);
@@ -59,7 +57,10 @@ static t_input	**linked_list_start(char *line, char **envp, t_input **input)
 int	input_sort(char *line, char **envp)
 {
 	t_input	*input;
+	char	**cmd;
 
-	linked_list_start(line, envp, &input);
+	input = NULL;
+	cmd = mod_split(line, ' ');
+	linked_list_start(cmd, envp, &input);
 	return (1);
 }

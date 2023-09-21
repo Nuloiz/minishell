@@ -87,13 +87,13 @@ int	input_type(char *s, char *s_one, char **envp)
 		return (i);
 	else if (is_file(s))
 		return (3);
-	else if (is_op(s[0]))
+	else if (is_op(s))
 		return (4);
-	else if (is_pipe(s[0]))
+	else if (is_pipe(s))
 		return (5);
 	else if (is_quote(s[0]))
 		return (6);
-	else if (is_red(s[0]))
+	else if (is_red(s))
 		return (7);
 	else
 		return (8);
