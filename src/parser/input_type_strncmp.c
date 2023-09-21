@@ -14,8 +14,7 @@
 
 int	is_op(char *s)
 {
-	if ((s[0] == '-' && !s[1]) || s[0] == '+' \
-		ft_strncmp(s, "&&", 3) || ft_strncmp(s, "||", 3))
+	if ((s[0] == '-' && !s[1]) || s[0] == '+')
 		return (1);
 	return (0);
 }
