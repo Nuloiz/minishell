@@ -13,6 +13,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define READLINE_LIBRARY
+
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -25,8 +27,6 @@
 # include "history.h"
 # include "rlstdc.h"
 # include "ft_printf.h"
-
-#define READLINE_LIBRARY
 
 typedef struct s_input
 {
