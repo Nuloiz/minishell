@@ -48,7 +48,7 @@ int		is_op(char *s);
 int		is_pipe(char *s);
 int		is_quote(char s);
 int		is_red(char *s);
-int		is_file(char *s);
+int		is_file(char *s);	
 char	**mod_split(char const *s, char c);
 void	free_array(char **array);
 
