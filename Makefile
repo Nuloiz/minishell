@@ -18,12 +18,14 @@ OBJ := $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 READLINE_PATH = ${PWD}/readline
 
+INCLUDES := -I inc -I tools/ft_printf  -I${READLINE_PATH}/includes -L${READLINE_PATH}/lib -lreadline -lhistory -ltermcap
+
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C tools/ft_printf
 	
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) tools/ft_printf/libftprintf.a -I${READLINE_PATH}/include -L${READLINE_PATH}/lib -lreadline -lhistory -ltermcap
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) tools/ft_printf/libftprintf.a $(INCLUDES)
 #	@echo "Linking $(NAME)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/
