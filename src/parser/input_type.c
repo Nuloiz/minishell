@@ -70,7 +70,7 @@ static int	is_cmd(char *s, char *s_one, char **envp)
 {
 	if (find_path(s, envp))
 		return (1);
-	else if (find_path(s_one, envp))
+	else if (find_path(s_one, envp) || is_flag(s_one))
 	{
 		if (is_flag(s) == 1)
 			return (2);
@@ -82,19 +82,19 @@ int	input_type(char *s, char *s_one, char **envp)
 {
 	int	i;
 
+	if (is_built_in(s))
+		return (7);
 	i = is_cmd(s, s_one, envp);
 	if (i > 0)
 		return (i);
 	else if (is_file(s))
 		return (3);
-	else if (is_op(s))
+	else if (is_env_var(s))
 		return (4);
 	else if (is_pipe(s))
 		return (5);
-	else if (is_quote(s[0]))
+	else if (is_red(s[0]))
 		return (6);
-	else if (is_red(s))
-		return (7);
 	else
 		return (8);
 }

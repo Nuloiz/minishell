@@ -6,11 +6,19 @@
 /*   By: nschutz <nschutz@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 15:26:55 by nschutz           #+#    #+#             */
-/*   Updated: 2023/09/18 16:36:56 by nschutz          ###   ########.fr       */
+/*   Updated: 2023/09/23 10:41:39 by nschutz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*quotes(char *s)
+{
+	char	*ret;
+
+	ret = ft_substr(s, 1, ft_strlen(s) - 2);
+	return (ret);
+}
 
 static t_input	*new_node(char *s, char *s_one, char **envp)
 {
@@ -20,7 +28,14 @@ static t_input	*new_node(char *s, char *s_one, char **envp)
 	if (!new)
 		return (NULL);
 	new->type = input_type(s, s_one, envp);
-	new->word = s;
+	if (s[0] == 34 || s[0] == 39)
+	{
+		new->word = quotes(s);
+		if (!new->word)
+			return (NULL);
+	}
+	else
+		new->word = s;
 	new->next = NULL;
 	return (new);
 }
@@ -31,7 +46,7 @@ static t_input	**linked_list_start(char **cmd, char **envp, t_input **input)
 	int		i;
 	t_input	*new;
 
-	//num = 0;
+	num = 0;
 	i = 0;
 	while (cmd[num])
 		num++;

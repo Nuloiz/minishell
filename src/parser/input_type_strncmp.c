@@ -12,9 +12,13 @@
 
 #include "minishell.h"
 
-int	is_op(char *s)
+
+int	is_built_in(char *s)
 {
-	if ((s[0] == '-' && !s[1]) || s[0] == '+')
+	if (!ft_strncmp(s, "cd", 2) || !ft_strncmp(s, "echo", 4) || \
+		!ft_strncmp(s, "unset", 5) || !ft_strncmp(s, "export", 6) || \
+		!ft_strncmp(s, "exit", 4) || !ft_strncmp(s, "pwd", 3) || \
+		!ft_strncmp(s, "env", 3))
 		return (1);
 	return (0);
 }
@@ -26,16 +30,16 @@ int	is_pipe(char *s)
 	return (0);
 }
 
-int	is_quote(char s)
+int	is_env_var(char *s)
 {
-	if (s == 39 || s == 34)
+	if (s[0] == '$' && s[1])
 		return (1);
 	return (0);
 }
 
-int	is_red(char *s)
+int	is_red(char s)
 {
-	if (ft_strchr(s, '<') || ft_strchr(s, '>'))
+	if (s == '<' || s == '>')
 		return (1);
 	return (0);
 }

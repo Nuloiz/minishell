@@ -34,7 +34,7 @@ static int	mod_possplit(const char *s, char c)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == c || s[i] == 34 || s[i] == 39)
+		if (s[i] == c)
 			return (i);
 		else
 			i++;
@@ -55,12 +55,10 @@ static int	mod_countsplit(char const *s, char c)
 			j++;
 		if (!s[j])
 			break ;
-		j = j + mod_possplit(&s[j], c);
 		if (s[j] == 34 || s[j] == 39)
-		{
-			j++;
-			i++;
-		}
+			j = j + mod_possplit(&s[j] + 1, s[j]) + 2;
+		else
+			j = j + mod_possplit(&s[j], c);
 		i++;
 	}
 	return (i);
@@ -85,10 +83,10 @@ char	**mod_split(char const *s, char c)
 			break ;
 		if (s[j] == 34 || s[j] == 39)
 		{
-			array[i] = ft_substr(s, j, 1);
+			array[i] = ft_substr(s, j, mod_possplit(&s[j] + 1, s[j]) + 2);
 			if (array[i] == NULL)
 				return (mod_allocfails(array));
-			j++;
+			j = j + mod_possplit(&s[j] + 1, s[j]) + 2;
 		}
 		else
 		{

@@ -36,10 +36,10 @@ typedef struct s_input
 	//COMMAND	= 1;
 	//FLAGS		= 2;
 	//FILE		= 3;
-	//OPERATOR	= 4;
+	//ENV VAR	= 4;
 	//PIPE		= 5;
-	//QUOTES	= 6;
-	//REDIRECT	= 7;
+	//REDIRECT	= 6;
+	//BUILTIN	= 7;
 	//PARAM		= 8;
 }				t_input;
 
@@ -48,10 +48,10 @@ int		input_sort(char *line, char **envp);
 void	mod_lstadd_back(t_input **lst, t_input *new);
 t_input	*mod_lstlast(t_input *lst);
 int		input_type(char *s, char *s_one, char **envp);
-int		is_op(char *s);
+int		is_env_var(char *s);
+int		is_built_in(char *s);
 int		is_pipe(char *s);
-int		is_quote(char s);
-int		is_red(char *s);
+int		is_red(char s);
 int		is_file(char *s);	
 char	**mod_split(char const *s, char c);
 void	free_array(char **array);
