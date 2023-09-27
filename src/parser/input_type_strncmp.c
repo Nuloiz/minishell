@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 int	is_built_in(char *s)
 {
 	if (!ft_strncmp(s, "cd", 2) || !ft_strncmp(s, "echo", 4) || \

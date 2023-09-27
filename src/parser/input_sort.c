@@ -61,11 +61,11 @@ static t_input	**linked_list_start(char **cmd, char **envp, t_input **input)
 		mod_lstadd_back(input, new);
 		i++;
 	}
-	while ((*input))
-	{
-		ft_printf("Word:%s	/	Type:%i\n", (*input)->word, (*input)->type);
-		*input = (*input)->next;
-	}
+	//while ((*input))
+	//{
+	//	ft_printf("Word:%s	/	Type:%i\n", (*input)->word, (*input)->type);
+	//	*input = (*input)->next;
+	//}
 	return (input);
 }
 
@@ -77,5 +77,6 @@ int	input_sort(char *line, char **envp)
 	input = NULL;
 	cmd = mod_split(line, ' ');
 	linked_list_start(cmd, envp, &input);
+	sort_tree(input, envp);
 	return (1);
 }

@@ -28,20 +28,29 @@
 # include "rlstdc.h"
 # include "ft_printf.h"
 
+#define COMMAND	1
+#define FLAGS	2
+#define FILE	3
+#define ENV_VAR	4
+#define PIPE	5
+#define REDIRECT 6
+#define BUILTIN	 7
+#define PARAM	 8
+
 typedef struct s_input
 {
 	struct s_input	*next;
 	char			*word;
 	int				type;
-	//COMMAND	= 1;
-	//FLAGS		= 2;
-	//FILE		= 3;
-	//ENV VAR	= 4;
-	//PIPE		= 5;
-	//REDIRECT	= 6;
-	//BUILTIN	= 7;
-	//PARAM		= 8;
 }				t_input;
+
+typedef struct binary_tree
+{
+	struct binary_tree	*left;
+	struct binary_tree	*right;
+	char				*word;
+	int					type;
+}				t_binary_tree;
 
 int		main(int argc, char **argv, char **envp);
 int		input_sort(char *line, char **envp);
@@ -52,8 +61,10 @@ int		is_env_var(char *s);
 int		is_built_in(char *s);
 int		is_pipe(char *s);
 int		is_red(char s);
-int		is_file(char *s);	
+int		is_file(char *s);
+int		sort_tree(t_input *input, char **envp);
 char	**mod_split(char const *s, char c);
+char	*mod_strjoin(char const *s1, char const *s2);
 void	free_array(char **array);
 
 #endif

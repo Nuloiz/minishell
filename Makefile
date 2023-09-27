@@ -8,8 +8,8 @@ CFLAGS :=  -fsanitize=address -g
 # find / -name libreadline.aCFLAGS := $(CFLAGS) -fsanitize=address
 SRC := 	free.c \
 		main_second.c \
-		parser/input_sort.c parser/input_type.c parser/input_type_strncmp.c \
-		modified/modified_lst_func.c modified/modified_split_func.c
+		parser/input_sort.c parser/input_type.c parser/input_type_strncmp.c parser/sort_tree.c parser/filler.c \
+		modified/modified_lst_func.c modified/modified_split_func.c modified/modified_strjoin_func.c
 
 SRC_DIR := src
 OBJ_DIR := obj
