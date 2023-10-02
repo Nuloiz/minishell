@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/09/21 10:42:52 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/09/21 18:09:26 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "history.h"
 # include "rlstdc.h"
 # include "ft_printf.h"
+# include "../src/executer/pipex.h"
 
 typedef struct s_input
 {
