@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:50:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/09/21 18:03:46 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/02 14:52:44 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ int	ft_init_struct(t_execute *new, int argc, char **argv, char **envp)
 	new->count_children = argc - 3 - new->here_doc;
 	new->id = malloc(sizeof(int) * (new->count_children));
 	new->count_pipes = argc - 4;
+	if (new->count_pipes < 1)
+		new->count_pipes = 1;
+	printf("count pipes: %i\n", new->count_pipes);
 	new->pipe_fd = malloc(sizeof(int *) * (new->count_pipes));
 	new->error = 0;
 	new->commands = &argv[2 + new->here_doc];
