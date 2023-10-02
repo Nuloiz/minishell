@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/02 09:50:44 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/02 14:52:44 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_parent(t_execute *exec)
 	int	i;
 	int	status;
 
+	// if (exec.builtin == 1)
+	// 	ft_
 	ft_close_all_fds(exec);
 	i = -1;
 	while (++i < exec->count_children)
@@ -93,11 +95,11 @@ int	execute(int argc, char **argv, char **envp)
 	int			error;
 
 	error = 0;
-	if (argc < 5)
-	{
-		ft_putstr_fd("Wrong argument count!\n", 2);
-		return (1);
-	}
+	// if (argc < 5)
+	// {
+	// 	ft_putstr_fd("Wrong argument count!\n", 2);
+	// 	return (1);
+	// }
 	if (!ft_strncmp(argv[1], "here_doc", 8) && argc < 6)
 	{
 		ft_putstr_fd("Wrong argument count!\n", 2);
