@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/02 18:10:59 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/02 18:12:13 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	ft_export(char **envp, char *string)
 	{
 		envp = ft_append_string_to_arry(envp, string);
 	}
+	return (0);
 }
 
 int main(int argc, char **argv, char **envp)
