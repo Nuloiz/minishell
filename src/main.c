@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:19:04 by nschutz           #+#    #+#             */
-/*   Updated: 2023/09/21 12:51:27 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/09/21 18:05:27 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <stdio.h>
+#include "executer/pipex.h"
 
 void	ft_sig_handle(int sig)
 {
@@ -23,8 +24,8 @@ void	ft_sig_handle(int sig)
 		// printf("signal: %i caught! i will be a new promt on new line\n", sig);
 		// printf("minishell after signal2-0.1$ ");
 		// 
-		rl_replace_line("hello", 0);
-		write(0, "\n", 2);
+		rl_replace_line("hello\n", 0);
+		// write(0, "\n", 2);
 		rl_on_new_line();
 		rl_redisplay();
 		// readline, rl_clear_history, rl_on_new_line,
@@ -46,6 +47,9 @@ int	main(int argc, char **argv, char **envp)
 	rl_replace_line("hello", 1);
 	rl_redisplay();
 	line = readline(0);
+	ft_putstr_fd("hello\n", 1);
+	char *testargv[] = {"minishell","input.txt", "cat", "cat -e", "output.txt", NULL};
+	execute(5, testargv, envp);
 	// while (1)
 	// {
 	// 	if (!line)
