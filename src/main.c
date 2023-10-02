@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:19:04 by nschutz           #+#    #+#             */
-/*   Updated: 2023/09/21 18:05:27 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/02 14:52:44 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	main(int argc, char **argv, char **envp)
 	rl_redisplay();
 	line = readline(0);
 	ft_putstr_fd("hello\n", 1);
-	char *testargv[] = {"minishell","input.txt", "cat", "cat -e", "output.txt", NULL};
-	execute(5, testargv, envp);
+	char *testargv[] = {"minishell", "input.txt", "cat", "output.txt", NULL};
+	execute(4, testargv, envp);
 	// while (1)
 	// {
 	// 	if (!line)
