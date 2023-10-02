@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 11:18:49 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/02 09:47:18 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/02 15:23:47 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,23 @@ int	ft_first_child(t_execute *exec, int i)
 	close(exec->pipe_fd[exec->count_pipes - 1 - exec->here_doc][0]);
 	exec->pipe_fd[exec->count_pipes - 1 - exec->here_doc][0]
 		= open(exec->argv[1], O_RDONLY);
+	if (exec->pipe_fd[exec->count_pipes - 1 - exec->here_doc][0] < 1)
+	{
+		perror("Error");
+		return (1);
+	}
+	exec->error += ft_child(i, exec);
+	return (0);
+}
+
+int	ft_child_first_last(t_execute *exec, int i)
+{
+	close(exec->pipe_fd[exec->count_pipes - 1][0]); //exec->pipe_fd[0][0]
+	exec->pipe_fd[exec->count_pipes - 1][0]
+		= open(exec->argv[1], O_RDONLY);
+	close(exec->pipe_fd[0][1]);
+	exec->pipe_fd[0][1] = open(exec->argv[exec->argc - 1], O_RDWR
+			| O_CREAT | O_TRUNC, 0644);
 	if (exec->pipe_fd[exec->count_pipes - 1 - exec->here_doc][0] < 1)
 	{
 		perror("Error");
@@ -71,6 +88,12 @@ int	ft_forking(t_execute *exec)
 		return (1);
 	if (exec->id[i] == 0 && i == 0 && exec->here_doc)
 		exec->error += ft_child(i, exec);
+	else if (exec->id[i] == 0 && i == 0 && exec->count_children == 1)
+	{
+		// printf("countii: %i\n", exec->count_pipes);
+		// printf("i: %i\n", exec->pipe_fd[0][0]);
+		exec->error += ft_child_first_last(exec, i);
+	}
 	else if (exec->id[i] == 0 && i == 0)
 		error = ft_first_child(exec, i);
 	else if (exec->id[i] == 0 && i == exec->count_children - 1)
