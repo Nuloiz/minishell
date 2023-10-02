@@ -6,7 +6,15 @@ CC := cc
 CFLAGS :=  -fsanitize=address -g
 #CFLAGS := -Wall -Wextra -Werror -g
 # find / -name libreadline.aCFLAGS := $(CFLAGS) -fsanitize=address
-SRC := 	main.c
+SRC := 	main.c \
+		executer/execute.c \
+		executer/ft_check_command_and_get_path.c \
+		executer/utils.c \
+		executer/ft_special_split.c \
+		executer/errors.c \
+		executer/ft_get_command_arg_array.c \
+		executer/fork.c \
+		executer/utils_two.c
 
 SRC_DIR := src
 OBJ_DIR := obj
@@ -23,16 +31,18 @@ INCLUDES := -I inc -I tools/ft_printf  -I${READLINE_PATH}/includes -L${READLINE_
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@make -C tools/ft_printf
+#	@make -C tools/ft_printf
 	
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) tools/ft_printf/libftprintf.a $(INCLUDES)
 #	@echo "Linking $(NAME)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/
+	@make -C tools/ft_printf
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/parser
 	@mkdir -p $(OBJ_DIR)/modified
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+	@mkdir -p $(OBJ_DIR)/executer
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES) tools/ft_printf/libftprintf.a
 	@echo "Compiling $<"
 
 clean:
