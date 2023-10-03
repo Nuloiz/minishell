@@ -6,10 +6,24 @@ CC := cc
 CFLAGS :=  -fsanitize=address -g
 #CFLAGS := -Wall -Wextra -Werror -g
 # find / -name libreadline.aCFLAGS := $(CFLAGS) -fsanitize=address
-SRC := 	free.c \
-		main_second.c \
-		parser/input_sort.c parser/input_type.c parser/input_type_strncmp.c parser/sort_tree.c parser/filler.c \
-		modified/modified_lst_func.c modified/modified_split_func.c modified/modified_strjoin_func.c
+SRC :=	free.c \
+        parser/input_sort.c parser/input_type.c parser/input_type_strncmp.c parser/sort_tree.c parser/filler.c \
+        modified/modified_lst_func.c modified/modified_split_func.c modified/modified_strjoin_func.c \
+        main.c \
+		executer/execute.c \
+		executer/ft_check_command_and_get_path.c \
+		executer/utils.c \
+		executer/ft_special_split.c \
+		executer/errors.c \
+		executer/ft_get_command_arg_array.c \
+		executer/fork.c \
+		executer/utils_two.c \
+		builtins/builtins_utils.c \
+		builtins/echo.c \
+		builtins/env.c \
+		builtins/export.c \
+		builtins/pwd.c \
+		builtins/unset.c
 
 SRC_DIR := src
 OBJ_DIR := obj
@@ -26,16 +40,19 @@ INCLUDES := -I inc -I tools/ft_printf  -I${READLINE_PATH}/includes -L${READLINE_
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@make -C tools/ft_printf
-	
+#	@make -C tools/ft_printf
+
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) tools/ft_printf/libftprintf.a $(INCLUDES)
 #	@echo "Linking $(NAME)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/
+	@make -C tools/ft_printf
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/parser
 	@mkdir -p $(OBJ_DIR)/modified
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+	@mkdir -p $(OBJ_DIR)/executer
+	@mkdir -p $(OBJ_DIR)/builtins
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES) tools/ft_printf/libftprintf.a
 	@echo "Compiling $<"
 
 clean:
