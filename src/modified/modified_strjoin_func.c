@@ -18,20 +18,26 @@ char	*mod_strjoin(char const *s1, char const *s2)
 	int		i;
 	int		j;
 
-	i = -1;
-	j = -1;
-	joined = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char) + 1);
+	i = 0;
+	j = 0;
+	joined = ft_calloc((ft_strlen(s1) + ft_strlen(s2)) + 2, 1);
 	if (joined)
 	{
-		while (s1[++i])
+		while (s1 && s1[i])
+		{
 			joined[i] = s1[i];
-		i = (int)ft_strlen(s1);
-		joined[i] = ' ';
-		i++;
-		while (s2[++j])
+			i++;
+		}
+		if (i > 0)
+		{
+			joined[i] = ' ';
+			i++;
+		}
+		while (s2 && s2[j])
 		{
 			joined[i] = s2[j];
 			i++;
+			j++;
 		}
 		joined[i] = 0;
 		return (joined);

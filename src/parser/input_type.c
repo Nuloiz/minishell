@@ -28,7 +28,7 @@ static char	*get_path(char **envp)
 	return (NULL);
 }
 
-static char	*find_path(char *cmd, char **envp)
+char	*find_path(char *cmd, char **envp)
 {
 	int		i;
 	char	*path;

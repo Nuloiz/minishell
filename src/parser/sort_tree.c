@@ -6,7 +6,7 @@
 /*   By: nschutz <nschutz@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 13:35:06 by nschutz           #+#    #+#             */
-/*   Updated: 2023/09/23 13:35:06 by nschutz          ###   ########.fr       */
+/*   Updated: 2023/10/02 16:23:23 by nschutz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ t_binary_tree	*fill_tree(t_binary_tree *root, t_input *input)
 	int	pipe;
 
 	pipe = 0;
+	if (!input)
+		return (NULL);
 	root->word = input->word;
 	root->type = input->type;
 	input = input->next;
@@ -140,7 +142,9 @@ int	sort_tree(t_input *input, char **envp)
 	t_binary_tree	*root;
 
 	root = ft_calloc(1, sizeof(t_binary_tree));
-	root = fill_tree(root, input);
-	print_tree(root, 0);
+	//root = fill_tree(root, input);
+	//filler(input, envp);
+	sort_array(input, envp);
+	//print_tree(root, 0);
 	return (1);
 }
