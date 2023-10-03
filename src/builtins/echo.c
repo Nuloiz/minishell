@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 18:29:06 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/02 18:48:45 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/03 13:11:48 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_echo(char **args)
 	}
 	while (args[i])
 	{
-		ft_printf("%s",args[i]);
+		ft_printf("%s", args[i]);
 		if (i < size - 1)
 			ft_printf(" ");
 		i++;
@@ -50,10 +50,9 @@ int	ft_echo(char **args)
 	return (0);
 }
 
-int main(void)
-{
-	char **echo;
-	
-	echo = ft_split("     -n      hello  my friend", ' ');
-	ft_echo(echo);
-}
+// int	main(void)
+// {
+// 	char **echo;
+// 	echo = ft_split("     -n      hello  my friend", ' ');
+// 	ft_echo(echo);
+// }
