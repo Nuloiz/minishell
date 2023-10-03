@@ -15,6 +15,7 @@ SRC := 	main.c \
 		executer/ft_get_command_arg_array.c \
 		executer/fork.c \
 		executer/utils_two.c \
+		builtins/builtins_utils.c \
 		builtins/echo.c \
 		builtins/env.c \
 		builtins/export.c \
