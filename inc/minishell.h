@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/09/21 10:42:52 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/03 13:29:21 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@
 # include <string.h>
 # include <math.h>
 # include <fcntl.h>
-# include "ft_printf.h"
 # include "readline.h"
 # include "history.h"
 # include "rlstdc.h"
-# include "ft_printf.h"
+# include <limits.h>
+//# include "ft_printf.h"
+# include "../tools/ft_printf/ft_printf.h"
+# include "../src/executer/pipex.h"
 
 #define COMMAND	1
 #define FLAGS	2
@@ -68,5 +70,12 @@ void	sort_array(t_input *input, char **envp);
 char	**mod_split(char const *s, char c);
 char	*mod_strjoin(char const *s1, char const *s2);
 void	free_array(char **array);
+int		ft_array_size(char **array);
+int		ft_echo(char **args);
+int		ft_env(char **envp);
+int		ft_export(char ***envp, char *string);
+char	**ft_append_string_to_array(char **array, char *string);
+int		ft_cwd(void);
+int		ft_unset(char ***envp, char *string);
 
 #endif
