@@ -14,7 +14,12 @@ SRC := 	main.c \
 		executer/errors.c \
 		executer/ft_get_command_arg_array.c \
 		executer/fork.c \
-		executer/utils_two.c
+		executer/utils_two.c \
+		builtins/echo.c \
+		builtins/env.c \
+		builtins/export.c \
+		builtins/pwd.c \
+		builtins/unset.c
 
 SRC_DIR := src
 OBJ_DIR := obj
@@ -42,6 +47,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/
 	@mkdir -p $(OBJ_DIR)/parser
 	@mkdir -p $(OBJ_DIR)/modified
 	@mkdir -p $(OBJ_DIR)/executer
+	@mkdir -p $(OBJ_DIR)/builtins
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES) tools/ft_printf/libftprintf.a
 	@echo "Compiling $<"
 
