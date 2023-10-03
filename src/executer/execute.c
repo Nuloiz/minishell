@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/02 14:52:44 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/03 21:08:09 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,14 @@ int	ft_child(int i, t_execute *exec)
 		dup2(exec->pipe_fd[0][1], 1);
 	else
 		dup2(exec->pipe_fd[i][1], 1);
+	printf("exec->commands[%i] to split: %s", i, exec->commands[i]);
 	command_array = ft_get_command_arg_array
 		(exec->commands[i]);
 	command = ft_check_command_and_get_path(command_array[0], exec->envp);
 	if (command == NULL)
 	{
 		ft_free_array(command_array);
-		return (ft_print_command_error(exec->argv, 127));
+		return (ft_print_command_error(exec->commands, 127, i));
 	}
 	execve(command, command_array, exec->envp);
 	perror("Execve error:");
@@ -72,11 +73,11 @@ int	ft_here_doc(t_execute *exec)
 	red_line = get_next_line(0);
 	while (red_line != NULL)
 	{
-		if (ft_strlen(red_line) - 1 < ft_strlen(exec->argv[2]))
-			len = ft_strlen(exec->argv[2]);
+		if (ft_strlen(red_line) - 1 < ft_strlen(exec->limiter))
+			len = ft_strlen(exec->limiter);
 		else
 			len = ft_strlen(red_line) - 1;
-		if (ft_strncmp(red_line, exec->argv[2], len) == 0)
+		if (ft_strncmp(red_line, exec->limiter, len) == 0)
 			break ;
 		write(exec->pipe_fd[exec->count_pipes - 1][1],
 			red_line, ft_strlen(red_line));
@@ -89,25 +90,15 @@ int	ft_here_doc(t_execute *exec)
 	return (1);
 }
 
-int	execute(int argc, char **argv, char **envp)
+int	execute(int *types, char **parsed, char **envp)
 {
 	t_execute	exec;
 	int			error;
 
 	error = 0;
-	// if (argc < 5)
-	// {
-	// 	ft_putstr_fd("Wrong argument count!\n", 2);
-	// 	return (1);
-	// }
-	if (!ft_strncmp(argv[1], "here_doc", 8) && argc < 6)
-	{
-		ft_putstr_fd("Wrong argument count!\n", 2);
+	if (ft_init(&exec, types, parsed, envp))
 		return (1);
-	}
-	if (ft_init(&exec, argc, argv, envp))
-		return (1);
-	if (exec.here_doc == 1)
+	if (exec.limiter)
 		ft_here_doc(&exec);
 	error = ft_forking(&exec);
 	if (error)
@@ -117,15 +108,13 @@ int	execute(int argc, char **argv, char **envp)
 }
 
 //call initialisation for struct, set here_doc and open pipes
-int	ft_init(t_execute *exec, int argc, char **argv, char **envp)
+int	ft_init(t_execute *exec, int *types, char **parsed, char **envp)
 {
 	int	i;
 
 	i = -1;
-	exec->here_doc = 0;
-	if (!ft_strncmp(argv[1], "here_doc", 8))
-		exec->here_doc = 1;
-	ft_init_struct(exec, argc, argv, envp);
+	// 
+	ft_init_struct(exec, types, parsed, envp);
 	if (exec->id == NULL || exec->pipe_fd == NULL)
 		return (1);
 	while (++i < exec->count_pipes)
