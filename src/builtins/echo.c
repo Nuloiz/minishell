@@ -6,24 +6,14 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 18:29:06 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/03 13:11:48 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/03 13:25:07 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../tools/ft_printf/ft_printf.h"
-#include <unistd.h>
-#include <limits.h>
+#include "minishell.h"
 
-int	ft_array_size(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-		i++;
-	return (i);
-}
-
+// prints args (maybe needed to be splitted with
+// ft_split) and if first is -n then no newline at end
 int	ft_echo(char **args)
 {
 	int	new_line;
