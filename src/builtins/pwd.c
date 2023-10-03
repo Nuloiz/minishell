@@ -6,13 +6,11 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 18:20:46 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/03 13:10:57 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/03 13:22:15 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../tools/ft_printf/ft_printf.h"
-#include <unistd.h>
-#include <limits.h>
+#include "minishell.h"
 
 int	ft_cwd(void)
 {
@@ -27,7 +25,7 @@ int	ft_cwd(void)
 		return (1);
 }
 
-int	main(void)
-{
-	ft_cwd();
-}
+// int	main(void)
+// {
+// 	ft_cwd();
+// }
