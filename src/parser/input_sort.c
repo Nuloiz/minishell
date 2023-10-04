@@ -70,6 +70,15 @@ static t_input	**linked_list_start(char **cmd, char **envp, t_input **input)
 	return (input);
 }
 
+void print_list(t_input **input)
+{
+	while (*input)
+	{
+		ft_printf("Word: %s\n", (*input)->word);
+		*input = (*input)->next;
+	}
+}
+
 int	input_sort(char *line, char **envp)
 {
 	t_input	*input;
@@ -78,6 +87,9 @@ int	input_sort(char *line, char **envp)
 	input = NULL;
 	cmd = mod_split(line, ' ');
 	linked_list_start(cmd, envp, &input);
-	sort_tree(&input, envp);
+	sort_array(&input, envp);
+	print_list(&input);
+	free_list(&input);
+	//print_list(&input);
 	return (1);
 }

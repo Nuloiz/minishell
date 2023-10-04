@@ -65,7 +65,6 @@ int		is_built_in(char *s);
 int		is_pipe(char *s);
 int		is_red(char s);
 int		is_file(char *s);
-int		sort_tree(t_input **input, char **envp);
 void	sort_array(t_input **input, char **envp);
 char	**mod_split(char const *s, char c);
 char	*mod_strjoin(char const *s1, char const *s2);

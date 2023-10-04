@@ -7,7 +7,7 @@ CFLAGS :=  -fsanitize=address -g
 #CFLAGS := -Wall -Wextra -Werror -g
 # find / -name libreadline.aCFLAGS := $(CFLAGS) -fsanitize=address
 SRC :=	free.c \
-        parser/input_sort.c parser/input_type.c parser/input_type_strncmp.c parser/sort_tree.c parser/filler.c \
+        parser/input_sort.c parser/input_type.c parser/input_type_strncmp.c parser/create_array.c \
         modified/modified_lst_func.c modified/modified_split_func.c modified/modified_strjoin_func.c \
         main.c \
 		executer/execute.c \
