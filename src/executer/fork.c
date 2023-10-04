@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 11:18:49 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/03 21:19:16 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/04 11:36:59 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	ft_last_child(t_execute *exec, int i)
 
 int	ft_first_child(t_execute *exec, int i)
 {
+	printf("first child\n");
 	if (exec->input)
 	{
 		close(exec->pipe_fd[exec->count_pipes - 1][0]);
@@ -64,9 +65,12 @@ int	ft_first_child(t_execute *exec, int i)
 
 int	ft_child_first_last(t_execute *exec, int i)
 {
+	printf("one and only child\n");
+	close(exec->pipe_fd[0][0]);
+	close(exec->pipe_fd[0][1]);
 	if (exec->input)
 	{
-		close(exec->pipe_fd[exec->count_pipes - 1][0]);
+		printf("with input file\n");
 		exec->pipe_fd[exec->count_pipes - 1][0]
 			= open(exec->input, O_RDONLY);
 		if (exec->pipe_fd[exec->count_pipes - 1][0] < 1)
@@ -74,10 +78,11 @@ int	ft_child_first_last(t_execute *exec, int i)
 			perror("Error");
 			return (1);
 		}
+		else
+			exec->pipe_fd[0][0] = 0;
 	}
 	if (exec->output)
 	{
-		close(exec->pipe_fd[0][1]);
 		if (exec->append)
 			exec->pipe_fd[0][1] = open(exec->output, O_RDWR
 					| O_CREAT | O_APPEND, 0644);
@@ -90,6 +95,8 @@ int	ft_child_first_last(t_execute *exec, int i)
 			return (1);
 		}
 	}
+	else
+		exec->pipe_fd[0][1] = 1;
 	exec->error += ft_child(i, exec);
 	return (0);
 }
@@ -123,19 +130,19 @@ int	ft_forking(t_execute *exec)
 	i = ft_check_fork(exec, i);
 	if (i < 0)
 		return (1);
-	if (exec->id[i] == 0 && i == 0 && exec->limiter)
+	if (exec->id[i] == 0 && i == 0 && exec->limiter && !(exec->count_builtins == 1) && !(exec->count_children == 1))
 		exec->error += ft_child(i, exec);
-	else if (exec->id[i] == 0 && i == 0 && exec->count_children == 1)
+	else if (exec->id[i] == 0 && i == 0 && exec->count_children == 1 && !(exec->count_builtins == 1) && !(exec->count_children == 1))
 	{
 		// printf("countii: %i\n", exec->count_pipes);
 		// printf("i: %i\n", exec->pipe_fd[0][0]);
 		exec->error += ft_child_first_last(exec, i);
 	}
-	else if (exec->id[i] == 0 && i == 0)
+	else if (exec->id[i] == 0 && i == 0 && !(exec->count_builtins == 1) && !(exec->count_children == 1))
 		error = ft_first_child(exec, i);
-	else if (exec->id[i] == 0 && i == exec->count_children - 1)
+	else if (exec->id[i] == 0 && i == exec->count_children - 1 && !(exec->count_builtins == 1) && !(exec->count_children == 1))
 		error = ft_last_child(exec, i);
-	else if (exec->id[i] == 0)
+	else if (exec->id[i] == 0 && !(exec->count_builtins == 1) && !(exec->count_children == 1))
 		exec->error += ft_child(i, exec);
 	else if (exec->id[i] > 0)
 		exec->error += ft_parent(exec);
