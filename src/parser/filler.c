@@ -75,8 +75,8 @@ void sort_array(t_input **input, char **envp)
 				{
 					s[count] = tmp;
 					tmp = NULL;
+					count++;
 				}
-				count++;
 				if (!ft_strncmp((*input)->word, "<", 1))
 					type[count] = 1;
 				else if (!ft_strncmp((*input)->word, "<<", 1))
@@ -101,7 +101,7 @@ void sort_array(t_input **input, char **envp)
 	}
 	s[count] = tmp;
 	print_cmds(s, type);
-	//execute(type, s, envp);
+	execute(type, s, envp);
 	free_array(s);
 	free(type);
 }

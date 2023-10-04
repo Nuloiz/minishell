@@ -47,33 +47,6 @@ int	main(int argc, char **argv, char **envp)
 	// rl_replace_line("hello", 1);
 	// rl_redisplay();
 	line = readline(0);
-	// ft_putstr_fd("hello\n", 1);
-
-	// char *testargv[] = {"input.txt", "cat -e", "cat -e", "grep a", "cat -e", NULL};
-	// int	testintargv[] = {1, 5, 6, 5, 5, NULL};
-	// char *testargv[] = {"cat -e", "cat -e", "grep a", "cat -e", "output.txt", NULL};
-	// int	testintargv[] = {5, 6, 5, 5, 3, NULL};
-	// char *testargv[] = {"cat -e", "cat -e", "grep a", "cat -e", "output.txt", NULL};
-	// int	testintargv[] = {5, 6, 5, 5, 4, NULL};
-	// char *testargv[] = {"ls -a", "cat -e", "grep a", "cat -e", NULL};
-	// int	testintargv[] = {5, 6, 5, 5, NULL};
-	char *testargv[] = {"ls -a", "cat -e", "grep a", "cat -e", "output.txt", NULL};
-	int	testintargv[] = {5, 6, 5, 5, 3, NULL};
-	// char *testargv[] = {"input.txt", "cat -e", "cat -e", "grep a", "cat -e", "output.txt", NULL};
-	// int	testintargv[] = {1, 5, 6, 5, 5, 4, NULL};
-	// char *testargv[] = {"cat -e", "echo hallo", "wc -l", NULL};
-	// int	*testintargv[] = {5, 6, 5, NULL};
-	// char *testargv[] = {"end", "cat -e", "echo hallo", "wc -l", "output.txt", NULL};
-	// int	*testintargv[] = {2, 5, 6, 5, 4, NULL};
-	// input 1
-	// limiter 2
-	// output 3
-	// append 4
-	// command 5
-	// builtin 6
-	execute(testintargv, testargv, envp);
-	// rl_replace_line("hello", 1);
-	// rl_redisplay();
-	// line = readline(0);
+	input_sort(line, envp);
 	return (0);
 }
