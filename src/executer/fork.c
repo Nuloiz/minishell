@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 11:18:49 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/04 11:36:59 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/04 15:52:10 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	ft_forking(t_execute *exec)
 	}
 	else if (exec->id[i] == 0 && i == 0 && !(exec->count_builtins == 1) && !(exec->count_children == 1))
 		error = ft_first_child(exec, i);
-	else if (exec->id[i] == 0 && i == exec->count_children - 1 && !(exec->count_builtins == 1) && !(exec->count_children == 1))
+	else if (exec->id[i] == 0 && i == exec->count_children - 1 && !(exec->count_builtins == 1))
 		error = ft_last_child(exec, i);
 	else if (exec->id[i] == 0 && !(exec->count_builtins == 1) && !(exec->count_children == 1))
 		exec->error += ft_child(i, exec);
