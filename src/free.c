@@ -24,3 +24,16 @@ void	free_array(char **array)
 	}
 	free(array);
 }
+
+void	free_list(t_input **input)
+{
+	t_input	*tmp;
+
+	while (*input)
+	{
+		tmp = *input;
+		free((*input)->word);
+		free(*input);
+		*input = tmp->next;
+	}
+}

@@ -28,7 +28,7 @@ static char	*get_path(char **envp)
 	return (NULL);
 }
 
-char	*find_path(char *cmd, char **envp)
+int	find_path(char *cmd, char **envp)
 {
 	int		i;
 	char	*path;
@@ -38,7 +38,7 @@ char	*find_path(char *cmd, char **envp)
 
 	path = get_path(envp);
 	if (!path | !cmd)
-		return (NULL);
+		return (0);
 	new_path = ft_split(path, ':');
 	i = 0;
 	while (new_path[i])
@@ -49,12 +49,13 @@ char	*find_path(char *cmd, char **envp)
 		if (access(path_c, R_OK) == 0)
 		{
 			free_array(new_path);
-			return (path_c);
+			free(path_c);
+			return (1);
 		}
 		free(path_c);
 		i++;
 	}
-	return (free_array(new_path), NULL);
+	return (free_array(new_path), 0);
 }
 
 static int	is_flag(char *s)
