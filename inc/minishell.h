@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/04 11:29:41 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/04 18:35:49 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*mod_strjoin(char const *s1, char const *s2);
 void	free_array(char **array);
 void	free_list(t_input **input);
 int		ft_array_size(char **array);
-int		ft_echo(char **args);
+int		ft_echo(char *args);
 int		ft_env(char **envp);
 int		ft_export(char ***envp, char *string);
 char	**ft_append_string_to_array(char **array, char *string);
