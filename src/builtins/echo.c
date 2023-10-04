@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 18:29:06 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/03 13:25:07 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/04 18:47:49 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,32 @@
 
 // prints args (maybe needed to be splitted with
 // ft_split) and if first is -n then no newline at end
-int	ft_echo(char **args)
+int	ft_echo(char *args)
 {
 	int	new_line;
 	int	i;
 	int	size;
+	char	**splitted;
 
-	size = ft_array_size(args);
-	i = 0;
-	new_line = 0;
-	if (!(ft_strncmp("-n", args[i], 3)))
+	splitted = ft_split(args, ' ');
+	size = ft_array_size(splitted);
+	i = 1;
+	new_line = 1;
+	if (!(ft_strncmp("-n", splitted[i], 3)))
 	{
-		new_line = 1;
+		new_line = 0;
 		i++;
 	}
-	while (args[i])
+	while (splitted[i])
 	{
-		ft_printf("%s", args[i]);
+		ft_printf("%s", splitted[i]);
 		if (i < size - 1)
 			ft_printf(" ");
 		i++;
 	}
 	if (new_line)
 		ft_printf("\n");
+	ft_free_array(splitted);
 	return (0);
 }
 
