@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:19:04 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/03 21:34:12 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/04 15:54:35 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ int	main(int argc, char **argv, char **envp)
 	// rl_replace_line("hello", 1);
 	// rl_redisplay();
 	line = readline(0);
-	input_sort(line, envp);
+	while (line)
+	{
+		input_sort(line, envp);
+		line = readline(0);
+	}
 	return (0);
 }
