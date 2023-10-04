@@ -2,14 +2,14 @@ NAME := minishell
 
 CC := cc
 
-#CFLAGS := -Wall -Wextra -Werror
-CFLAGS :=  -fsanitize=address -g
+CFLAGS := -Wall
+#CFLAGS :=  -fsanitize=address -g
 #CFLAGS := -Wall -Wextra -Werror -g
 # find / -name libreadline.aCFLAGS := $(CFLAGS) -fsanitize=address
 SRC :=	free.c \
         parser/input_sort.c parser/input_type.c parser/input_type_strncmp.c parser/sort_tree.c parser/filler.c \
         modified/modified_lst_func.c modified/modified_split_func.c modified/modified_strjoin_func.c \
-        main.c \
+        main_second.c \
 		executer/execute.c \
 		executer/ft_check_command_and_get_path.c \
 		executer/utils.c \

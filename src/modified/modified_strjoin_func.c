@@ -40,6 +40,10 @@ char	*mod_strjoin(char const *s1, char const *s2)
 			j++;
 		}
 		joined[i] = 0;
+		if (s1)
+			free((char *)s1);
+		if (s2)
+			free((char *)s2);
 		return (joined);
 	}
 	else
