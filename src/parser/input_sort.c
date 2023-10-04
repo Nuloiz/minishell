@@ -85,7 +85,7 @@ int	input_sort(char *line, char **envp)
 	char	**cmd;
 
 	input = NULL;
-	if (!line)
+	if (line[0] == '\0')
 		return (0);
 	cmd = mod_split(line, ' ');
 	linked_list_start(cmd, envp, &input);
