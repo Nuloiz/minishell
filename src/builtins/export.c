@@ -6,36 +6,38 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/04 22:15:05 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/04 22:36:13 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_sort_chars(char ***array)
+void	ft_sort_array(char ***arr)
 {
+	int		len;
 	int		i;
-	int		len_string;
 	int		j;
 	char	*temp;
-	int		len;
+	int		char_len;
 
+	len = 0;
 	i = 0;
-	len_string = ft_array_size(*array);
-	while (i < len_string - 1)
+	while ((*arr)[len])
+		len++;
+	while (i < len - 1)
 	{
 		j = i + 1;
-		while (j < len_string)
+		while (j < len)
 		{
-			if (ft_strlen(*array[i]) > ft_strlen(*array[j]))
-				len = ft_strlen(*array[i]);
+			if (ft_strlen((*arr)[i]) > ft_strlen((*arr)[j]))
+				char_len = ft_strlen((*arr)[i]);
 			else
-				len = ft_strlen(*array[j]);
-			if (ft_strncmp(*array[i], *array[j], len) > 0)
+				char_len = ft_strlen((*arr)[j]);
+			if (ft_strncmp((*arr)[i], (*arr)[j], char_len) > 0)
 			{
-				temp = *array[i];
-				*array[i] = *array[j];
-				*array[j] = temp;
+				temp = (*arr)[i];
+				(*arr)[i] = (*arr)[j];
+				(*arr)[j] = temp;
 			}
 			j++;
 		}
@@ -48,7 +50,7 @@ void	ft_sorted_print_array(char **envp)
 	int	i;
 
 	i = 0;
-	// ft_sort_chars(&envp);
+	ft_sort_array(&envp);
 	while (envp[i])
 	{
 		dprintf(2, "declare -x %s\n", envp[i]);
