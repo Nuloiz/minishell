@@ -46,13 +46,15 @@ void sort_array(t_input **input, char **envp)
 	char	*tmp;
 	int		*type;
 	int		count;
+	int 	i;
 
 	s = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
 	count = 0;
 	tmp = NULL;
-	type = malloc((count_alloc(*input) + 1) * sizeof(int));
+	type = malloc((count_alloc(*input) + 2) * sizeof(int));
 	while (*input)
 	{
+		i = 0;
 		if ((*input)->type == COMMAND)
 		{
 			tmp = (*input)->word;
@@ -67,7 +69,7 @@ void sort_array(t_input **input, char **envp)
 		}
 		else
 			type[count] = 5;
-		while (*input && (*input)->type != COMMAND && (*input)->type != BUILTIN)
+		while (*input && (*input)->type != PIPE && i != 1)
 		{
 			if ((*input)->type == REDIRECT)
 			{
@@ -77,29 +79,35 @@ void sort_array(t_input **input, char **envp)
 					tmp = NULL;
 					count++;
 				}
-				if (!ft_strncmp((*input)->word, "<", 1))
+				if (!ft_strncmp((*input)->word, "<", 2))
+				{
 					type[count] = 1;
-				else if (!ft_strncmp((*input)->word, "<<", 1))
+					i = 2;
+				}
+				else if (!ft_strncmp((*input)->word, "<<", 3))
 					type[count] = 2;
-				else if (!ft_strncmp((*input)->word, ">", 1))
+				else if (!ft_strncmp((*input)->word, ">", 2))
 					type[count] = 3;
-				else if (!ft_strncmp((*input)->word, ">>", 1))
+				else if (!ft_strncmp((*input)->word, ">>", 3))
 					type[count] = 4;
 				else
 					perror("Invalid redirect");
 			}
-			else if ((*input)->type == PIPE)
+			else
 			{
-				s[count] = tmp;
-				tmp = NULL;
-				count++;
-			}
-			else if ((*input)->type == FLAGS || (*input)->type == FILE || (*input)->type == PARAM)
 				tmp = mod_strjoin(tmp, (*input)->word);
+				i--;
+			}
 			(*input) = (*input)->next;
 		}
+		if (*input && (*input)->type == PIPE)
+			(*input) = (*input)->next;
+		s[count] = tmp;
+		tmp = NULL;
+		count++;
 	}
 	s[count] = tmp;
+	type[count + 1] = 0;
 	print_cmds(s, type);
 	execute(type, s, envp);
 	free_array(s);
