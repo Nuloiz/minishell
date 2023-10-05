@@ -61,16 +61,11 @@ static t_input	**linked_list_start(char **cmd, char **envp, t_input **input)
 		mod_lstadd_back(input, new);
 		i++;
 	}
-	//while ((*input))
-	//{
-	//	ft_printf("Word:%s	/	Type:%i\n", (*input)->word, (*input)->type);
-	//	*input = (*input)->next;
-	//}
 	free(cmd);
 	return (input);
 }
 
-void print_list(t_input **input)
+void	print_list(t_input **input)
 {
 	while (*input)
 	{
@@ -92,6 +87,5 @@ int	input_sort(char *line, char **envp)
 	sort_array(&input, envp);
 	print_list(&input);
 	free_list(&input);
-	//print_list(&input);
 	return (1);
 }

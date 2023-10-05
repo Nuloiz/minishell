@@ -30,14 +30,14 @@
 # include "../tools/ft_printf/ft_printf.h"
 # include "../src/executer/pipex.h"
 
-#define COMMAND	1
-#define FLAGS	2
-#define FILE	3
-#define ENV_VAR	4
-#define PIPE	5
-#define REDIRECT 6
+#define	COMMAND 1
+#define	FLAGS	2
+#define	FILE	3
+#define	ENV_VAR	4
+#define	PIPE	5
+#define	REDIRECT 6
 #define BUILTIN	 7
-#define PARAM	 8
+#define	PARAM	 8
 
 typedef struct s_input
 {
@@ -45,14 +45,6 @@ typedef struct s_input
 	char			*word;
 	int				type;
 }				t_input;
-
-typedef struct binary_tree
-{
-	struct binary_tree	*left;
-	struct binary_tree	*right;
-	char				*word;
-	int					type;
-}				t_binary_tree;
 
 int		main(int argc, char **argv, char **envp);
 int		input_sort(char *line, char **envp);

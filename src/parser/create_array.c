@@ -12,12 +12,12 @@
 
 #include "minishell.h"
 
-void print_cmds(char **s, int *type)
+void	print_cmds(char **s, int *type)
 {
 	int	i;
 
 	i = 0;
-	while(s[i])
+	while (s[i])
 	{
 		ft_printf("Array: %s\n Type: %i\n\n", s[i], type[i]);
 		i++;
@@ -40,13 +40,13 @@ int	count_alloc(t_input *input)
 	return (count + 1);
 }
 
-void sort_array(t_input **input, char **envp)
+void	sort_array(t_input **input, char **envp)
 {
 	char	**s;
 	char	*tmp;
 	int		*type;
 	int		count;
-	int 	i;
+	int		i;
 
 	s = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
 	count = 0;
@@ -61,7 +61,7 @@ void sort_array(t_input **input, char **envp)
 			*input = (*input)->next;
 			type[count] = 5;
 		}
-		else if((*input)->type == BUILTIN)
+		else if ((*input)->type == BUILTIN)
 		{
 			tmp = (*input)->word;
 			*input = (*input)->next;
