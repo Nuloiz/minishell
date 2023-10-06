@@ -77,17 +77,16 @@ void	print_list(t_input **input)
 int	input_sort(char *line, char **envp)
 {
 	t_input	*input;
-	t_array	*array;
+	t_array	array;
 	char	**cmd;
 
 	input = NULL;
-	array = NULL;
-	array->envp = envp;
+	array.envp = envp;
 	if (line[0] == '\0')
 		return (0);
 	cmd = mod_split(line, ' ');
 	linked_list_start(cmd, envp, &input);
-	sort_array(&input, array);
+	sort_array(&input, &array);
 	print_list(&input);
 	free_list(&input);
 	return (1);

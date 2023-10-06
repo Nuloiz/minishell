@@ -17,7 +17,7 @@ void	print_cmds(char **s, int *type)
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (s && s[i])
 	{
 		ft_printf("Array: %s\n Type: %i\n\n", s[i], type[i]);
 		i++;
@@ -40,6 +40,31 @@ int	count_alloc(t_input *input)
 	return (count + 1);
 }
 
+
+char	*is_cmd(t_input **input, t_array array, int count)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	printf("Before is_cmd: tmp: %s, input_word: %s, input_type: %i, array_type: %i\n", tmp, (*input)->word, (*input)->type, array.type[count]);
+	if ((*input)->type == COMMAND)
+	{
+		tmp = (*input)->word;
+		*input = (*input)->next;
+		array.type[count] = 5;
+	}
+	else if ((*input)->type == BUILTIN)
+	{
+		tmp = (*input)->word;
+		*input = (*input)->next;
+		array.type[count] = 6;
+	}
+	else
+		array.type[count] = 5;
+	printf("After is_cmd: tmp: %s, input_word: %s, input_type: %i, array_type: %i\n", tmp, (*input)->word, (*input)->type, array.type[count]);
+	return (tmp);
+}
+
 void	sort_array(t_input **input, t_array	*array)
 {
 	char	*tmp;
@@ -48,25 +73,12 @@ void	sort_array(t_input **input, t_array	*array)
 
 	array->cmds = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
 	count = 0;
-	tmp = NULL;
 	array->type = malloc((count_alloc(*input) + 2) * sizeof(int));
 	while (*input)
 	{
 		i = 0;
-		if ((*input)->type == COMMAND)
-		{
-			tmp = (*input)->word;
-			*input = (*input)->next;
-			array->type[count] = 5;
-		}
-		else if ((*input)->type == BUILTIN)
-		{
-			tmp = (*input)->word;
-			*input = (*input)->next;
-			array->type[count] = 6;
-		}
-		else
-			array->type[count] = 5;
+		tmp = is_cmd(input, *array, count);
+		printf("In sort array: tmp: %s, input_word: %s, input_type: %i, array_type: %i\n", tmp, (*input)->word, (*input)->type, array->type[count]);
 		while (*input && (*input)->type != PIPE && i != 1)
 		{
 			if ((*input)->type == REDIRECT)
@@ -101,13 +113,10 @@ void	sort_array(t_input **input, t_array	*array)
 		if (*input && (*input)->type == PIPE)
 			(*input) = (*input)->next;
 		array->cmds[count] = tmp;
-		tmp = NULL;
 		count++;
 	}
-	array->cmds[count] = tmp;
-	array->type[count + 1] = 0;
+	array->type[count] = 0;
 	print_cmds(array->cmds, array->type);
 	execute(array->type, array->cmds, array->envp);
-	free_array(array->cmds);
 	free(array->type);
 }
