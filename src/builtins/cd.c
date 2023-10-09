@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:43:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/09 11:36:53 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/09 11:46:36 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_set_old_pwd(char ***envp)
 	char	*oldpwd;
 	char	pwd[PATH_MAX];
 
-	if (!(getcdw(pwd, PATH_MAX)))
+	if (!(getcwd(pwd, PATH_MAX)))
 		return (1);
 	oldpwd = ft_strjoin("OLDPWD=", pwd);
 	if (!oldpwd)
@@ -33,7 +33,7 @@ int	ft_set_pwd(char ***envp)
 	char	pwd[PATH_MAX];
 
 
-	if (!(getcdw(pwd, PATH_MAX)))
+	if (!(getcwd(pwd, PATH_MAX)))
 		return (1);
 	new_pwd = ft_strjoin("PWD=", pwd);
 	if (!new_pwd)
@@ -45,6 +45,28 @@ int	ft_set_pwd(char ***envp)
 
 int	ft_set_pwd_home(char ***envp)
 {
+	char	*home;
+
+	home = ft_get_env(*envp, "HOME");
+	if (!home)
+	{
+		ft_putstr_fd("cd: HOME not set\n", 2);
+		return (1);
+	}
+	else
+	{
+		ft_set_old_pwd(envp);
+		if (chdir(home) == -1)
+		{
+			ft_putstr_fd("cd: ", 2);
+			ft_putstr_fd(home, 2);
+			ft_putstr_fd(": ", 2);
+			ft_putstr_fd(strerror(errno), 2);
+			ft_putstr_fd("\n", 2);
+			return (1);
+		}
+		ft_set_pwd(envp);
+	}
 	return (0);
 }
 
@@ -62,7 +84,7 @@ int	ft_cd(char *command, char ***envp)
 		if (chdir(splitted[0]) == -1)
 		{
 			ft_putstr_fd("cd: ", 2);
-			ft_putstr_fd(splitted[0], 2);
+			ft_putstr_fd(splitted[1], 2);
 			ft_putstr_fd(": ", 2);
 			ft_putstr_fd(strerror(errno), 2);
 			ft_putstr_fd("\n", 2);
@@ -72,7 +94,8 @@ int	ft_cd(char *command, char ***envp)
 	}
 	else
 	{
-		
+		ft_set_pwd_home(envp);
 	}
 	return (0);
 }
+
