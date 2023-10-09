@@ -6,24 +6,52 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/04 22:36:13 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/09 13:33:24 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_sort_array(char ***arr)
+void	ft_print_export(char **envp)
 {
-	int		len;
+	int		i;
+	int		j;
+	char	**splitted;
+	int		once;
+
+	i = 0;
+	j = 0;
+	once = 0;
+	while (envp[i])
+	{
+		splitted = ft_split(envp[i], '=');
+		printf("declare -x ");
+		while (splitted[j])
+		{
+			printf("%s", splitted[j]);
+			if (splitted[j + 1] && !once)
+			{
+				once = 1;
+				printf("=\"");
+			}
+			j++;
+		}
+		j = 0;
+		once = 0;
+		free_array(splitted);
+		printf("\"\n");
+		i++;
+	}
+}
+
+void	ft_sort_array(char ***arr, int len)
+{
 	int		i;
 	int		j;
 	char	*temp;
 	int		char_len;
 
-	len = 0;
 	i = 0;
-	while ((*arr)[len])
-		len++;
 	while (i < len - 1)
 	{
 		j = i + 1;
@@ -47,15 +75,17 @@ void	ft_sort_array(char ***arr)
 
 void	ft_sorted_print_array(char **envp)
 {
-	int	i;
+	int		i;
+	char	**sorted_envp;
+	int		len;
+	char	**splitted;
 
+	len = 0;
 	i = 0;
-	ft_sort_array(&envp);
-	while (envp[i])
-	{
-		dprintf(2, "declare -x %s\n", envp[i]);
-		i++;
-	}
+	while (envp[len])
+		len++;
+	ft_sort_array(&envp, len);
+	ft_print_export(envp);
 }
 
 //add or replace the value of the string in the 2D envp array
