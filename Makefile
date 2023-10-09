@@ -23,7 +23,9 @@ SRC :=	free.c \
 		builtins/env.c \
 		builtins/export.c \
 		builtins/pwd.c \
-		builtins/unset.c
+		builtins/unset.c \
+		builtins/cd.c \
+		builtins/exit.c
 
 SRC_DIR := src
 OBJ_DIR := obj
