@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 13:18:32 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/03 13:27:20 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/09 11:23:59 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,32 @@ char	**ft_append_string_to_array(char **array, char *string)
 	new_array[i++] = ft_strdup(string);
 	new_array[i] = NULL;
 	return (new_array);
+}
+
+char	*ft_get_env(char **envp, char *string)
+{
+	int		i;
+	char	*string_equal;
+	char	**splitted;
+
+	i = 0;
+	splitted = ft_split(string, ' ');
+	if (!splitted[1])
+		return (NULL);
+	string_equal = ft_strjoin(splitted[1], "=");
+	if (envp == NULL)
+		return (NULL);
+	while (envp[i])
+	{
+		if (!ft_strncmp(envp[i], string_equal, ft_strlen(string_equal)))
+		{
+			free(string_equal);
+			ft_free_array(splitted);
+			return (envp[i]);
+		}
+		i++;
+	}
+	free(string_equal);
+	ft_free_array(splitted);
+	return (NULL);
 }
