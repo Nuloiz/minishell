@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:19:04 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/09 13:50:03 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/09 14:20:38 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,16 @@ int	main(int argc, char **argv, char **envp)
 	line = readline(0);
 	add_history(line);
 	while (line)
-		{
-			input_sort(line, envp);
-			// printf("line: %s\n", line);
-			free(line);
-			line = readline(0);
-			add_history(line);
-		}
+	{
+		if (line[0] == '\0')
+			break;
+		input_sort(line, envp);
+		// printf("line: %s\n", line);
+		free(line);
+		line = readline(0);
+		add_history(line);
+	}
+	free(line);
 		// input_sort(line, envp);
 	return (0);
 }
