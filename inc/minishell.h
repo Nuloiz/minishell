@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/09 11:14:17 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/09 12:42:14 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,7 @@ int		ft_unset(char ***envp, char *string);
 int		execute(int *types, char **parsed, char **envp);
 void	ft_exit(char **array);
 char	*ft_get_env(char **envp, char *string);
+int		ft_cd(char *command, char ***envp);
+
 
 #endif
