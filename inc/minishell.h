@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/04 18:35:49 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/09 11:14:17 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 //# include "ft_printf.h"
 # include "../tools/ft_printf/ft_printf.h"
 # include "../src/executer/pipex.h"
+# include <errno.h>
 
 #define COMMAND	1
 #define FLAGS	2
@@ -78,5 +79,7 @@ char	**ft_append_string_to_array(char **array, char *string);
 int		ft_pwd(void);
 int		ft_unset(char ***envp, char *string);
 int		execute(int *types, char **parsed, char **envp);
+void	ft_exit(char **array);
+char	*ft_get_env(char **envp, char *string);
 
 #endif
