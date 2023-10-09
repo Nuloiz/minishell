@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:43:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/09 11:46:36 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/09 14:08:13 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,19 @@ int	ft_set_pwd_home(char ***envp)
 
 int	ft_cd(char *command, char ***envp)
 {
-	char	*home;
 	char	**splitted;
 
 	splitted = ft_split(command, ' ');
 	if (splitted)
+	{
+		printf("error split\n");
 		return (1);
+	}
 	if (splitted[0])
 	{
+		dprintf(2, "set pwd: %s\n", splitted[0]);
 		ft_set_old_pwd(envp);
-		if (chdir(splitted[0]) == -1)
+		if (chdir(splitted[1]) == -1)
 		{
 			ft_putstr_fd("cd: ", 2);
 			ft_putstr_fd(splitted[1], 2);
@@ -94,6 +97,7 @@ int	ft_cd(char *command, char ***envp)
 	}
 	else
 	{
+		dprintf(2, "set pwd home\n");
 		ft_set_pwd_home(envp);
 	}
 	return (0);
