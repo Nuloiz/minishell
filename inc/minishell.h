@@ -67,6 +67,7 @@ int		is_file(char *s);
 void	sort_array(t_input **input, t_array *array);
 char	**mod_split(char const *s, char c);
 char	*mod_strjoin(char const *s1, char const *s2);
+char	**dup_array(char **array);
 void	free_array(char **array);
 void	free_list(t_input **input);
 int		ft_array_size(char **array);

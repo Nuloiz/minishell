@@ -81,7 +81,7 @@ int	input_sort(char *line, char **envp)
 	char	**cmd;
 
 	input = NULL;
-	array.envp = envp;
+	array.envp = dup_array(envp);
 	if (line[0] == '\0')
 		return (0);
 	cmd = mod_split(line, ' ');
