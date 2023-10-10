@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 11:18:49 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/04 15:52:10 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/10 16:23:19 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,19 +130,15 @@ int	ft_forking(t_execute *exec)
 	i = ft_check_fork(exec, i);
 	if (i < 0)
 		return (1);
-	if (exec->id[i] == 0 && i == 0 && exec->limiter && !(exec->count_builtins == 1) && !(exec->count_children == 1))
+	if (exec->id[i] == 0 && i == 0 && exec->limiter && !(exec->count_builtins == 1 && exec->count_children == 1))
 		exec->error += ft_child(i, exec);
-	else if (exec->id[i] == 0 && i == 0 && exec->count_children == 1 && !(exec->count_builtins == 1) && !(exec->count_children == 1))
-	{
-		// printf("countii: %i\n", exec->count_pipes);
-		// printf("i: %i\n", exec->pipe_fd[0][0]);
+	else if (exec->id[i] == 0 && i == 0 && exec->count_children == 1 && !(exec->count_builtins == 1 && exec->count_children == 1))
 		exec->error += ft_child_first_last(exec, i);
-	}
-	else if (exec->id[i] == 0 && i == 0 && !(exec->count_builtins == 1) && !(exec->count_children == 1))
+	else if (exec->id[i] == 0 && i == 0 && !(exec->count_builtins == 1 && exec->count_children == 1))
 		error = ft_first_child(exec, i);
-	else if (exec->id[i] == 0 && i == exec->count_children - 1 && !(exec->count_builtins == 1))
+	else if (exec->id[i] == 0 && i == exec->count_children - 1 && !(exec->count_builtins == 1 && exec->count_children == 1))
 		error = ft_last_child(exec, i);
-	else if (exec->id[i] == 0 && !(exec->count_builtins == 1) && !(exec->count_children == 1))
+	else if (exec->id[i] == 0 && !(exec->count_builtins == 1 && exec->count_children == 1))
 		exec->error += ft_child(i, exec);
 	else if (exec->id[i] > 0)
 		exec->error += ft_parent(exec);
