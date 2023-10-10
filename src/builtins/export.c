@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/09 13:33:24 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/10 13:54:59 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,10 @@ void	ft_sort_array(char ***arr, int len)
 
 void	ft_sorted_print_array(char **envp)
 {
-	int		i;
-	char	**sorted_envp;
 	int		len;
 	char	**splitted;
 
 	len = 0;
-	i = 0;
 	while (envp[len])
 		len++;
 	ft_sort_array(&envp, len);
