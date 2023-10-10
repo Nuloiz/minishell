@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/10 20:32:04 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/10 20:49:20 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	ft_parent(t_execute *exec)
 		}
 		else
 			exec->pipe_fd[0][1] = 1;
-		dprintf(2, "exec->pipe_fd[0][0]: %i exec->pipe_fd[0][1]: %i\n", exec->pipe_fd[0][0], exec->pipe_fd[0][1]);
 		dup2(exec->pipe_fd[0][0], 0);
 		dup2(exec->pipe_fd[0][1], 1);
 		if (!ft_strncmp(exec->commands[0], "echo", 4))
