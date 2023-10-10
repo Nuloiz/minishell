@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 13:18:32 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/09 11:43:04 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/10 12:01:01 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,11 @@ char	*ft_get_env(char **envp, char *string)
 {
 	int		i;
 	char	*string_equal;
-	char	**splitted;
 	char	*env;
 
 	i = 0;
 	env = NULL;
-	splitted = ft_split(string, ' ');
-	if (!splitted[1])
-		return (NULL);
-	string_equal = ft_strjoin(splitted[1], "=");
+	string_equal = ft_strjoin(string, "=");
 	if (envp == NULL)
 		return (NULL);
 	while (envp[i])
@@ -66,12 +62,10 @@ char	*ft_get_env(char **envp, char *string)
 		{
 			env = ft_strdup(envp[i]);
 			free(string_equal);
-			ft_free_array(splitted);
-			return (envp[i]);
+			return (env);
 		}
 		i++;
 	}
 	free(string_equal);
-	ft_free_array(splitted);
 	return (env);
 }
