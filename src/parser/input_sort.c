@@ -20,7 +20,7 @@ static char	*quotes(char *s)
 	return (ret);
 }
 
-static t_input	*new_node(char *s, char *s_one, char **envp)
+static t_input	*new_node(char *s, char *s_one, char **envp, int *l_r)
 {
 	t_input	*new;
 
@@ -28,7 +28,15 @@ static t_input	*new_node(char *s, char *s_one, char **envp)
 	if (!new)
 		return (NULL);
 	new->type = input_type(s, s_one, envp);
-	if (s[0] == 34 || s[0] == 39)
+	if (new->type == 4)
+	{
+		if (!ft_strncmp(s, "$?", 3))
+			new->word = ft_itoa(*l_r);
+		else
+			new->word = ft_get_env(envp, &s[1]);
+		free(s);
+	}
+	else if (s[0] == 34 || s[0] == 39)
 	{
 		new->word = quotes(s);
 		if (!new->word)
@@ -40,7 +48,8 @@ static t_input	*new_node(char *s, char *s_one, char **envp)
 	return (new);
 }
 
-static t_input	**linked_list_start(char **cmd, char **envp, t_input **input)
+static t_input	**linked_list_start(char **cmd, char **envp, \
+									t_input **input, int *l_r)
 {
 	int		num;
 	int		i;
@@ -53,9 +62,9 @@ static t_input	**linked_list_start(char **cmd, char **envp, t_input **input)
 	while (i < num)
 	{
 		if (i == 0)
-			new = new_node (cmd[0], NULL, envp);
+			new = new_node (cmd[0], NULL, envp, l_r);
 		else
-			new = new_node(cmd[i], cmd[i - 1], envp);
+			new = new_node(cmd[i], cmd[i - 1], envp, l_r);
 		if (!new)
 			return (NULL);
 		mod_lstadd_back(input, new);
@@ -74,20 +83,21 @@ void	print_list(t_input **input)
 	}
 }
 
-int	input_sort(char *line, char **envp)
+int	input_sort(char *line, char **envp, int *l_r)
 {
 	t_input	*input;
 	t_array	array;
 	char	**cmd;
+	int		r;
 
 	input = NULL;
 	array.envp = envp;
 	if (!line)
 		return (0);
 	cmd = mod_split(line, ' ');
-	linked_list_start(cmd, envp, &input);
-	sort_array(&input, &array);
+	linked_list_start(cmd, envp, &input, l_r);
+	r = sort_array(&input, &array);
 	print_list(&input);
 	free_list(&input);
-	return (1);
+	return (r);
 }

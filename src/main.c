@@ -39,6 +39,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char				**new_env;
 	char				*line;
+	int 				last_return;
 
 	// sa.sa_handler = &ft_sig_handle;
 	// sa.sa_flags = SA_RESTART;
@@ -49,11 +50,12 @@ int	main(int argc, char **argv, char **envp)
 	new_env = dup_array(envp);
 	line = readline("minishell: ");
 	add_history(line);
+	last_return = 0;
 	while (line)
 	{
 		if (line[0] == '\0')
 			break ;
-		input_sort(line, new_env);
+		last_return = input_sort(line, new_env, &last_return);
 		free(line);
 		line = readline("minishell: ");
 		add_history(line);

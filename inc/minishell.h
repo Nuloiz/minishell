@@ -55,7 +55,7 @@ typedef struct s_array
 }				t_array;
 
 int		main(int argc, char **argv, char **envp);
-int		input_sort(char *line, char **envp);
+int		input_sort(char *line, char **envp, int *l_r);
 void	mod_lstadd_back(t_input **lst, t_input *new);
 t_input	*mod_lstlast(t_input *lst);
 int		input_type(char *s, char *s_one, char **envp);
@@ -65,7 +65,7 @@ int		is_built_in(char *s);
 int		is_pipe(char *s);
 int		is_red(char s);
 int		is_file(char *s);
-void	sort_array(t_input **input, t_array *array);
+int		sort_array(t_input **input, t_array *array);
 char	**mod_split(char const *s, char c);
 char	*mod_strjoin(char const *s1, char const *s2);
 char	**dup_array(char **array);
