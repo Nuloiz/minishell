@@ -37,6 +37,7 @@ void	ft_sig_handle(int sig)
 
 int	main(int argc, char **argv, char **envp)
 {
+	char				**new_env;
 	struct sigaction	sa;
 	char				*line;
 
@@ -46,11 +47,12 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	// rl_replace_line("hello", 1);
 	// rl_redisplay();
-	line = readline(0);
-	while (line)
+	new_env = dup_array(envp);
+	while (1)
 	{
-		input_sort(line, envp);
 		line = readline(0);
+		input_sort(line, new_env);
+		free(line);
 	}
 	return (0);
 }
