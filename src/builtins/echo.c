@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 18:29:06 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/10 14:51:54 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/10 15:27:47 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_echo(char *args)
 	char	**splitted;
 
 	splitted = ft_split(args, ' ');
-	if (!splitted || *splitted)
+	if (!splitted || !*splitted)
 		return (0);
 	size = ft_array_size(splitted);
 	i = 1;
