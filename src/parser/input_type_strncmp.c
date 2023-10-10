@@ -14,10 +14,10 @@
 
 int	is_built_in(char *s)
 {
-	if (!ft_strncmp(s, "cd", 2) || !ft_strncmp(s, "echo", 4) || \
-		!ft_strncmp(s, "unset", 5) || !ft_strncmp(s, "export", 6) || \
-		!ft_strncmp(s, "exit", 4) || !ft_strncmp(s, "pwd", 3) || \
-		!ft_strncmp(s, "env", 3))
+	if (!ft_strncmp(s, "cd", 3) || !ft_strncmp(s, "echo", 5) || \
+		!ft_strncmp(s, "unset", 6) || !ft_strncmp(s, "export", 7) || \
+		!ft_strncmp(s, "exit", 5) || !ft_strncmp(s, "pwd", 4) || \
+		!ft_strncmp(s, "env", 4))
 		return (1);
 	return (0);
 }
