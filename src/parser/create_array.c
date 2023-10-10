@@ -46,7 +46,6 @@ char	*is_cmd(t_input **input, t_array array, int count)
 	char	*tmp;
 
 	tmp = NULL;
-	printf("Before is_cmd: tmp: %s, input_word: %s, input_type: %i, array_type: %i\n", tmp, (*input)->word, (*input)->type, array.type[count]);
 	if ((*input)->type == COMMAND)
 	{
 		tmp = (*input)->word;
@@ -61,7 +60,6 @@ char	*is_cmd(t_input **input, t_array array, int count)
 	}
 	else
 		array.type[count] = 5;
-	printf("After is_cmd: tmp: %s, input_word: %s, input_type: %i, array_type: %i\n", tmp, (*input)->word, (*input)->type, array.type[count]);
 	return (tmp);
 }
 
