@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/09 12:51:31 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/10 07:10:15 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_parent(t_execute *exec)
 	int	status;
 
 	i = -1;
-	if (exec->count_builtins == 1)
+	if (exec->count_builtins == 1 && exec->count_children == 1)
 	{
 		printf("one and only parent builtin\n");
 		close(exec->pipe_fd[0][0]);
@@ -67,12 +67,11 @@ int	ft_parent(t_execute *exec)
 			ft_unset(&exec->envp, exec->commands[0]);
 		else if (!ft_strncmp(exec->commands[0], "env", 4))
 			ft_env(exec->envp);
-		// else if (!ft_strncmp(exec->commands[0], "exit", 4))
-		// 	ft_exit(exec->commands[0]);
+		else if (!ft_strncmp(exec->commands[0], "exit", 4))
+			ft_exit(exec->commands);
 		ft_close_fds(exec, 0);
 	}
-	else
-		ft_close_all_fds(exec);
+	ft_close_all_fds(exec);
 	i = -1;
 	while (++i < exec->count_children)
 	{
