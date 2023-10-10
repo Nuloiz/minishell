@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/10 14:28:19 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/10 16:10:18 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	ft_parent(t_execute *exec)
 				perror("Error");
 				return (1);
 			}
-			else
-				exec->pipe_fd[0][0] = 0;
 		}
+		else
+			exec->pipe_fd[0][0] = 0;
 		if (exec->output)
 		{
 			printf("with output file\n");
@@ -71,6 +71,7 @@ int	ft_parent(t_execute *exec)
 			ft_exit(exec->commands);
 		// ft_close_fds(exec, 0);
 	}
+	dprintf(2, "count_children: %i count_pipes: %i\n", exec->count_children, exec->count_pipes);
 	ft_close_all_fds(exec);
 	i = -1;
 	while (++i < exec->count_children)
