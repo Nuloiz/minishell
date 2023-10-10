@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 13:18:32 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/10 12:21:51 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/10 13:14:07 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,8 @@ char	*ft_get_env(char **envp, char *string)
 		if (!ft_strncmp(envp[i], string_equal, ft_strlen(string_equal)))
 		{
 			env = ft_strdup(envp[i]);
-			dprintf(2, "env before: %s\n", env);
-			ft_remove(&env[0], &env[ft_strlen(string) - 1]);
-			// ft_remove(&env[ft_strlen(env)], &env[ft_strlen(string)]);
+			dprintf(2, "strlen string: %i env before: %s\n", ft_strlen(string), env);
+			ft_memmove(env, &env[ft_strlen(string) + 1], (ft_strlen(env) - ft_strlen(string)));
 			dprintf(2, "env after remove: %s\n", env);
 			free(string_equal);
 			return (env);
