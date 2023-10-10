@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/10 07:10:15 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/10 10:42:08 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,15 @@ int	ft_parent(t_execute *exec)
 		dup2(exec->pipe_fd[0][1], 1);
 		if (!ft_strncmp(exec->commands[0], "echo", 4))
 			ft_echo(exec->commands[0]);
-		else if (!ft_strncmp(exec->commands[0], "cd", 4))
+		else if (!ft_strncmp(exec->commands[0], "cd", 2))
 			ft_cd(exec->commands[0], &exec->envp);
-		else if (!ft_strncmp(exec->commands[0], "pwd", 4))
+		else if (!ft_strncmp(exec->commands[0], "pwd", 3))
 			ft_pwd();
-		else if (!ft_strncmp(exec->commands[0], "export", 4))
+		else if (!ft_strncmp(exec->commands[0], "export", 6))
 			ft_export(&exec->envp, exec->commands[0]);
-		else if (!ft_strncmp(exec->commands[0], "unset", 4))
+		else if (!ft_strncmp(exec->commands[0], "unset", 5))
 			ft_unset(&exec->envp, exec->commands[0]);
-		else if (!ft_strncmp(exec->commands[0], "env", 4))
+		else if (!ft_strncmp(exec->commands[0], "env", 3))
 			ft_env(exec->envp);
 		else if (!ft_strncmp(exec->commands[0], "exit", 4))
 			ft_exit(exec->commands);
