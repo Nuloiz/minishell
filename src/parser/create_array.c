@@ -74,7 +74,10 @@ int	type_redirect(t_input **input, t_array array, int *count)
 		i = 2;
 	}
 	else if (!ft_strncmp((*input)->word, "<<", 3))
+	{
 		array.type[*count] = 2;
+		i = 2;
+	}
 	else if (!ft_strncmp((*input)->word, ">", 2))
 		array.type[*count] = 3;
 	else if (!ft_strncmp((*input)->word, ">>", 3))
