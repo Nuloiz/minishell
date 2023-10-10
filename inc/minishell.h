@@ -31,14 +31,14 @@
 # include "../src/executer/pipex.h"
 # include <errno.h>
 
-#define COMMAND	1
-#define FLAGS	2
-#define FILE	3
-#define ENV_VAR	4
-#define PIPE	5
-#define REDIRECT 6
+#define	COMMAND 1
+#define	FLAGS	2
+#define	FILE	3
+#define	ENV_VAR	4
+#define	PIPE	5
+#define	REDIRECT 6
 #define BUILTIN	 7
-#define PARAM	 8
+#define	PARAM	 8
 
 typedef struct s_input
 {
@@ -47,13 +47,12 @@ typedef struct s_input
 	int				type;
 }				t_input;
 
-typedef struct binary_tree
+typedef struct s_array
 {
-	struct binary_tree	*left;
-	struct binary_tree	*right;
-	char				*word;
-	int					type;
-}				t_binary_tree;
+	char	**cmds;
+	char	**envp;
+	int		*type;
+}				t_array;
 
 int		main(int argc, char **argv, char **envp);
 int		input_sort(char *line, char **envp);
@@ -66,9 +65,10 @@ int		is_built_in(char *s);
 int		is_pipe(char *s);
 int		is_red(char s);
 int		is_file(char *s);
-void	sort_array(t_input **input, char **envp);
+void	sort_array(t_input **input, t_array *array);
 char	**mod_split(char const *s, char c);
 char	*mod_strjoin(char const *s1, char const *s2);
+char	**dup_array(char **array);
 void	free_array(char **array);
 void	free_list(t_input **input);
 int		ft_array_size(char **array);

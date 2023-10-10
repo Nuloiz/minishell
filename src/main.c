@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:19:04 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/10 10:25:11 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/10 13:41:13 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	// struct sigaction	sa;
+	char				**new_env;
 	char				*line;
 
 	// sa.sa_handler = &ft_sig_handle;
@@ -46,13 +46,14 @@ int	main(int argc, char **argv, char **envp)
 	// signal(SIGQUIT, SIG_IGN);
 	// rl_replace_line("hello", 1);
 	// rl_redisplay();
+	new_env = dup_array(envp);
 	line = readline(0);
 	add_history(line);
 	while (line)
 	{
 		if (line[0] == '\0')
 			break ;
-		input_sort(line, envp);
+		input_sort(line, new_env);
 		free(line);
 		line = readline(0);
 		add_history(line);

@@ -12,12 +12,12 @@
 
 #include "minishell.h"
 
-void print_cmds(char **s, int *type)
+void	print_cmds(char **s, int *type)
 {
 	int	i;
 
 	i = 0;
-	while(s[i])
+	while (s && s[i])
 	{
 		ft_printf("Array: %s\n Type: %i\n\n", s[i], type[i]);
 		i++;
@@ -40,56 +40,66 @@ int	count_alloc(t_input *input)
 	return (count + 1);
 }
 
-void sort_array(t_input **input, char **envp)
-{
-	char	**s;
-	char	*tmp;
-	int		*type;
-	int		count;
-	int 	i;
 
-	s = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
-	count = 0;
+char	*is_cmd(t_input **input, t_array array, int count)
+{
+	char	*tmp;
+
 	tmp = NULL;
-	type = malloc((count_alloc(*input) + 2) * sizeof(int));
+	printf("Before is_cmd: tmp: %s, input_word: %s, input_type: %i, array_type: %i\n", tmp, (*input)->word, (*input)->type, array.type[count]);
+	if ((*input)->type == COMMAND)
+	{
+		tmp = (*input)->word;
+		*input = (*input)->next;
+		array.type[count] = 5;
+	}
+	else if ((*input)->type == BUILTIN)
+	{
+		tmp = (*input)->word;
+		*input = (*input)->next;
+		array.type[count] = 6;
+	}
+	else
+		array.type[count] = 5;
+	printf("After is_cmd: tmp: %s, input_word: %s, input_type: %i, array_type: %i\n", tmp, (*input)->word, (*input)->type, array.type[count]);
+	return (tmp);
+}
+
+void	sort_array(t_input **input, t_array	*array)
+{
+	char	*tmp;
+	int		count;
+	int		i;
+
+	array->cmds = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
+	count = 0;
+	array->type = malloc((count_alloc(*input) + 2) * sizeof(int));
 	while (*input)
 	{
 		i = 0;
-		if ((*input)->type == COMMAND)
-		{
-			tmp = (*input)->word;
-			*input = (*input)->next;
-			type[count] = 5;
-		}
-		else if((*input)->type == BUILTIN)
-		{
-			tmp = (*input)->word;
-			*input = (*input)->next;
-			type[count] = 6;
-		}
-		else
-			type[count] = 5;
+		tmp = is_cmd(input, *array, count);
+		printf("In sort array: tmp: %s, input_word: %s, input_type: %i, array_type: %i\n", tmp, (*input)->word, (*input)->type, array->type[count]);
 		while (*input && (*input)->type != PIPE && i != 1)
 		{
 			if ((*input)->type == REDIRECT)
 			{
 				if (tmp != NULL)
 				{
-					s[count] = tmp;
+					array->cmds[count] = tmp;
 					tmp = NULL;
 					count++;
 				}
 				if (!ft_strncmp((*input)->word, "<", 2))
 				{
-					type[count] = 1;
+					array->type[count] = 1;
 					i = 2;
 				}
 				else if (!ft_strncmp((*input)->word, "<<", 3))
-					type[count] = 2;
+					array->type[count] = 2;
 				else if (!ft_strncmp((*input)->word, ">", 2))
-					type[count] = 3;
+					array->type[count] = 3;
 				else if (!ft_strncmp((*input)->word, ">>", 3))
-					type[count] = 4;
+					array->type[count] = 4;
 				else
 					perror("Invalid redirect");
 			}
@@ -102,14 +112,11 @@ void sort_array(t_input **input, char **envp)
 		}
 		if (*input && (*input)->type == PIPE)
 			(*input) = (*input)->next;
-		s[count] = tmp;
-		tmp = NULL;
+		array->cmds[count] = tmp;
 		count++;
 	}
-	s[count] = tmp;
-	type[count + 1] = 0;
-	print_cmds(s, type);
-	execute(type, s, envp);
-	free_array(s);
-	free(type);
+	array->type[count] = 0;
+	print_cmds(array->cmds, array->type);
+	execute(array->type, array->cmds, array->envp);
+	free(array->type);
 }
