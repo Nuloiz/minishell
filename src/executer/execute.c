@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/10 11:53:11 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/10 14:28:19 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	ft_child(int i, t_execute *exec)
 	char	**command_array;
 	char	*command;
 
-	printf("child %i executing: %s\n", i, exec->commands[i]);
 	ft_close_fds(exec, i);
 	if (i == 0)
 		dup2(exec->pipe_fd[exec->count_pipes - 1][0], 0);
@@ -101,7 +100,6 @@ int	ft_child(int i, t_execute *exec)
 		dup2(exec->pipe_fd[0][1], 1);
 	else
 		dup2(exec->pipe_fd[i][1], 1);
-	dprintf(2, "exec->commands[%i] to split: %s", i, exec->commands[i]);
 	command_array = ft_get_command_arg_array
 		(exec->commands[i]);
 	command = ft_check_command_and_get_path(command_array[0], exec->envp);
