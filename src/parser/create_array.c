@@ -63,6 +63,27 @@ char	*is_cmd(t_input **input, t_array array, int count)
 	return (tmp);
 }
 
+int	type_redirect(t_input **input, t_array array, int *count)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_strncmp((*input)->word, "<", 2))
+	{
+		array.type[*count] = 1;
+		i = 2;
+	}
+	else if (!ft_strncmp((*input)->word, "<<", 3))
+		array.type[*count] = 2;
+	else if (!ft_strncmp((*input)->word, ">", 2))
+		array.type[*count] = 3;
+	else if (!ft_strncmp((*input)->word, ">>", 3))
+		array.type[*count] = 4;
+	else
+		perror("Invalid redirect");
+	return (i);
+}
+
 char	*fill_tmp(t_input **input, t_array array, int *count, char *tmp)
 {
 	int	i;
@@ -78,19 +99,7 @@ char	*fill_tmp(t_input **input, t_array array, int *count, char *tmp)
 				tmp = NULL;
 				(*count)++;
 			}
-			if (!ft_strncmp((*input)->word, "<", 2))
-			{
-				array.type[*count] = 1;
-				i = 2;
-			}
-			else if (!ft_strncmp((*input)->word, "<<", 3))
-				array.type[*count] = 2;
-			else if (!ft_strncmp((*input)->word, ">", 2))
-				array.type[*count] = 3;
-			else if (!ft_strncmp((*input)->word, ">>", 3))
-				array.type[*count] = 4;
-			else
-				perror("Invalid redirect");
+			i = type_redirect(input, array, count);
 		}
 		else
 		{
@@ -104,8 +113,8 @@ char	*fill_tmp(t_input **input, t_array array, int *count, char *tmp)
 
 void	sort_array(t_input **input, t_array	*array)
 {
-	char		*tmp;
-	int			count;
+	char	*tmp;
+	int		count;
 
 	array->cmds = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
 	count = 0;
