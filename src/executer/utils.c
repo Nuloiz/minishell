@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:50:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/03 21:25:41 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/10 14:28:49 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int	ft_init_struct(t_execute *new, int *types, char **parsed, char **envp)
 		new->commands = parsed;
 	new->envp = envp;
 	int j = -1;
-	while (new->commands[++j])
-		printf("commands: %s\n", new->commands[j]);
-	printf("count_children: %i count_commands: %i count_builtins: %i  count_pipes: %i\n", new->count_children, new->count_commands, new->count_builtins, new->count_pipes);
+	// while (new->commands[++j])
+	// 	printf("commands: %s\n", new->commands[j]);
+	// printf("count_children: %i count_commands: %i count_builtins: %i  count_pipes: %i\n", new->count_children, new->count_commands, new->count_builtins, new->count_pipes);
 	return (1);
 }
 
