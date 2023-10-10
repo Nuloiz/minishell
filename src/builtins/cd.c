@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:43:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/09 14:08:13 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/10 12:15:31 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_set_old_pwd(char ***envp)
 
 	if (!(getcwd(pwd, PATH_MAX)))
 		return (1);
-	oldpwd = ft_strjoin("OLDPWD=", pwd);
+	oldpwd = ft_strjoin("export OLDPWD=", pwd);
 	if (!oldpwd)
 		return (1);
 	ft_export(envp, oldpwd);
@@ -27,17 +27,22 @@ int	ft_set_old_pwd(char ***envp)
 	return (0);
 }
 
-int	ft_set_pwd(char ***envp)
+// setting pwd in env to given path, if not set to pwd
+int	ft_set_pwd(char ***envp, char *path)
 {
 	char	*new_pwd;
 	char	pwd[PATH_MAX];
 
-
-	if (!(getcwd(pwd, PATH_MAX)))
-		return (1);
-	new_pwd = ft_strjoin("PWD=", pwd);
-	if (!new_pwd)
-		return (1);
+	if (!path)
+	{
+		if (!(getcwd(pwd, PATH_MAX)))
+			return (1);
+		new_pwd = ft_strjoin("export PWD=", pwd);
+		if (!new_pwd)
+			return (1);
+	}
+	else
+		new_pwd = ft_strjoin("export PWD=", path);
 	ft_export(envp, new_pwd);
 	free(new_pwd);
 	return (0);
@@ -48,6 +53,7 @@ int	ft_set_pwd_home(char ***envp)
 	char	*home;
 
 	home = ft_get_env(*envp, "HOME");
+	dprintf(2, "home: %s\n", home);
 	if (!home)
 	{
 		ft_putstr_fd("cd: HOME not set\n", 2);
@@ -65,7 +71,7 @@ int	ft_set_pwd_home(char ***envp)
 			ft_putstr_fd("\n", 2);
 			return (1);
 		}
-		ft_set_pwd(envp);
+		ft_set_pwd(envp, home);
 	}
 	return (0);
 }
@@ -74,15 +80,18 @@ int	ft_cd(char *command, char ***envp)
 {
 	char	**splitted;
 
+	dprintf(2, "command to split: %s\n", command);
 	splitted = ft_split(command, ' ');
-	if (splitted)
+	dprintf(2, "splitted: %s\n", splitted[0]);
+	if (!splitted)
 	{
 		printf("error split\n");
 		return (1);
 	}
-	if (splitted[0])
+	dprintf(2, "splitted: %s\n", splitted[0]);
+	if (splitted[1])
 	{
-		dprintf(2, "set pwd: %s\n", splitted[0]);
+		dprintf(2, "set pwd: %s\n", splitted[1]);
 		ft_set_old_pwd(envp);
 		if (chdir(splitted[1]) == -1)
 		{
@@ -93,7 +102,7 @@ int	ft_cd(char *command, char ***envp)
 			ft_putstr_fd("\n", 2);
 			return (1);
 		}
-		ft_set_pwd(envp);
+		ft_set_pwd(envp, NULL);
 	}
 	else
 	{
