@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/10 10:42:08 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/10 11:53:11 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_parent(t_execute *exec)
 			ft_env(exec->envp);
 		else if (!ft_strncmp(exec->commands[0], "exit", 4))
 			ft_exit(exec->commands);
-		ft_close_fds(exec, 0);
+		// ft_close_fds(exec, 0);
 	}
 	ft_close_all_fds(exec);
 	i = -1;
