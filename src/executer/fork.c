@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 11:18:49 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/11 10:36:50 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/11 12:33:56 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_first_child(t_execute *exec, int i)
 			= open(exec->input, O_RDONLY);
 		if (exec->pipe_fd[exec->count_pipes - 1][0] < 1)
 		{
-			perror("Error");
+			perror("Error first child");
 			return (1);
 		}
 	}
@@ -66,6 +66,7 @@ int	ft_first_child(t_execute *exec, int i)
 int	ft_child_first_last(t_execute *exec, int i)
 {
 	dprintf(2, "one and only child\n");
+	dprintf(2, "before exec->pipe_fd[0][0]: %i exec->pipe_fd[0][1]: %i\n", exec->pipe_fd[0][0], exec->pipe_fd[0][1]);
 	close(exec->pipe_fd[0][0]);
 	close(exec->pipe_fd[0][1]);
 	if (exec->input)
@@ -75,7 +76,7 @@ int	ft_child_first_last(t_execute *exec, int i)
 			= open(exec->input, O_RDONLY);
 		if (exec->pipe_fd[exec->count_pipes - 1][0] < 1)
 		{
-			perror("Error");
+			perror("Error Inputfile Only Child");
 			return (1);
 		}
 		else
@@ -105,7 +106,7 @@ int	ft_check_fork(t_execute *exec, int i)
 {
 	if (i == exec->count_children)
 		i--;
-	if ((exec->id[i] < 0) && (i < exec->count_children))
+	if ((exec->id[i] < 0) && (i < exec->count_children && !(exec->count_builtins == 1)))
 	{
 		dprintf(2, "fork error at id[%i]: %i\n", i, exec->id[i]);
 		perror("fork error");
@@ -120,11 +121,11 @@ int	ft_forking(t_execute *exec)
 	int	error;
 
 	error = 0;
-	i = -1;
-	while (++i < exec->count_children && !exec->count_builtins == 1)
+	i = 0;
+	while (i < exec->count_children && !(exec->count_builtins == 1))
 	{
 		exec->id[i] = fork();
-		if (exec->id[i] == 0)
+		if (exec->id[i++] == 0)
 			break ;
 	}
 	i = ft_check_fork(exec, i);
