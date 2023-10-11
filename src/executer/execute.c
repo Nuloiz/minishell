@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/11 16:40:34 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/11 19:51:50 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ int	ft_child(int i, t_execute *exec)
 	perror("Execve error:");
 	ft_free_array(command_array);
 	free(command);
-	return (127);
+	exit(127);
+	// return (127);
 }
 
 int	ft_here_doc(t_execute *exec)
@@ -151,6 +152,7 @@ int	execute(int *types, char **parsed, char **envp)
 	t_execute	exec;
 	int			error;
 
+	dprintf(2, "hi im the executer!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 	if (!parsed || !*parsed)
 		return (0);
 	error = 0;
