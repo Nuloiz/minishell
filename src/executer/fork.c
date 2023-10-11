@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 11:18:49 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/10 16:23:19 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/11 10:36:50 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ int	ft_last_child(t_execute *exec, int i)
 					| O_CREAT | O_TRUNC, 0644);
 		if (exec->pipe_fd[0][1] < 1)
 		{
-			perror("Error");
+			perror("Error Outputfile Child");
 			return (1);
 		}
-		printf("last child with output: %s and append is: %i\n", exec->output, exec->append);
+		dprintf(2, "last child with output: %s and append is: %i\n", exec->output, exec->append);
 	}
 	else
 	{
-		printf("last child without output\n");
+		dprintf(2, "last child without output\n");
 		close(exec->pipe_fd[0][1]);
 		exec->pipe_fd[0][1] = 1;
 	}
@@ -42,7 +42,7 @@ int	ft_last_child(t_execute *exec, int i)
 
 int	ft_first_child(t_execute *exec, int i)
 {
-	printf("first child\n");
+	dprintf(2, "first child\n");
 	if (exec->input)
 	{
 		close(exec->pipe_fd[exec->count_pipes - 1][0]);
@@ -65,12 +65,12 @@ int	ft_first_child(t_execute *exec, int i)
 
 int	ft_child_first_last(t_execute *exec, int i)
 {
-	printf("one and only child\n");
+	dprintf(2, "one and only child\n");
 	close(exec->pipe_fd[0][0]);
 	close(exec->pipe_fd[0][1]);
 	if (exec->input)
 	{
-		printf("with input file\n");
+		dprintf(2, "with input file\n");
 		exec->pipe_fd[exec->count_pipes - 1][0]
 			= open(exec->input, O_RDONLY);
 		if (exec->pipe_fd[exec->count_pipes - 1][0] < 1)
@@ -91,7 +91,7 @@ int	ft_child_first_last(t_execute *exec, int i)
 					| O_CREAT | O_TRUNC, 0644);
 		if (exec->pipe_fd[0][1] < 1)
 		{
-			perror("Error");
+			perror("Error Outputfile Only Child");
 			return (1);
 		}
 	}
@@ -121,7 +121,7 @@ int	ft_forking(t_execute *exec)
 
 	error = 0;
 	i = -1;
-	while (++i < exec->count_children)
+	while (++i < exec->count_children && !exec->count_builtins == 1)
 	{
 		exec->id[i] = fork();
 		if (exec->id[i] == 0)
