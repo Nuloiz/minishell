@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/11 10:44:37 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/11 16:40:34 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,20 @@ int	ft_parent(t_execute *exec)
 		else if (!ft_strncmp(exec->commands[0], "export", 6))
 			ft_export(&exec->envp, exec->commands[0]);
 		else if (!ft_strncmp(exec->commands[0], "unset", 5))
-			ft_unset(&exec->envp, exec->commands[0]);
+				ft_unset(&exec->envp, exec->commands[0]);
 		else if (!ft_strncmp(exec->commands[0], "env", 3))
 			ft_env(exec->envp);
 		else if (!ft_strncmp(exec->commands[0], "exit", 4))
 			ft_exit(exec->commands);
 	}
 	ft_close_all_fds(exec);
-
-	dup2(stin_backup, 0);
-	dup2(sout_backup, 1);
 	i = -1;
 	while (++i < exec->count_children && !(exec->count_builtins == 1))
 	{
 		waitpid(exec->id[i], &status, 0);
 	}
+	dup2(stin_backup, 0);
+	dup2(sout_backup, 1);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (0);
@@ -152,7 +151,7 @@ int	execute(int *types, char **parsed, char **envp)
 	t_execute	exec;
 	int			error;
 
-	if (!parsed)
+	if (!parsed || !*parsed)
 		return (0);
 	error = 0;
 	if (ft_init(&exec, types, parsed, envp))
@@ -182,7 +181,7 @@ int	ft_init(t_execute *exec, int *types, char **parsed, char **envp)
 			return (1);
 	}
 	i = -1;
-	while (++i < exec->count_pipes && !exec->count_children == 1)
+	while (++i < exec->count_pipes)
 	{
 		if (pipe(exec->pipe_fd[i]) == -1)
 		{
