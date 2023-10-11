@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:19:04 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/10 14:22:53 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/11 09:48:47 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,18 @@ int	main(int argc, char **argv, char **envp)
 	// rl_replace_line("hello", 1);
 	// rl_redisplay();
 	new_env = dup_array(envp);
-	line = readline("minishell: ");
-	add_history(line);
-	while (line)
+	// line = readline("minishell: ");
+	// add_history(line);
+	while (1)
 	{
-		if (line[0] == '\0')
-			break ;
-		input_sort(line, new_env);
-		free(line);
+		// line = get_next_line(0);
+		// line[ft_strlen(line) - 1] = 0;
 		line = readline("minishell: ");
 		add_history(line);
+		input_sort(line, new_env);
+		if (line[0] == '\0')
+			break ;
+		free(line);
 	}
 	free(line);
 	return (0);
