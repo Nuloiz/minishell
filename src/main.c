@@ -48,17 +48,15 @@ int	main(int argc, char **argv, char **envp)
 	// rl_replace_line("hello", 1);
 	// rl_redisplay();
 	new_env = dup_array(envp);
-	line = readline("minishell: ");
-	add_history(line);
+	//line = readline("minishell: ");
+	//add_history(line);
 	last_return = 0;
-	while (line)
+	while (1)
 	{
-		if (line[0] == '\0')
-			break ;
-		last_return = input_sort(line, new_env, &last_return);
-		free(line);
 		line = readline("minishell: ");
 		add_history(line);
+		last_return = input_sort(line, new_env, &last_return);
+		free(line);
 	}
 	free(line);
 	return (0);
