@@ -3,7 +3,7 @@ NAME := minishell
 CC := cc
 
 #CFLAGS := -Wall -g
-#CFLAGS :=  -fsanitize=address -g
+CFLAGS :=  -fsanitize=address -g
 #CFLAGS := -Wall -Wextra -Werror -g
 # find / -name libreadline.aCFLAGS := $(CFLAGS) -fsanitize=address
 SRC :=	free.c dup.c \
