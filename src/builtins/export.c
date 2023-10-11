@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/11 10:29:06 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/11 16:21:53 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,15 @@ void	ft_sorted_print_array(char **envp)
 {
 	int		len;
 	char	**splitted;
+	char	**duped;
 
 	len = 0;
-	while (envp[len])
+	duped = dup_array(envp);
+	while (duped[len])
 		len++;
-	ft_sort_array(&envp, len);
-	ft_print_export(envp);
+	ft_sort_array(&duped, len);
+	ft_print_export(duped);
+	free_array(duped);
 }
 
 //add or replace the value of the string in the 2D envp array
@@ -94,7 +97,7 @@ int	ft_export(char ***envp, char *string)
 
 	splitted = ft_split(string, ' ');
 	found = 0;
-	printf("export started\n");
+	dprintf(2, "export started\n");
 	if (!*envp)
 		ft_putstr_fd("NO ENVP\n", 2);
 	if (!splitted[1])
