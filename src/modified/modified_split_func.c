@@ -64,7 +64,7 @@ static int	mod_countsplit(char const *s, char c)
 	return (i);
 }
 
-char	**mod_split(char const *s, char c)
+char	**mod_split(char *s, char c)
 {
 	int		i;
 	int		j;

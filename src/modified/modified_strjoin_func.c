@@ -38,14 +38,13 @@ char	*mod_strjoin(char *s1, char *s2)
 	if (joined)
 	{
 		joined = string_one(s1, joined);
-		i = (int)ft_strlen(joined) + 1;
+		i = (int)ft_strlen(joined);
 		while (s2 && s2[j])
 		{
 			joined[i] = s2[j];
 			i++;
 			j++;
 		}
-		joined[i] = 0;
 		if (s1)
 			free((char *)s1);
 		if (s2)
