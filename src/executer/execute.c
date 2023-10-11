@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/11 10:44:37 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/11 11:03:48 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int	execute(int *types, char **parsed, char **envp)
 	t_execute	exec;
 	int			error;
 
-	if (!parsed)
+	if (!*parsed)
 		return (0);
 	error = 0;
 	if (ft_init(&exec, types, parsed, envp))
