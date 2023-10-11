@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/10 13:54:59 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/11 10:29:06 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,21 @@ void	ft_print_export(char **envp)
 	while (envp[i])
 	{
 		splitted = ft_split(envp[i], '=');
-		printf("declare -x ");
+		ft_printf("declare -x ");
 		while (splitted[j])
 		{
-			printf("%s", splitted[j]);
+			ft_printf("%s", splitted[j]);
 			if (splitted[j + 1] && !once)
 			{
 				once = 1;
-				printf("=\"");
+				ft_printf("=\"");
 			}
 			j++;
 		}
 		j = 0;
 		once = 0;
 		free_array(splitted);
-		printf("\"\n");
+		ft_printf("\"\n");
 		i++;
 	}
 }
@@ -99,7 +99,7 @@ int	ft_export(char ***envp, char *string)
 		ft_putstr_fd("NO ENVP\n", 2);
 	if (!splitted[1])
 	{
-		printf("export without arguements\n");
+		dprintf(2, "export without arguements\n");
 		ft_sorted_print_array(*envp);
 		return (0);
 	}

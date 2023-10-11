@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:43:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/10 12:15:31 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/11 10:28:52 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_cd(char *command, char ***envp)
 	dprintf(2, "splitted: %s\n", splitted[0]);
 	if (!splitted)
 	{
-		printf("error split\n");
+		ft_putstr_fd("minishell: cd: error split\n", 2);
 		return (1);
 	}
 	dprintf(2, "splitted: %s\n", splitted[0]);
