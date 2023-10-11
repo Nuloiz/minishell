@@ -28,7 +28,6 @@ static int	count_alloc(t_input *input)
 	return (count + 1);
 }
 
-
 static char	*is_cmd(t_input **input, t_array array, int count)
 {
 	char	*tmp;

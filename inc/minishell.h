@@ -31,14 +31,14 @@
 # include "../src/executer/pipex.h"
 # include <errno.h>
 
-#define	COMMAND 1
-#define	FLAGS	2
-#define	FILE	3
-#define	ENV_VAR	4
-#define	PIPE	5
-#define	REDIRECT 6
+#define COMMAND 1
+#define FLAGS	2
+#define FILE	3
+#define ENV_VAR	4
+#define PIPE	5
+#define REDIRECT 6
 #define BUILTIN	 7
-#define	PARAM	 8
+#define PARAM	 8
 
 typedef struct s_input
 {
@@ -84,6 +84,5 @@ char	*ft_get_env(char **envp, char *string);
 int		ft_cd(char *command, char ***envp);
 void	print_list(t_input **input);
 void	print_cmds(char **s, int *type);
-
 
 #endif
