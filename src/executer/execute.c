@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/11 12:41:38 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/11 13:38:55 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ int	ft_parent(t_execute *exec)
 	int	status;
 	int	stin_backup;
 	int	sout_backup;
-
+ 
 	stin_backup = dup(0);
 	sout_backup = dup(1);
+
 	i = -1;
 	if (exec->count_builtins == 1 && exec->count_children == 1)
 	{
@@ -29,12 +30,12 @@ int	ft_parent(t_execute *exec)
 		close(exec->pipe_fd[0][1]);
 		if (exec->input)
 		{
-			dprintf(2, "with input file: %s\n", exec->input);
-			exec->pipe_fd[0][0]
+			printf("with input file\n");
+			exec->pipe_fd[exec->count_pipes - 1][0]
 				= open(exec->input, O_RDONLY);
-			if (exec->pipe_fd[0][0] < 1)
+			if (exec->pipe_fd[exec->count_pipes - 1][0] < 1)
 			{
-				perror("Error Outinputfile Parent");
+				perror("Error");
 				return (1);
 			}
 		}
@@ -42,7 +43,7 @@ int	ft_parent(t_execute *exec)
 			exec->pipe_fd[0][0] = 0;
 		if (exec->output)
 		{
-			dprintf(2, "with output file %s\n", exec->output);
+			printf("with output file\n");
 			if (exec->append)
 				exec->pipe_fd[0][1] = open(exec->output, O_RDWR
 						| O_CREAT | O_APPEND, 0644);
@@ -51,7 +52,7 @@ int	ft_parent(t_execute *exec)
 						| O_CREAT | O_TRUNC, 0644);
 			if (exec->pipe_fd[0][1] < 1)
 			{
-				perror("Error Outputfile Parent");
+				perror("Error");
 				return (1);
 			}
 		}
@@ -73,14 +74,14 @@ int	ft_parent(t_execute *exec)
 			ft_env(exec->envp);
 		else if (!ft_strncmp(exec->commands[0], "exit", 4))
 			ft_exit(exec->commands);
+		// ft_close_fds(exec, 0);
 	}
-	dprintf(2, "exec->pipe_fd[0][0]: %i exec->pipe_fd[0][1]: %i\n", exec->pipe_fd[0][0], exec->pipe_fd[0][1]);
-	ft_close_all_fds(exec);
-
-	dup2(stin_backup, 0);
+	dprintf(2, "count_children: %i count_pipes: %i\n", exec->count_children, exec->count_pipes);
 	dup2(sout_backup, 1);
+	dup2(stin_backup, 0);
+	ft_close_all_fds(exec);
 	i = -1;
-	while (++i < exec->count_children && !(exec->count_builtins == 1))
+	while (++i < exec->count_children && !(exec->count_builtins == 1 &&  exec->count_children == 1))
 	{
 		waitpid(exec->id[i], &status, 0);
 	}
@@ -98,7 +99,6 @@ int	ft_child(int i, t_execute *exec)
 	char	**command_array;
 	char	*command;
 
-	dprintf(2, "in child to execute: exec->pipe_fd[0][0]: %i exec->pipe_fd[0][1]: %i\n", exec->pipe_fd[0][0], exec->pipe_fd[0][1]);
 	ft_close_fds(exec, i);
 	if (i == 0)
 		dup2(exec->pipe_fd[exec->count_pipes - 1][0], 0);
@@ -154,8 +154,8 @@ int	execute(int *types, char **parsed, char **envp)
 	t_execute	exec;
 	int			error;
 
-	if (!*parsed)
-		return (0);
+	if (!parsed || !*parsed)
+		return (127);
 	error = 0;
 	if (ft_init(&exec, types, parsed, envp))
 		return (1);
@@ -177,19 +177,13 @@ int	ft_init(t_execute *exec, int *types, char **parsed, char **envp)
 	ft_init_struct(exec, types, parsed, envp);
 	if (exec->id == NULL || exec->pipe_fd == NULL)
 		return (1);
-	dprintf(2, "exec->count_pipes: %i exec->count_children: %i exec->count_builtins: %i\n", exec->count_pipes, exec->count_children, exec->count_builtins);
 	while (++i < exec->count_pipes)
 	{
 		exec->pipe_fd[i] = malloc(sizeof(int) * 2);
-		dprintf(2, "exec->pipe_fd[%i] wurde gemalloct mit sizeof(int)\n", i);
 		if (exec->pipe_fd[i] == NULL)
 			return (1);
-		exec->pipe_fd[i][0] = -1;
-		exec->pipe_fd[i][1] = -1;	
-		dprintf(2, "exec->pipe_fd[%i][0]: %i exec->pipe_fd[%i][1]: %i\n", i, exec->pipe_fd[i][0], i, exec->pipe_fd[i][1]);
 	}
 	i = -1;
-	// while (++i < exec->count_pipes && !(exec->count_children == 1))
 	while (++i < exec->count_pipes)
 	{
 		if (pipe(exec->pipe_fd[i]) == -1)
@@ -197,7 +191,6 @@ int	ft_init(t_execute *exec, int *types, char **parsed, char **envp)
 			ft_putstr_fd("Pipe Error!\n", 2);
 			return (1);
 		}
-		dprintf(2, "exec->pipe_fd[%i][0]:%i exec->pipe_fd[%i][1]: %i\n",i, exec->pipe_fd[i][0], i, exec->pipe_fd[i][1]);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 11:18:49 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/11 12:33:56 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/11 13:36:59 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ int	ft_last_child(t_execute *exec, int i)
 					| O_CREAT | O_TRUNC, 0644);
 		if (exec->pipe_fd[0][1] < 1)
 		{
-			perror("Error Outputfile Child");
+			perror("Error");
 			return (1);
 		}
-		dprintf(2, "last child with output: %s and append is: %i\n", exec->output, exec->append);
+		printf("last child with output: %s and append is: %i\n", exec->output, exec->append);
 	}
 	else
 	{
-		dprintf(2, "last child without output\n");
+		printf("last child without output\n");
 		close(exec->pipe_fd[0][1]);
 		exec->pipe_fd[0][1] = 1;
 	}
@@ -42,7 +42,7 @@ int	ft_last_child(t_execute *exec, int i)
 
 int	ft_first_child(t_execute *exec, int i)
 {
-	dprintf(2, "first child\n");
+	printf("first child\n");
 	if (exec->input)
 	{
 		close(exec->pipe_fd[exec->count_pipes - 1][0]);
@@ -50,7 +50,7 @@ int	ft_first_child(t_execute *exec, int i)
 			= open(exec->input, O_RDONLY);
 		if (exec->pipe_fd[exec->count_pipes - 1][0] < 1)
 		{
-			perror("Error first child");
+			perror("Error");
 			return (1);
 		}
 	}
@@ -65,18 +65,17 @@ int	ft_first_child(t_execute *exec, int i)
 
 int	ft_child_first_last(t_execute *exec, int i)
 {
-	dprintf(2, "one and only child\n");
-	dprintf(2, "before exec->pipe_fd[0][0]: %i exec->pipe_fd[0][1]: %i\n", exec->pipe_fd[0][0], exec->pipe_fd[0][1]);
+	printf("one and only child\n");
 	close(exec->pipe_fd[0][0]);
 	close(exec->pipe_fd[0][1]);
 	if (exec->input)
 	{
-		dprintf(2, "with input file\n");
+		printf("with input file\n");
 		exec->pipe_fd[exec->count_pipes - 1][0]
 			= open(exec->input, O_RDONLY);
 		if (exec->pipe_fd[exec->count_pipes - 1][0] < 1)
 		{
-			perror("Error Inputfile Only Child");
+			perror("Error");
 			return (1);
 		}
 		else
@@ -92,7 +91,7 @@ int	ft_child_first_last(t_execute *exec, int i)
 					| O_CREAT | O_TRUNC, 0644);
 		if (exec->pipe_fd[0][1] < 1)
 		{
-			perror("Error Outputfile Only Child");
+			perror("Error");
 			return (1);
 		}
 	}
@@ -106,7 +105,7 @@ int	ft_check_fork(t_execute *exec, int i)
 {
 	if (i == exec->count_children)
 		i--;
-	if ((exec->id[i] < 0) && (i < exec->count_children && !(exec->count_builtins == 1)))
+	if ((exec->id[i] < 0) && (i < exec->count_children) && !exec->count_builtins == 1)
 	{
 		dprintf(2, "fork error at id[%i]: %i\n", i, exec->id[i]);
 		perror("fork error");
@@ -121,14 +120,17 @@ int	ft_forking(t_execute *exec)
 	int	error;
 
 	error = 0;
-	i = 0;
-	while (i < exec->count_children && !(exec->count_builtins == 1))
+	i = -1;
+	exec->id[0] = 1;
+	while (++i < exec->count_children && !(exec->count_builtins == 1 && exec->count_children == 1))
 	{
+		dprintf(2, "hi, ich forke\n");
 		exec->id[i] = fork();
-		if (exec->id[i++] == 0)
+		if (exec->id[i] == 0)
 			break ;
 	}
 	i = ft_check_fork(exec, i);
+	dprintf(2, "i: %i exec->id[0]: %i\n", i, exec->id[0]);
 	if (i < 0)
 		return (1);
 	if (exec->id[i] == 0 && i == 0 && exec->limiter && !(exec->count_builtins == 1 && exec->count_children == 1))
