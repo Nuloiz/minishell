@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 11:18:49 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/11 13:55:47 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/11 18:25:18 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,22 @@ int	ft_first_child(t_execute *exec, int i)
 
 int	ft_child_first_last(t_execute *exec, int i)
 {
-	dprintf(2, "one and only child with command: %s\n", exec->commands[i]);
+	dprintf(2, "one and only child with command i:%i: %s\n", i, exec->commands[i]);
 	close(exec->pipe_fd[0][0]);
 	close(exec->pipe_fd[0][1]);
 	if (exec->input)
 	{
-		dprintf(2, "with input file: %s\n", exec->input);
-		exec->pipe_fd[exec->count_pipes - 1][0]
+		dprintf(2, "with input file: %s exec->count_pipes: %i\n", exec->input, exec->count_pipes);
+		exec->pipe_fd[0][0]
 			= open(exec->input, O_RDONLY);
-		if (exec->pipe_fd[exec->count_pipes - 1][0] < 1)
+		if (exec->pipe_fd[0][0] < 1)
 		{
 			perror("Error");
 			return (1);
 		}
-		else
-			exec->pipe_fd[0][0] = 0;
 	}
+	else
+		exec->pipe_fd[0][0] = 0;
 	if (exec->output)
 	{
 		dprintf(2, "with output file: %s\n", exec->output);
@@ -99,6 +99,7 @@ int	ft_child_first_last(t_execute *exec, int i)
 	}
 	else
 		exec->pipe_fd[0][1] = 1;
+	dprintf(2, "before child exec->pipe_fd[0][1]: %i exec->pipe_fd[0][0]: %i\n", exec->pipe_fd[0][1], exec->pipe_fd[0][0]);	
 	exec->error += ft_child(i, exec);
 	return (0);
 }
