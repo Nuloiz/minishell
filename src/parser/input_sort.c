@@ -20,6 +20,15 @@ static char	*quotes(char *s)
 	return (ret);
 }
 
+static char	*env_var(char *s, char **envp, int *l_r)
+{
+	if (!ft_strncmp(s, "$?", 3))
+		s = ft_itoa(*l_r);
+	else
+		s = ft_get_env(envp, &s[1]);
+	return (s);
+}
+
 static t_input	*new_node(char *s, char *s_one, char **envp, int *l_r)
 {
 	t_input	*new;
@@ -28,22 +37,21 @@ static t_input	*new_node(char *s, char *s_one, char **envp, int *l_r)
 	if (!new)
 		return (NULL);
 	new->type = input_type(s, s_one, envp);
-	if (new->type == 4)
-	{
-		if (!ft_strncmp(s, "$?", 3))
-			new->word = ft_itoa(*l_r);
-		else
-			new->word = ft_get_env(envp, &s[1]);
-		free(s);
-	}
-	else if (s[0] == 34 || s[0] == 39)
+	if (s[0] == 34 || s[0] == 39)
 	{
 		new->word = quotes(s);
 		if (!new->word)
 			return (NULL);
+		if (s[0] == 34 && is_env_var(&s[1]))
+			new->type = 4;
 	}
 	else
 		new->word = s;
+	if (new->type == 4)
+	{
+		new->word = env_var(new->word, envp, l_r);
+		free(s);
+	}
 	new->next = NULL;
 	return (new);
 }
