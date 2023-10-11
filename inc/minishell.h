@@ -59,7 +59,6 @@ int		input_sort(char *line, char **envp, int *l_r);
 void	mod_lstadd_back(t_input **lst, t_input *new);
 t_input	*mod_lstlast(t_input *lst);
 int		input_type(char *s, char *s_one, char **envp);
-int		find_path(char *cmd, char **envp);
 int		is_env_var(char *s);
 int		is_built_in(char *s);
 int		is_pipe(char *s);
@@ -82,6 +81,8 @@ int		execute(int *types, char **parsed, char **envp);
 void	ft_exit(char **array);
 char	*ft_get_env(char **envp, char *string);
 int		ft_cd(char *command, char ***envp);
+void	print_list(t_input **input);
+void	print_cmds(char **s, int *type);
 
 
 #endif

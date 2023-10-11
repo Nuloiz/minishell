@@ -12,19 +12,7 @@
 
 #include "minishell.h"
 
-void	print_cmds(char **s, int *type)
-{
-	int	i;
-
-	i = 0;
-	while (s && s[i])
-	{
-		ft_printf("Array: %s\n Type: %i\n\n", s[i], type[i]);
-		i++;
-	}
-}
-
-int	count_alloc(t_input *input)
+static int	count_alloc(t_input *input)
 {
 	int	count;
 
@@ -41,7 +29,7 @@ int	count_alloc(t_input *input)
 }
 
 
-char	*is_cmd(t_input **input, t_array array, int count)
+static char	*is_cmd(t_input **input, t_array array, int count)
 {
 	char	*tmp;
 
@@ -63,7 +51,7 @@ char	*is_cmd(t_input **input, t_array array, int count)
 	return (tmp);
 }
 
-int	type_redirect(t_input **input, t_array array, int *count)
+static int	type_redirect(t_input **input, t_array array, int *count)
 {
 	int	i;
 
@@ -87,7 +75,7 @@ int	type_redirect(t_input **input, t_array array, int *count)
 	return (i);
 }
 
-char	*fill_tmp(t_input **input, t_array array, int *count, char *tmp)
+static char	*fill_tmp(t_input **input, t_array array, int *count, char *tmp)
 {
 	int	i;
 

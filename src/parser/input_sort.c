@@ -82,15 +82,6 @@ static t_input	**linked_list_start(char **cmd, char **envp, \
 	return (input);
 }
 
-void	print_list(t_input **input)
-{
-	while (*input)
-	{
-		ft_printf("Word: %s\n", (*input)->word);
-		*input = (*input)->next;
-	}
-}
-
 int	input_sort(char *line, char **envp, int *l_r)
 {
 	t_input	*input;
