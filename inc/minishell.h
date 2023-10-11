@@ -65,6 +65,7 @@ int		is_pipe(char *s);
 int		is_red(char s);
 int		is_file(char *s);
 int		sort_array(t_input **input, t_array *array);
+int		nv_after_red(t_input **input, int i);
 char	**mod_split(char const *s, char c);
 char	*mod_strjoin(char const *s1, char const *s2);
 char	**dup_array(char **array);

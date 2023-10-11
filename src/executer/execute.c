@@ -152,7 +152,7 @@ int	execute(int *types, char **parsed, char **envp)
 	t_execute	exec;
 	int			error;
 
-	if (!parsed)
+	if (!*parsed)
 		return (0);
 	error = 0;
 	if (ft_init(&exec, types, parsed, envp))
