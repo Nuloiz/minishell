@@ -64,6 +64,23 @@ static int	mod_countsplit(char const *s, char c)
 	return (i);
 }
 
+char	*mod_splitting(char *s, int *j, char c)
+{
+	char	*array;
+
+	if (s[*j] == 34 || s[*j] == 39)
+	{
+		array = ft_substr(s, *j, mod_possplit(&s[*j] + 1, s[*j]) + 2);
+		*j = *j + mod_possplit(&s[*j] + 1, s[*j]) + 2;
+	}
+	else
+	{
+		array = ft_substr(s, *j, mod_possplit(&s[*j], c));
+		*j = *j + mod_possplit(&s[*j], c);
+	}
+	return (array);
+}
+
 char	**mod_split(char *s, char c)
 {
 	int		i;
@@ -81,20 +98,9 @@ char	**mod_split(char *s, char c)
 			j++;
 		if (!s[j])
 			break ;
-		if (s[j] == 34 || s[j] == 39)
-		{
-			array[i] = ft_substr(s, j, mod_possplit(&s[j] + 1, s[j]) + 2);
-			if (array[i] == NULL)
-				return (mod_allocfails(array));
-			j = j + mod_possplit(&s[j] + 1, s[j]) + 2;
-		}
-		else
-		{
-			array[i] = ft_substr(s, j, mod_possplit(&s[j], c));
-			if (array[i] == NULL)
-				return (mod_allocfails(array));
-			j = j + mod_possplit(&s[j], c);
-		}
+		array[i] = mod_splitting(s, &j, c);
+		if (array[i] == NULL)
+			return (mod_allocfails(array));
 		i++;
 	}
 	array[i] = NULL;
