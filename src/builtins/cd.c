@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:43:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/11 10:28:52 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/12 10:43:37 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	ft_set_pwd(char ***envp, char *path)
 	}
 	else
 		new_pwd = ft_strjoin("export PWD=", path);
+	dprintf(2, "new_pwd: %s\n", new_pwd);
 	ft_export(envp, new_pwd);
 	free(new_pwd);
 	return (0);
