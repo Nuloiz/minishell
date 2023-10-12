@@ -82,7 +82,7 @@ static t_input	**linked_list_start(char **cmd, char **envp, \
 	return (input);
 }
 
-int	input_sort(char *line, char **envp, int *l_r)
+int	input_sort(char *line, char ***envp, int *l_r)
 {
 	t_input	*input;
 	t_array	array;
@@ -94,7 +94,7 @@ int	input_sort(char *line, char **envp, int *l_r)
 	if (!line)
 		return (0);
 	cmd = mod_split(line, ' ');
-	linked_list_start(cmd, envp, &input, l_r);
+	linked_list_start(cmd, *envp, &input, l_r);
 	r = sort_array(&input, &array);
 	print_list(&input);
 	free_list(&input);
