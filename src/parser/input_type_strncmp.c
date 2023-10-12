@@ -31,8 +31,15 @@ int	is_pipe(char *s)
 
 int	is_env_var(char *s)
 {
-	if (s[0] == '$' && s[1])
-		return (1);
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '$' && s[i + 1])
+			return (1);
+		i++;
+	}
 	return (0);
 }
 

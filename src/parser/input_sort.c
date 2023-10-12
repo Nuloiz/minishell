@@ -22,11 +22,25 @@ static char	*quotes(char *s)
 
 static char	*env_var(char *s, char **envp, int *l_r)
 {
-	if (!ft_strncmp(s, "$?", 3))
-		s = ft_itoa(*l_r);
+	int		i;
+	int 	j;
+	char	*dup;
+
+	i = 0;
+	j = 0;
+	while (s[i] != '$')
+		i++;
+	dup = ft_calloc(i + 1, 1);
+	while (j < i)
+	{
+		dup[j] = s[j];
+		j++;
+	}
+	if (!ft_strncmp(&s[i], "$?", 3))
+		dup = modified_strjoin(dup, ft_itoa(*l_r));
 	else
-		s = ft_get_env(envp, &s[1]);
-	return (s);
+		dup = modified_strjoin(dup, ft_get_env(envp, &s[i + 1]));
+	return (dup);
 }
 
 static t_input	*new_node(char *s, char *s_one, char **envp, int *l_r)

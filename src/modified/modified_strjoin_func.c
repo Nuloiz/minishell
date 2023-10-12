@@ -54,3 +54,39 @@ char	*mod_strjoin(char *s1, char *s2)
 	else
 		return (0);
 }
+
+char	*modified_strjoin(char *s1, char *s2)
+{
+	char	*joined;
+	int		i;
+	int		j;
+
+	i = -1;
+	j = -1;
+	joined = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1) , sizeof(char));
+	if (joined)
+	{
+		if (s1)
+		{
+			while (s1[++i])
+				joined[i] = s1[i];
+			i = ft_strlen(s1);
+			free(s1);
+		}
+		else
+			i = 0;
+		if (s2)
+		{
+			while (s2[++j])
+			{
+				joined[i] = s2[j];
+				i++;
+			}
+			free(s2);
+		}
+		joined[i] = 0;
+		return (joined);
+	}
+	else
+		return (0);
+}
