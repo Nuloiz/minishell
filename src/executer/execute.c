@@ -6,11 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/10/12 09:33:07 by dnebatz          ###   ########.fr       */
-=======
-/*   Updated: 2023/10/11 10:44:37 by dnebatz          ###   ########.fr       */
->>>>>>> 1a8d18567b677e40d73156a43719df6b22412d33
+/*   Updated: 2023/10/12 09:54:50 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +74,6 @@ int	ft_parent(t_execute *exec)
 		else if (!ft_strncmp(exec->commands[0], "exit", 4))
 			ft_exit(exec->commands);
 	}
-<<<<<<< HEAD
-	dprintf(2, "count_children: %i count_pipes: %i\n", exec->count_children, exec->count_pipes);
-	dup2(sout_backup, 1);
-	dup2(stin_backup, 0);
-=======
->>>>>>> 1a8d18567b677e40d73156a43719df6b22412d33
 	ft_close_all_fds(exec);
 
 	dup2(stin_backup, 0);
@@ -162,12 +152,7 @@ int	execute(int *types, char **parsed, char **envp)
 	t_execute	exec;
 	int			error;
 
-<<<<<<< HEAD
-	dprintf(2, "hi im the executer!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-	if (!parsed || !*parsed)
-=======
 	if (!*parsed)
->>>>>>> 1a8d18567b677e40d73156a43719df6b22412d33
 		return (0);
 	error = 0;
 	if (ft_init(&exec, types, parsed, envp))
