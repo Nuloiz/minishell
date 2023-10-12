@@ -6,13 +6,13 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:50:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/10 14:28:49 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/12 10:15:22 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_init_struct(t_execute *new, int *types, char **parsed, char **envp)
+int	ft_init_struct(t_execute *new, int *types, char **parsed, char ***envp)
 {
 	int	i;
 

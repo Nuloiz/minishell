@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nschutz <nschutz@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/12 10:02:33 by nschutz          ###   ########.fr       */
+/*   Updated: 2023/10/12 10:18:46 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,15 @@ int	ft_parent(t_execute *exec)
 		if (!ft_strncmp(exec->commands[0], "echo", 4))
 			ft_echo(exec->commands[0]);
 		else if (!ft_strncmp(exec->commands[0], "cd", 2))
-			ft_cd(exec->commands[0], &exec->envp);
+			ft_cd(exec->commands[0], exec->envp);
 		else if (!ft_strncmp(exec->commands[0], "pwd", 3))
 			ft_pwd();
 		else if (!ft_strncmp(exec->commands[0], "export", 6))
-			ft_export(&exec->envp, exec->commands[0]);
+			ft_export(exec->envp, exec->commands[0]);
 		else if (!ft_strncmp(exec->commands[0], "unset", 5))
-			ft_unset(&exec->envp, exec->commands[0]);
+			ft_unset(exec->envp, exec->commands[0]);
 		else if (!ft_strncmp(exec->commands[0], "env", 3))
-			ft_env(exec->envp);
+			ft_env(*exec->envp);
 		else if (!ft_strncmp(exec->commands[0], "exit", 4))
 			ft_exit(exec->commands);
 	}
@@ -108,13 +108,13 @@ int	ft_child(int i, t_execute *exec)
 		dup2(exec->pipe_fd[i][1], 1);
 	command_array = ft_get_command_arg_array
 		(exec->commands[i]);
-	command = ft_check_command_and_get_path(command_array[0], exec->envp);
+	command = ft_check_command_and_get_path(command_array[0], *exec->envp);
 	if (command == NULL)
 	{
 		ft_free_array(command_array);
 		return (ft_print_command_error(exec->commands, 127, i));
 	}
-	execve(command, command_array, exec->envp);
+	execve(command, command_array, *exec->envp);
 	perror("Execve error:");
 	ft_free_array(command_array);
 	free(command);
@@ -147,7 +147,7 @@ int	ft_here_doc(t_execute *exec)
 	return (1);
 }
 
-int	execute(int *types, char **parsed, char **envp)
+int	execute(int *types, char **parsed, char ***envp)
 {
 	t_execute	exec;
 	int			error;
@@ -167,7 +167,7 @@ int	execute(int *types, char **parsed, char **envp)
 }
 
 //call initialisation for struct, set here_doc and open pipes
-int	ft_init(t_execute *exec, int *types, char **parsed, char **envp)
+int	ft_init(t_execute *exec, int *types, char **parsed, char ***envp)
 {
 	int	i;
 
