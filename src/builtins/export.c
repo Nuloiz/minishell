@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/12 10:48:19 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/12 12:05:32 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,11 @@ int	ft_export(char ***envp, char *string)
 		return (0);
 	}
 	i = 0;
+	//ft_memmove(env, &env[ft_strlen(string) + 1], (ft_strlen(env) - ft_strlen(string)));
+	ft_memmove(string, &string[7], (ft_strlen(string) - 6));
 	while ((*envp)[i])
 	{
-		dprintf(2, "")
+		// dprintf(2, "ft_strncmp((*envp)[%i]: %s, string: %s, (ft_strchr(string, '=') - string + 1): %i)\n", i, (*envp)[i], string, ft_strchr(string, '=') - string + 1);
 		if (!ft_strncmp((*envp)[i], string, (ft_strchr(string, '=') - string + 1)))
 		{
 			free((*envp)[i]);
