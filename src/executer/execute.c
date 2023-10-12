@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/12 10:18:46 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/12 13:42:53 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ int	ft_parent(t_execute *exec)
 	}
 	ft_close_all_fds(exec);
 
-	dup2(stin_backup, 0);
-	dup2(sout_backup, 1);
 	i = -1;
 	while (++i < exec->count_children && !(exec->count_builtins == 1))
 	{
 		waitpid(exec->id[i], &status, 0);
 	}
+	dup2(stin_backup, 0);
+	dup2(sout_backup, 1);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (0);
@@ -182,7 +182,7 @@ int	ft_init(t_execute *exec, int *types, char **parsed, char ***envp)
 			return (1);
 	}
 	i = -1;
-	while (++i < exec->count_pipes && !exec->count_children == 1)
+	while (++i < exec->count_pipes)
 	{
 		if (pipe(exec->pipe_fd[i]) == -1)
 		{
