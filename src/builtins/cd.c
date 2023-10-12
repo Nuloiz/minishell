@@ -6,24 +6,29 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:43:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/12 10:43:37 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/12 12:26:38 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_set_old_pwd(char ***envp)
+char	**ft_get_pwd(char ***envp)
 {
-	char	*oldpwd;
 	char	pwd[PATH_MAX];
+	char	*oldpwd;
 
 	if (!(getcwd(pwd, PATH_MAX)))
 		return (1);
 	oldpwd = ft_strjoin("export OLDPWD=", pwd);
 	if (!oldpwd)
-		return (1);
-	ft_export(envp, oldpwd);
-	free(oldpwd);
+		return (NULL);
+	return (oldpwd);
+}
+
+int	ft_set_old_pwd(char ***envp, char *old_pwd)
+{
+	ft_export(envp, old_pwd);
+	free(old_pwd);
 	return (0);
 }
 
@@ -52,17 +57,18 @@ int	ft_set_pwd(char ***envp, char *path)
 int	ft_set_pwd_home(char ***envp)
 {
 	char	*home;
+	char	*old_pwd;
 
 	home = ft_get_env(*envp, "HOME");
 	dprintf(2, "home: %s\n", home);
 	if (!home)
 	{
-		ft_putstr_fd("cd: HOME not set\n", 2);
+		ft_putstr_fd("Minishell: Error: cd: PATH HOME not set\n", 2);
 		return (1);
 	}
 	else
 	{
-		ft_set_old_pwd(envp);
+		old_pwd = ft_get_pwd(envp);
 		if (chdir(home) == -1)
 		{
 			ft_putstr_fd("cd: ", 2);
@@ -70,8 +76,10 @@ int	ft_set_pwd_home(char ***envp)
 			ft_putstr_fd(": ", 2);
 			ft_putstr_fd(strerror(errno), 2);
 			ft_putstr_fd("\n", 2);
+			free(old_pwd);
 			return (1);
 		}
+		ft_set_old_pwd(envp, old_pwd);
 		ft_set_pwd(envp, home);
 	}
 	return (0);
@@ -80,6 +88,7 @@ int	ft_set_pwd_home(char ***envp)
 int	ft_cd(char *command, char ***envp)
 {
 	char	**splitted;
+	char	*old_pwd;
 
 	dprintf(2, "command to split: %s\n", command);
 	splitted = ft_split(command, ' ');
@@ -93,7 +102,7 @@ int	ft_cd(char *command, char ***envp)
 	if (splitted[1])
 	{
 		dprintf(2, "set pwd: %s\n", splitted[1]);
-		ft_set_old_pwd(envp);
+		old_pwd = ft_get_pwd(envp);
 		if (chdir(splitted[1]) == -1)
 		{
 			ft_putstr_fd("cd: ", 2);
@@ -101,8 +110,10 @@ int	ft_cd(char *command, char ***envp)
 			ft_putstr_fd(": ", 2);
 			ft_putstr_fd(strerror(errno), 2);
 			ft_putstr_fd("\n", 2);
+			free(old_pwd);
 			return (1);
 		}
+		ft_set_old_pwd(envp, old_pwd);
 		ft_set_pwd(envp, NULL);
 	}
 	else
