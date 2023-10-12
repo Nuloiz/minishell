@@ -32,4 +32,3 @@ void	print_cmds(char **s, int *type)
 		i++;
 	}
 }
-

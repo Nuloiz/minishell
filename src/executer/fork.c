@@ -6,7 +6,11 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 11:18:49 by dnebatz           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/10/12 09:37:06 by dnebatz          ###   ########.fr       */
+=======
+/*   Updated: 2023/10/11 18:25:18 by dnebatz          ###   ########.fr       */
+>>>>>>> 1a8d18567b677e40d73156a43719df6b22412d33
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +30,7 @@ int	ft_last_child(t_execute *exec, int i)
 					| O_CREAT | O_TRUNC, 0644);
 		if (exec->pipe_fd[0][1] < 1)
 		{
-			perror("Error");
+			perror("Error Outputfile Child");
 			return (1);
 		}
 		dprintf(2, "with output: %s and append is: %i\n", exec->output, exec->append);
@@ -93,7 +97,7 @@ int	ft_child_first_last(t_execute *exec, int i)
 					| O_CREAT | O_TRUNC, 0644);
 		if (exec->pipe_fd[0][1] < 1)
 		{
-			perror("Error");
+			perror("Error Outputfile Only Child");
 			return (1);
 		}
 	}
@@ -108,7 +112,7 @@ int	ft_check_fork(t_execute *exec, int i)
 {
 	if (i == exec->count_children)
 		i--;
-	if ((exec->id[i] < 0) && (i < exec->count_children) && !exec->count_builtins == 1)
+	if ((exec->id[i] < 0) && (i < exec->count_children))
 	{
 		dprintf(2, "fork error at id[%i]: %i\n", i, exec->id[i]);
 		perror("fork error");
