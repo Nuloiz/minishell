@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: nschutz <nschutz@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/12 09:54:50 by dnebatz          ###   ########.fr       */
+/*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
+/*   Updated: 2023/10/12 10:02:33 by nschutz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

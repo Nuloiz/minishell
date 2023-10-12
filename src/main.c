@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: nschutz <nschutz@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/18 14:19:04 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/11 11:32:14 by dnebatz          ###   ########.fr       */
+/*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
+/*   Updated: 2023/10/12 10:03:48 by nschutz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,13 @@ int	main(int argc, char **argv, char **envp)
 	//line = readline("minishell: ");
 	//add_history(line);
 	last_return = 0;
-	// while (1)
-	// {
-	// 	line = readline("minishell: ");
-	// 	add_history(line);
-	// 	last_return = input_sort(line, new_env, &last_return);
-	// 	free(line);
-	// }
-	// free(line);
-			line = readline("minishell: ");
-		add_history(line);
-		last_return = input_sort(line, new_env, &last_return);
-		free(line);
-				line = readline("minishell: ");
-		add_history(line);
-		last_return = input_sort(line, new_env, &last_return);
-		free(line);
-				line = readline("minishell: ");
+	while (1)
+	{
+		line = readline("minishell: ");
 		add_history(line);
 		last_return = input_sort(line, &new_env, &last_return);
 		free(line);
+	}
+	free(line);
 	return (0);
 }
