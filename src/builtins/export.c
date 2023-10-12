@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/11 16:21:53 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/12 10:48:19 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	ft_export(char ***envp, char *string)
 	i = 0;
 	while ((*envp)[i])
 	{
+		dprintf(2, "")
 		if (!ft_strncmp((*envp)[i], string, (ft_strchr(string, '=') - string + 1)))
 		{
 			free((*envp)[i]);
