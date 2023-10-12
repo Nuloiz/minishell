@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/11 13:38:55 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/12 09:33:07 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_parent(t_execute *exec)
 		else if (!ft_strncmp(exec->commands[0], "export", 6))
 			ft_export(&exec->envp, exec->commands[0]);
 		else if (!ft_strncmp(exec->commands[0], "unset", 5))
-			ft_unset(&exec->envp, exec->commands[0]);
+				ft_unset(&exec->envp, exec->commands[0]);
 		else if (!ft_strncmp(exec->commands[0], "env", 3))
 			ft_env(exec->envp);
 		else if (!ft_strncmp(exec->commands[0], "exit", 4))
@@ -85,6 +85,8 @@ int	ft_parent(t_execute *exec)
 	{
 		waitpid(exec->id[i], &status, 0);
 	}
+	dup2(stin_backup, 0);
+	dup2(sout_backup, 1);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (0);
@@ -120,7 +122,8 @@ int	ft_child(int i, t_execute *exec)
 	perror("Execve error:");
 	ft_free_array(command_array);
 	free(command);
-	return (127);
+	exit(127);
+	// return (127);
 }
 
 int	ft_here_doc(t_execute *exec)
@@ -154,8 +157,9 @@ int	execute(int *types, char **parsed, char **envp)
 	t_execute	exec;
 	int			error;
 
+	dprintf(2, "hi im the executer!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 	if (!parsed || !*parsed)
-		return (127);
+		return (0);
 	error = 0;
 	if (ft_init(&exec, types, parsed, envp))
 		return (1);
