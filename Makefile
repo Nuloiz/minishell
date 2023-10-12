@@ -44,6 +44,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 #	@make -C tools/ft_printf
 
+
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) tools/ft_printf/libftprintf.a $(INCLUDES)
 #	@echo "Linking $(NAME)"
 
