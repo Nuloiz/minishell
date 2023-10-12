@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dup.c                                              :+:      :+:    :+:   */
+/*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nschutz <nschutz@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 13:07:55 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/09 13:07:55 by nschutz          ###   ########.fr       */
+/*   Created: 2023/10/11 13:21:13 by nschutz           #+#    #+#             */
+/*   Updated: 2023/10/11 13:21:13 by nschutz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**dup_array(char **array)
+int	nv_after_red(t_input **input, int i)
 {
-	char	**new;
-	int		i;
-
-	i = 0;
-	while (array[i])
-		i++;
-	new = ft_calloc(sizeof(char *), i + 1);
-	i = 0;
-	while (array[i])
+	if (i == 2 && (!(*input) || (*input)->type == PIPE || \
+			(*input)->type == REDIRECT))
 	{
-		new[i] = ft_strdup(array[i]);
-		i++;
+		if (!(*input))
+			printf("syntax error near unexpected token `newline'\n");
+		else
+			printf("syntax error near unexpected token `%s'\n", (*input)->word);
+		return (258);
 	}
-	return (new);
+	return (0);
 }
