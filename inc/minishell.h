@@ -50,12 +50,12 @@ typedef struct s_input
 typedef struct s_array
 {
 	char	**cmds;
-	char	**envp;
+	char	***envp;
 	int		*type;
 }				t_array;
 
 int		main(int argc, char **argv, char **envp);
-int		input_sort(char *line, char **envp, int *l_r);
+int		input_sort(char *line, char ***envp, int *l_r);
 void	mod_lstadd_back(t_input **lst, t_input *new);
 t_input	*mod_lstlast(t_input *lst);
 int		input_type(char *s, char *s_one, char **envp);
