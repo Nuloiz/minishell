@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/12 13:42:53 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/12 16:09:44 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,19 +106,42 @@ int	ft_child(int i, t_execute *exec)
 		dup2(exec->pipe_fd[0][1], 1);
 	else
 		dup2(exec->pipe_fd[i][1], 1);
-	command_array = ft_get_command_arg_array
-		(exec->commands[i]);
-	command = ft_check_command_and_get_path(command_array[0], *exec->envp);
-	if (command == NULL)
+	if (exec->types[i] == 6)
 	{
-		ft_free_array(command_array);
-		return (ft_print_command_error(exec->commands, 127, i));
+		dprintf(2, "executing builtin: %s in child: %i", exec->commands[i], i);
+		if (!ft_strncmp(exec->commands[i], "echo", 4))
+			ft_echo(exec->commands[i]);
+		else if (!ft_strncmp(exec->commands[i], "cd", 2))
+			ft_cd(exec->commands[i], exec->envp);
+		else if (!ft_strncmp(exec->commands[i], "pwd", 3))
+			ft_pwd();
+		else if (!ft_strncmp(exec->commands[i], "export", 6))
+			ft_export(exec->envp, exec->commands[i]);
+		else if (!ft_strncmp(exec->commands[i], "unset", 5))
+			ft_unset(exec->envp, exec->commands[0]);
+		else if (!ft_strncmp(exec->commands[i], "env", 3))
+			ft_env(*exec->envp);
+		else if (!ft_strncmp(exec->commands[i], "exit", 4))
+			ft_exit(exec->commands);
+		ft_close_all_fds(exec);
+		exit(0);
 	}
-	execve(command, command_array, *exec->envp);
-	perror("Execve error:");
-	ft_free_array(command_array);
-	free(command);
-	return (127);
+	else
+	{
+		command_array = ft_get_command_arg_array
+			(exec->commands[i]);
+		command = ft_check_command_and_get_path(command_array[0], *exec->envp);
+		if (command == NULL)
+		{
+			ft_free_array(command_array);
+			return (ft_print_command_error(exec->commands, 127, i));
+		}
+		execve(command, command_array, *exec->envp);
+		perror("Execve error:");
+		ft_free_array(command_array);
+		free(command);
+	}
+	exit (127);
 }
 
 int	ft_here_doc(t_execute *exec)
