@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 10:18:35 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/12 10:17:52 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/12 13:55:15 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_execute {
 	int		error;
 	char	**commands;
 	char	***envp;
+	int		*types;
 }	t_execute;
 
 char	*ft_check_command_and_get_path(char *command, char **envp);
