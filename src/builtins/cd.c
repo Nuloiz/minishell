@@ -6,19 +6,19 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:43:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/12 12:26:38 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/14 19:04:33 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**ft_get_pwd(char ***envp)
+char	*ft_get_pwd(char ***envp)
 {
 	char	pwd[PATH_MAX];
 	char	*oldpwd;
 
 	if (!(getcwd(pwd, PATH_MAX)))
-		return (1);
+		return (NULL);
 	oldpwd = ft_strjoin("export OLDPWD=", pwd);
 	if (!oldpwd)
 		return (NULL);
