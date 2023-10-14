@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/12 16:09:44 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/14 20:07:05 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	ft_parent(t_execute *exec)
 	ft_close_all_fds(exec);
 
 	i = -1;
-	while (++i < exec->count_children && !(exec->count_builtins == 1))
+	while (++i < exec->count_children && !(exec->count_builtins == 1 && exec->count_children == 1))
 	{
 		waitpid(exec->id[i], &status, 0);
 	}
