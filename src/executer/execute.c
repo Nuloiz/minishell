@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/14 20:07:05 by dnebatz          ###   ########.fr       */
+/*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
+/*   Updated: 2023/10/15 16:32:48 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ int	ft_parent(t_execute *exec)
 			exec->pipe_fd[0][1] = 1;
 		dup2(exec->pipe_fd[0][0], 0);
 		dup2(exec->pipe_fd[0][1], 1);
-		if (!ft_strncmp(exec->commands[0], "echo", 4))
-			ft_echo(exec->commands[0]);
+		dprintf(2, "executing builtin: %s in parent\n", exec->commands[0]);
+		if (!ft_strncmp(exec->commands[0], "echo", 4)) ft_echo(exec->commands[0]);
 		else if (!ft_strncmp(exec->commands[0], "cd", 2))
 			ft_cd(exec->commands[0], exec->envp);
 		else if (!ft_strncmp(exec->commands[0], "pwd", 3))
