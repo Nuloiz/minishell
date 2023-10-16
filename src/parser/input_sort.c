@@ -80,7 +80,6 @@ static t_input	*new_node(char *s, char *s_one, char **envp, int *l_r)
 	if (!new)
 		return (NULL);
 	new->type = input_type(s, s_one, envp);
-	printf("%c", s[0]);
 	if (s[0] == 34 || s[0] == 39)
 	{
 		new->word = quotes(s, s[0]);
@@ -140,7 +139,6 @@ int	input_sort(char *line, char ***envp, int *l_r)
 	cmd = mod_split(line, ' ');
 	linked_list_start(cmd, *envp, &input, l_r);
 	r = sort_array(&input, &array);
-	print_list(&input);
 	free_list(&input);
 	return (r);
 }
