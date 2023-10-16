@@ -6,11 +6,11 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:50:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/15 16:25:14 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 16:47:08 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
 int	ft_init_struct(t_execute *new, int *types, char **parsed, char ***envp)
 {
@@ -52,12 +52,13 @@ int	ft_init_struct(t_execute *new, int *types, char **parsed, char ***envp)
 		new->count_pipes = 1;
 	new->pipe_fd = malloc(sizeof(int *) * (new->count_pipes));
 	new->error = 0;
-	if (new->limiter || new->input)
-		new->commands = &parsed[1];
-	else
-		new->commands = parsed;
 	new->envp = envp;
 	new->types = types;
+	new->commands = ft_get_commands(new, parsed);
+	int j = 0;
+	while (new->commands[j])
+		dprintf(2, "new->commands[i]: %s\n", new->commands[j++]);
+		dprintf(2, "new->commands[i]: %s\n", new->commands[j++]);
 	// int j = -1;
 	// while (new->commands[++j])
 	// 	printf("commands: %s\n", new->commands[j]);
