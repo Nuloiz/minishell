@@ -6,11 +6,11 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 10:46:55 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/09/06 18:33:48 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 16:34:30 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
 static char	**ft_free(char **splitted, int i)
 {

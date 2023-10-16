@@ -6,11 +6,11 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 09:51:39 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/09/18 18:43:59 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 16:34:30 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
 // is fetching all from enviroment after PATH=
 char	*ft_get_path(char **envp)

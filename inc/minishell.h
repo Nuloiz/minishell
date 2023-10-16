@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/12 10:17:38 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 16:56:09 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <limits.h>
 //# include "ft_printf.h"
 # include "../tools/ft_printf/ft_printf.h"
-# include "../src/executer/pipex.h"
+// # include "../src/executer/pipex.h"
 # include <errno.h>
 
 #define COMMAND 1
@@ -53,6 +53,24 @@ typedef struct s_array
 	char	***envp;
 	int		*type;
 }				t_array;
+
+typedef struct s_execute {
+	char	*input;
+	int		append;
+	char	*output;
+	char	*limiter;
+	int		count_commands;
+	int		count_builtins;
+	int		count_children;
+	int		count_limiter;
+	int		*id;
+	int		count_pipes;
+	int		**pipe_fd;
+	int		error;
+	char	**commands;
+	char	***envp;
+	int		*types;
+}	t_execute;
 
 int		main(int argc, char **argv, char **envp);
 int		input_sort(char *line, char ***envp, int *l_r);
@@ -81,10 +99,27 @@ char	**ft_append_string_to_array(char **array, char *string);
 int		ft_pwd(void);
 int		ft_unset(char ***envp, char *string);
 int		execute(int *types, char **parsed, char ***envp);
-void	ft_exit(char **array);
+void	ft_exit(char **array, t_execute *exec);
 char	*ft_get_env(char **envp, char *string);
 int		ft_cd(char *command, char ***envp);
 void	print_list(t_input **input);
 void	print_cmds(char **s, int *type);
+char	**ft_get_commands(t_execute *new, char **parsed);
+char	*ft_check_command_and_get_path(char *command, char **envp);
+void	ft_free_array(char **array);
+char	**ft_special_split(char const *s, char c);
+char	**ft_get_command_arg_array(char *command);
+void	ft_remove(char *start, char *end);
+void	ft_close_fds(t_execute *exec, int current_child);
+void	ft_close_all_fds(t_execute *exec);
+int		ft_print_command_error(char **parsed, int error_code, int i);
+int		ft_init_struct(t_execute *new, int *types, char **parsed, char ***envp);
+void	ft_free_data(t_execute *exec);
+int		ft_forking(t_execute *exec);
+int		ft_child(int i, t_execute *exec);
+int		ft_parent(t_execute *exec);
+char	*ft_remove_slash(char *deleted);
+int		ft_strchr_count(const char *string, char c);
+int		ft_init(t_execute *exec, int *types, char **parsed, char ***envp);
 
 #endif

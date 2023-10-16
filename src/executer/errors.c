@@ -6,11 +6,11 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:56:52 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/11 19:22:38 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 16:34:09 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
 // int	ft_print_execve_error(char **argv, int error_code)
 // {

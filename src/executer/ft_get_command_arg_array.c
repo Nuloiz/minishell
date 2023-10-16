@@ -6,11 +6,11 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 09:32:28 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/09/19 17:51:23 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 16:34:30 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
 //"grep Hello", "awk '{count++} END {print count}'"
 //"grep -v !", "sed 's/Hello/Salut/g'"

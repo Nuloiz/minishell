@@ -6,11 +6,11 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/15 16:32:48 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 16:36:17 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
 int	ft_parent(t_execute *exec)
 {
@@ -60,7 +60,8 @@ int	ft_parent(t_execute *exec)
 		dup2(exec->pipe_fd[0][0], 0);
 		dup2(exec->pipe_fd[0][1], 1);
 		dprintf(2, "executing builtin: %s in parent\n", exec->commands[0]);
-		if (!ft_strncmp(exec->commands[0], "echo", 4)) ft_echo(exec->commands[0]);
+		if (!ft_strncmp(exec->commands[0], "echo", 4))
+			ft_echo(exec->commands[0]);
 		else if (!ft_strncmp(exec->commands[0], "cd", 2))
 			ft_cd(exec->commands[0], exec->envp);
 		else if (!ft_strncmp(exec->commands[0], "pwd", 3))
@@ -72,10 +73,9 @@ int	ft_parent(t_execute *exec)
 		else if (!ft_strncmp(exec->commands[0], "env", 3))
 			ft_env(*exec->envp);
 		else if (!ft_strncmp(exec->commands[0], "exit", 4))
-			ft_exit(exec->commands);
+			ft_exit(exec->commands, exec);
 	}
 	ft_close_all_fds(exec);
-
 	i = -1;
 	while (++i < exec->count_children && !(exec->count_builtins == 1 && exec->count_children == 1))
 	{
@@ -122,7 +122,7 @@ int	ft_child(int i, t_execute *exec)
 		else if (!ft_strncmp(exec->commands[i], "env", 3))
 			ft_env(*exec->envp);
 		else if (!ft_strncmp(exec->commands[i], "exit", 4))
-			ft_exit(exec->commands);
+			ft_exit(exec->commands, exec);
 		ft_close_all_fds(exec);
 		exit(0);
 	}
