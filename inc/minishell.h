@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/16 16:56:09 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 18:11:12 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,6 @@ int		ft_parent(t_execute *exec);
 char	*ft_remove_slash(char *deleted);
 int		ft_strchr_count(const char *string, char c);
 int		ft_init(t_execute *exec, int *types, char **parsed, char ***envp);
+int		ft_free_end(int ret, char **array, t_execute *exec);
 
 #endif
