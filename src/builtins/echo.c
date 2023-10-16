@@ -6,11 +6,29 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 18:29:06 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/10 15:27:47 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 12:41:17 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// check if there is -n after echo
+// and return the position to start the echo string
+int	ft_check_newline(char **splitted, int *new_line)
+{
+	int	i;
+
+	i = 1;
+	if (splitted[i])
+	{
+		if (!(ft_strncmp("-n", splitted[i], 3)))
+		{
+			*new_line = 0;
+			i++;
+		}
+	}
+	return (i);
+}
 
 // prints args (maybe needed to be splitted with
 // ft_split) and if first is -n then no newline at end
@@ -25,13 +43,8 @@ int	ft_echo(char *args)
 	if (!splitted || !*splitted)
 		return (0);
 	size = ft_array_size(splitted);
-	i = 1;
 	new_line = 1;
-	if (!(ft_strncmp("-n", splitted[i], 3)))
-	{
-		new_line = 0;
-		i++;
-	}
+	i = ft_check_newline(splitted, &new_line);
 	while (splitted[i])
 	{
 		ft_printf("%s", splitted[i]);
