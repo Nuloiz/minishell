@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:50:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/12 10:15:22 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/15 16:25:14 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	ft_init_struct(t_execute *new, int *types, char **parsed, char ***envp)
 	new->limiter = NULL;
 	new->count_commands = 0;
 	new->count_builtins = 0;
+	new->count_limiter = 0;
 	while (types[++i])
 	{
 		if (types[i] == 1)
@@ -35,6 +36,8 @@ int	ft_init_struct(t_execute *new, int *types, char **parsed, char ***envp)
 		}
 		if (types[i] == 2)
 			new->limiter = parsed[i];
+		if (types[i] == 2)
+			new->count_limiter ++;
 		if (types[i] == 5)
 			++new->count_commands;
 		if (types[i] == 6)
@@ -43,6 +46,8 @@ int	ft_init_struct(t_execute *new, int *types, char **parsed, char ***envp)
 	new->count_children = new->count_commands + new->count_builtins;
 	new->id = malloc(sizeof(int) * (new->count_children));
 	new->count_pipes = new->count_children - 1;
+	if (new->count_limiter)
+		new->count_pipes++;
 	if (new->count_pipes < 1)
 		new->count_pipes = 1;
 	new->pipe_fd = malloc(sizeof(int *) * (new->count_pipes));
@@ -52,7 +57,8 @@ int	ft_init_struct(t_execute *new, int *types, char **parsed, char ***envp)
 	else
 		new->commands = parsed;
 	new->envp = envp;
-	int j = -1;
+	new->types = types;
+	// int j = -1;
 	// while (new->commands[++j])
 	// 	printf("commands: %s\n", new->commands[j]);
 	// printf("count_children: %i count_commands: %i count_builtins: %i  count_pipes: %i\n", new->count_children, new->count_commands, new->count_builtins, new->count_pipes);
@@ -113,6 +119,7 @@ void	ft_close_all_fds(t_execute *exec)
 	{
 		close(exec->pipe_fd[i][0]);
 		close(exec->pipe_fd[i][1]);
+		dprintf(2, "closed pipe_fd[%i][0]: %i pipe_fd[%i][1]: %i\n", i, exec->pipe_fd[i][0], i, exec->pipe_fd[i][1]);
 		i++;
 	}
 }
@@ -128,11 +135,13 @@ void	ft_close_fds(t_execute *exec, int current_child)
 				&& i == 0))
 		{
 			close(exec->pipe_fd[i][1]);
+			dprintf(2, "closed pipe_fd[%i][1]: %i\n", i, exec->pipe_fd[i][1]);
 		}
 		if (i != current_child - 1 && !(current_child == 0
 				&& i == exec->count_pipes - 1))
 		{
 			close(exec->pipe_fd[i][0]);
+			dprintf(2, "closed pipe_fd[%i][0]: %i \n", i, exec->pipe_fd[i][0]);
 		}
 		i++;
 	}

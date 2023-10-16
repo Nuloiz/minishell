@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nschutz <nschutz@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/12 10:02:33 by nschutz          ###   ########.fr       */
+/*   Created: 2023/09/19 11:18:49 by dnebatz           #+#    #+#             */
+/*   Updated: 2023/10/15 16:32:20 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,13 +127,13 @@ int	ft_forking(t_execute *exec)
 	exec->id[0] = 1;
 	while (++i < exec->count_children && !(exec->count_builtins == 1 && exec->count_children == 1))
 	{
-		dprintf(2, "hi, ich forke\n");
+		// dprintf(2, "hi, ich forke\n");
 		exec->id[i] = fork();
 		if (exec->id[i] == 0)
 			break ;
 	}
 	i = ft_check_fork(exec, i);
-	dprintf(2, "i: %i exec->id[%i]: %i\n", i, i, exec->id[i]);
+	// dprintf(2, "i: %i exec->id[%i]: %i\n", i, i, exec->id[i]);
 	if (i < 0)
 		return (1);
 	if (exec->id[i] == 0 && i == 0 && exec->limiter && !(exec->count_builtins == 1 && exec->count_children == 1))

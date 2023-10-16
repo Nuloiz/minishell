@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 10:18:35 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/12 10:17:52 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/15 16:22:38 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ typedef struct s_execute {
 	int		count_commands;
 	int		count_builtins;
 	int		count_children;
+	int		count_limiter;
 	int		*id;
 	int		count_pipes;
 	int		**pipe_fd;
 	int		error;
 	char	**commands;
 	char	***envp;
+	int		*types;
 }	t_execute;
 
 char	*ft_check_command_and_get_path(char *command, char **envp);
