@@ -72,6 +72,10 @@ char	*mod_splitting(char *s, int *j, char c)
 	{
 		array = ft_substr(s, *j, mod_possplit(&s[*j] + 1, s[*j]) + 2);
 		*j = *j + mod_possplit(&s[*j] + 1, s[*j]) + 2;
+		if (s[*j] != ' ')
+		{
+			c = 39;
+		}
 	}
 	else
 	{
