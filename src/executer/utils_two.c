@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/16 17:45:11 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 20:42:02 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char	*ft_remove_slash(char *deleted)
 	return (new_deleted);
 }
 
+// returns array with just commands and builtins
 char	**ft_get_commands(t_execute *new, char **parsed)
 {
 	char	**commands;
@@ -68,4 +69,26 @@ int	ft_free_end(int ret, char **array, t_execute *exec)
 	ft_free_array(exec->commands);
 	ft_close_all_fds(exec);
 	return (ret);
+}
+
+// returns array with just commands and builtins
+int	*ft_get_types_commands(t_execute *new)
+{
+	int	*types_commands;
+	int	i;
+	int	j;
+	int	size;
+
+	i = 0;
+	j = 0;
+	size = new->count_builtins + new->count_commands;
+	types_commands = malloc(sizeof(int *) * (size + 1));
+	while (i < size)
+	{
+		if (new->types[j] == 5 || new->types[j] == 6)
+			types_commands[i++] = new->types[j];
+		j++;
+	}
+	types_commands[i] = NULL;
+	return (types_commands);
 }
