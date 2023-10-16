@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 18:29:06 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/16 12:41:17 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 12:46:43 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // check if there is -n after echo
 // and return the position to start the echo string
-int	ft_check_newline(char **splitted, int *new_line)
+static int	ft_check_newline(char **splitted, int *new_line)
 {
 	int	i;
 
