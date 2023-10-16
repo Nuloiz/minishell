@@ -66,6 +66,7 @@ int		is_red(char s);
 int		is_file(char *s);
 int		sort_array(t_input **input, t_array *array);
 int		nv_after_red(t_input **input, int i);
+char	*mod_get_env(char **envp, char *string, int j, char *s);
 char	**mod_split(char *s, char c);
 char	*mod_strjoin(char *s1, char *s2);
 char	*modified_strjoin(char *s1, char *s2);

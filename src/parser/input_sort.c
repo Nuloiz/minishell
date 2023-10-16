@@ -12,11 +12,30 @@
 
 #include "minishell.h"
 
-static char	*quotes(char *s)
+static char	*quotes(char *s, char c)
 {
 	char	*ret;
+	int 	i;
+	int		j;
 
 	ret = ft_substr(s, 1, ft_strlen(s) - 2);
+	i = 0;
+	j = 0;
+	while (ret[i])
+	{
+		if (ret[i] == c)
+		{
+			ret = modified_strjoin(ft_substr(ret, 0, i - 1), ft_substr(ret, i + 1, ft_strlen(ret - i)));
+			j++;
+		}
+		i++;
+	}
+	if (j%2 != 0)
+	{
+		ft_putstr_fd("Open Quotes", 0);
+		free(ret);
+		return (NULL);
+	}
 	return (ret);
 }
 
@@ -24,6 +43,7 @@ static char	*env_var(char *s, char **envp, int *l_r)
 {
 	int		i;
 	int 	j;
+	int 	k;
 	char	*dup;
 
 	i = 0;
@@ -36,10 +56,19 @@ static char	*env_var(char *s, char **envp, int *l_r)
 		dup[j] = s[j];
 		j++;
 	}
+	if (dup[j - 1] == 39)
+		j = 1;
+	else
+		j = 0;
 	if (!ft_strncmp(&s[i], "$?", 3))
 		dup = modified_strjoin(dup, ft_itoa(*l_r));
 	else
-		dup = modified_strjoin(dup, ft_get_env(envp, &s[i + 1]));
+	{
+		k = i;
+		while (s[k] &&  s[k] != 39)
+			k++;
+		dup = modified_strjoin(dup, mod_get_env(envp, &s[i + 1], j, &s[k]));
+	}
 	return (dup);
 }
 
@@ -51,12 +80,13 @@ static t_input	*new_node(char *s, char *s_one, char **envp, int *l_r)
 	if (!new)
 		return (NULL);
 	new->type = input_type(s, s_one, envp);
+	printf("%c", s[0]);
 	if (s[0] == 34 || s[0] == 39)
 	{
-		new->word = quotes(s);
+		new->word = quotes(s, s[0]);
 		if (!new->word)
 			return (NULL);
-		if (s[0] == 34 && is_env_var(&s[1]))
+		if (is_env_var(s))
 			new->type = 4;
 	}
 	else
