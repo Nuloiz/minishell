@@ -6,11 +6,11 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/09/19 17:41:37 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 16:46:43 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
 char	*ft_remove_slash(char *deleted)
 {
@@ -39,4 +39,25 @@ char	*ft_remove_slash(char *deleted)
 	new_deleted[j] = 0;
 	free(deleted);
 	return (new_deleted);
+}
+
+char	**ft_get_commands(t_execute *new, char **parsed)
+{
+	char	**commands;
+	int		i;
+	int		j;
+	int		size;
+
+	i = 0;
+	j = 0;
+	size = new->count_builtins + new->count_commands;
+	commands = malloc(sizeof(char *) * (size + 1));
+	while (i < size)
+	{
+		if (new->types[j] == 5 || new->types[j] == 6)
+			commands[i++] = ft_strdup(parsed[j]);
+		j++;
+	}
+	commands[i] = NULL;
+	return (commands);
 }
