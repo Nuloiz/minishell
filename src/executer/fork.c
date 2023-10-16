@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 11:18:49 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/16 16:34:30 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 18:04:28 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int	ft_forking(t_execute *exec)
 			break ;
 	}
 	i = ft_check_fork(exec, i);
-	// dprintf(2, "i: %i exec->id[%i]: %i\n", i, i, exec->id[i]);
+	dprintf(2, "i: %i exec->id[%i]: %i\n", i, i, exec->id[i]);
 	if (i < 0)
 		return (1);
 	if (exec->id[i] == 0 && i == 0 && exec->limiter && !(exec->count_builtins == 1 && exec->count_children == 1))
