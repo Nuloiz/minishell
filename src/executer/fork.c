@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 11:18:49 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/16 18:04:28 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 20:42:36 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	ft_first_child(t_execute *exec, int i)
 		close(exec->pipe_fd[exec->count_pipes - 1][0]);
 		exec->pipe_fd[exec->count_pipes - 1][0]
 			= open(exec->input, O_RDONLY);
+		dprintf(2, "with input file: %s fd: %i\n", exec->input, exec->pipe_fd[exec->count_pipes - 1][0]);
 		if (exec->pipe_fd[exec->count_pipes - 1][0] < 1)
 		{
 			perror("Error");
