@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/16 16:36:17 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 18:10:04 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	ft_parent(t_execute *exec)
 	stin_backup = dup(0);
 	sout_backup = dup(1);
 	i = -1;
+	dprintf(2, "exec->count_builtins == %i && exec->count_children == %i\n",exec->count_builtins,exec->count_children);
 	if (exec->count_builtins == 1 && exec->count_children == 1)
 	{
 		dprintf(2, "one and only parent builtin\n");
@@ -34,7 +35,7 @@ int	ft_parent(t_execute *exec)
 				= open(exec->input, O_RDONLY);
 			if (exec->pipe_fd[0][0] < 1)
 			{
-				perror("Error Outputfile Parent");
+				perror("Error Inputfile Parent");
 				return (1);
 			}
 		}
@@ -51,7 +52,7 @@ int	ft_parent(t_execute *exec)
 						| O_CREAT | O_TRUNC, 0644);
 			if (exec->pipe_fd[0][1] < 1)
 			{
-				perror("Error Outputfile");
+				perror("Error Outputfile Parent");
 				return (1);
 			}
 		}
@@ -182,6 +183,8 @@ int	execute(int *types, char **parsed, char ***envp)
 		return (1);
 	if (exec.limiter)
 		ft_here_doc(&exec);
+	if (!exec.commands[0])
+		return (ft_free_end(0, NULL, &exec));
 	error = ft_forking(&exec);
 	if (error)
 		return (error);
