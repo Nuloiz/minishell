@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/16 16:46:43 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 17:45:11 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,12 @@ char	**ft_get_commands(t_execute *new, char **parsed)
 	}
 	commands[i] = NULL;
 	return (commands);
+}
+
+int	ft_free_end(int ret, char **array, t_execute *exec)
+{
+	ft_free_array(array);
+	ft_free_array(exec->commands);
+	ft_close_all_fds(exec);
+	return (ret);
 }
