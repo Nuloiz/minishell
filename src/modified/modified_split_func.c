@@ -42,6 +42,18 @@ static int	mod_possplit(const char *s, char c)
 	return (i);
 }
 
+void	mod_countsplitting(char *s, int *j, char c)
+{
+	if (s[*j] == 34 || s[*j] == 39)
+	{
+		*j = *j + mod_possplit(&s[*j] + 1, s[*j]) + 2;;
+		if (s[*j] != ' ')
+			mod_countsplitting(s, j, c);
+	}
+	else
+		*j = *j + mod_possplit(&s[*j], c);
+}
+
 static int	mod_countsplit(char const *s, char c)
 {
 	int		i;
@@ -55,10 +67,7 @@ static int	mod_countsplit(char const *s, char c)
 			j++;
 		if (!s[j])
 			break ;
-		if (s[j] == 34 || s[j] == 39)
-			j = j + mod_possplit(&s[j] + 1, s[j]) + 2;
-		else
-			j = j + mod_possplit(&s[j], c);
+		mod_countsplitting(s, &j, c);
 		i++;
 	}
 	return (i);
