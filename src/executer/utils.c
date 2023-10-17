@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:50:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/17 10:12:48 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/17 11:58:22 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	ft_free_array(char **array)
 			free(array[i]);
 			i++;
 		}
-		free(array[i]);
+		// free(array[i]);
 	}
 	free(array);
 }
