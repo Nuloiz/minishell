@@ -56,7 +56,7 @@ static char	*env_var(char *s, char **envp, int *l_r)
 		dup[j] = s[j];
 		j++;
 	}
-	if (dup[j - 1] == 39)
+	if (j > 0 && dup[j - 1] == 39)
 		j = 1;
 	else
 		j = 0;
