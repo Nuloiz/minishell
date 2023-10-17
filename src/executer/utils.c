@@ -6,13 +6,13 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:50:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/17 11:58:22 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/17 18:08:06 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_init_struct(t_execute *new, int *types, char **parsed, char ***envp)
+int	ft_init_struct(t_execute *new, t_command **token, char ***envp)
 {
 	int	i;
 
@@ -24,23 +24,14 @@ int	ft_init_struct(t_execute *new, int *types, char **parsed, char ***envp)
 	new->count_commands = 0;
 	new->count_builtins = 0;
 	new->count_limiter = 0;
-	while (types[++i])
+	while (token[++i]->index != -1)
 	{
-		if (types[i] == 1)
-			new->input = parsed[i];
-		if (types[i] == 3 || (types[i] == 4))
-		{
-			if (types[i] == 4)
-				new->append = 1;
-			new->output = parsed[i];
-		}
-		if (types[i] == 2)
-			new->limiter = parsed[i];
-		if (types[i] == 2)
+		dprintf(2, "token[%i]->type: %i\n", i, token[i]->type);
+		if (token[i]->type == 2)
 			new->count_limiter ++;
-		if (types[i] == 5)
+		if (token[i]->type == 5)
 			++new->count_commands;
-		if (types[i] == 6)
+		if (token[i]->type == 6)
 			++new->count_builtins;
 	}
 	new->count_children = new->count_commands + new->count_builtins;
@@ -53,36 +44,9 @@ int	ft_init_struct(t_execute *new, int *types, char **parsed, char ***envp)
 	new->pipe_fd = malloc(sizeof(int *) * (new->count_pipes));
 	new->error = 0;
 	new->envp = envp;
-	new->types = types;
-	new->commands = ft_get_commands(new, parsed);
-	new->types_commands = ft_get_types_commands(new);
-	int j = 0;
-	while (new->commands[j])
-		dprintf(2, "new->commands[i]: %s\n", new->commands[j++]);
-	dprintf(2, "new->commands[i]: %s\n", new->commands[j++]);
-	// int j = -1;
-	// while (new->commands[++j])
-	// 	printf("commands: %s\n", new->commands[j]);
-	// printf("count_children: %i count_commands: %i count_builtins: %i  count_pipes: %i\n", new->count_children, new->count_commands, new->count_builtins, new->count_pipes);
+	new->token = token;
 	return (1);
 }
-
-// int	ft_init_struct(t_execute *new, int argc, char **argv, char **envp)
-// {
-// 	new->count_children = argc - 3 - new->here_doc;
-// 	new->id = malloc(sizeof(int) * (new->count_children));
-// 	new->count_pipes = argc - 4;
-// 	if (new->count_pipes < 1)
-// 		new->count_pipes = 1;
-// 	printf("count pipes: %i\n", new->count_pipes);
-// 	new->pipe_fd = malloc(sizeof(int *) * (new->count_pipes));
-// 	new->error = 0;
-// 	new->commands = &argv[2 + new->here_doc];
-// 	new->envp = envp;
-// 	new->argc = argc;
-// 	new->argv = argv;
-// 	return (1);
-// }
 
 void	ft_free_data(t_execute *exec)
 {

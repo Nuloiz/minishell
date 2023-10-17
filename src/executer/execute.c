@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/17 11:01:49 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/17 18:32:48 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,38 +99,39 @@ int	ft_child(int i, t_execute *exec)
 	char	*command;
 
 	ft_close_fds(exec, i);
-	if (i == 0)
-		dup2(exec->pipe_fd[exec->count_pipes - 1][0], 0);
-	else
-		dup2(exec->pipe_fd[i - 1][0], 0);
-	if (i == exec->count_children - 1)
-		dup2(exec->pipe_fd[0][1], 1);
-	else
-		dup2(exec->pipe_fd[i][1], 1);
-	if (exec->types_commands[i] == 6)
+	// if (i == 0)
+	// 	dup2(exec->pipe_fd[exec->count_pipes - 1][0], 0);
+	// else
+	// 	dup2(exec->pipe_fd[i - 1][0], 0);
+	// if (i == exec->count_children - 1)
+	// 	dup2(exec->pipe_fd[0][1], 1);
+	// else
+	// 	dup2(exec->pipe_fd[i][1], 1);
+	dprintf(2, "exec->token[i]->type: %i in child: %i\n",exec->token[i]->type, i);
+	if (exec->token[i]->type == 6)
 	{
-		dprintf(2, "executing builtin: %s in child: %i\n", exec->commands[i], i);
-		if (!ft_strncmp(exec->commands[i], "echo", 4))
-			ft_echo(exec->commands[i]);
-		else if (!ft_strncmp(exec->commands[i], "cd", 2))
-			ft_cd(exec->commands[i], exec->envp);
-		else if (!ft_strncmp(exec->commands[i], "pwd", 3))
+		dprintf(2, "executing builtin: %s in child: %i\n", exec->token[i]->command, i);
+		if (!ft_strncmp(exec->token[i]->command, "echo", 4))
+			ft_echo(exec->token[i]->command);
+		else if (!ft_strncmp(exec->token[i]->command, "cd", 2))
+			ft_cd(exec->token[i]->command, exec->envp);
+		else if (!ft_strncmp(exec->token[i]->command, "pwd", 3))
 			ft_pwd();
-		else if (!ft_strncmp(exec->commands[i], "export", 6))
-			ft_export(exec->envp, exec->commands[i]);
-		else if (!ft_strncmp(exec->commands[i], "unset", 5))
-			ft_unset(exec->envp, exec->commands[0]);
-		else if (!ft_strncmp(exec->commands[i], "env", 3))
+		else if (!ft_strncmp(exec->token[i]->command, "export", 6))
+			ft_export(exec->envp, exec->token[i]->command);
+		else if (!ft_strncmp(exec->token[i]->command, "unset", 5))
+			ft_unset(exec->envp, exec->token[i]->command);
+		else if (!ft_strncmp(exec->token[i]->command, "env", 3))
 			ft_env(*exec->envp);
-		else if (!ft_strncmp(exec->commands[i], "exit", 4))
-			ft_exit(exec->commands, exec);
+		// else if (!ft_strncmp(exec->token[i]->command, "exit", 4))
+		// 	ft_exit(exec->commands, exec);
 		ft_close_all_fds(exec);
 		exit(0);
 	}
 	else
 	{
 		command_array = ft_get_command_arg_array
-			(exec->commands[i]);
+			(exec->token[i]->command);
 		command = ft_check_command_and_get_path(command_array[0], *exec->envp);
 		if (command == NULL)
 		{
@@ -172,19 +173,20 @@ int	ft_here_doc(t_execute *exec)
 	return (1);
 }
 
-int	execute(int *types, char **parsed, char ***envp)
+int	new_execute(char ***envp, t_command **token)
 {
 	t_execute	exec;
 	int			error;
 
-	if (!*parsed)
+	if (!*token)
 		return (0);
 	error = 0;
-	if (ft_init(&exec, types, parsed, envp))
+	if (ft_init(&exec, token, envp))
 		return (1);
 	if (exec.limiter)
 		ft_here_doc(&exec);
-	if (!exec.commands[0])
+
+	if (token[0]->index < 0)
 		return (ft_free_end(0, NULL, &exec));
 	error = ft_forking(&exec);
 	if (error)
@@ -193,13 +195,39 @@ int	execute(int *types, char **parsed, char ***envp)
 	return (exec.error);
 }
 
+int	execute(int *types, char **parsed, char ***envp)
+{
+	t_command	**token;
+
+	token = malloc(sizeof(t_command *) * 3);
+	token[0] = malloc(sizeof(t_command ));
+	token[1] = malloc(sizeof(t_command ));
+	token[2] = malloc(sizeof(t_command ));
+	token[0]->index = 0;
+	token[0]->command = "ls -a";
+	token[0]->input = "input.txt";
+	token[0]->output = NULL;
+	token[0]->append = 0;
+	token[0]->limiter = NULL;
+	token[0]->type = 5;
+	token[1]->index = 1;
+	token[1]->command = "ls -a";
+	token[1]->input = NULL;
+	token[1]->output = "output.txt";
+	token[1]->append = 1;
+	token[1]->type = 5;
+	token[1]->limiter = NULL;
+	token[2]->index = -1;
+	return (new_execute(envp, token));
+}
+
 //call initialisation for struct, set here_doc and open pipes
-int	ft_init(t_execute *exec, int *types, char **parsed, char ***envp)
+int	ft_init(t_execute *exec, t_command **token, char ***envp)
 {
 	int	i;
 
 	i = -1;
-	ft_init_struct(exec, types, parsed, envp);
+	ft_init_struct(exec, token, envp);
 	if (exec->id == NULL || exec->pipe_fd == NULL)
 		return (1);
 	while (++i < exec->count_pipes)
@@ -216,7 +244,7 @@ int	ft_init(t_execute *exec, int *types, char **parsed, char ***envp)
 			ft_putstr_fd("Pipe Error!\n", 2);
 			return (1);
 		}
-		dprintf(2, "exec->pipe_fd[%i][0]:%i exec->pipe_fd[%i][1]: %i\n",i, exec->pipe_fd[i][0], i, exec->pipe_fd[i][1]);
+		// dprintf(2, "exec->pipe_fd[%i][0]:%i exec->pipe_fd[%i][1]: %i\n",i, exec->pipe_fd[i][0], i, exec->pipe_fd[i][1]);
 	}
 	return (0);
 }
