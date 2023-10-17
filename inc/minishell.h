@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/16 18:11:12 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/16 20:42:13 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_execute {
 	int		error;
 	char	**commands;
 	char	***envp;
+	int		*types_commands;
 	int		*types;
 }	t_execute;
 
@@ -122,5 +123,6 @@ char	*ft_remove_slash(char *deleted);
 int		ft_strchr_count(const char *string, char c);
 int		ft_init(t_execute *exec, int *types, char **parsed, char ***envp);
 int		ft_free_end(int ret, char **array, t_execute *exec);
+int		*ft_get_types_commands(t_execute *new);
 
 #endif

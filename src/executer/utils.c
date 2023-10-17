@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:50:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/16 16:47:08 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/17 10:12:48 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,11 @@ int	ft_init_struct(t_execute *new, int *types, char **parsed, char ***envp)
 	new->envp = envp;
 	new->types = types;
 	new->commands = ft_get_commands(new, parsed);
+	new->types_commands = ft_get_types_commands(new);
 	int j = 0;
 	while (new->commands[j])
 		dprintf(2, "new->commands[i]: %s\n", new->commands[j++]);
-		dprintf(2, "new->commands[i]: %s\n", new->commands[j++]);
+	dprintf(2, "new->commands[i]: %s\n", new->commands[j++]);
 	// int j = -1;
 	// while (new->commands[++j])
 	// 	printf("commands: %s\n", new->commands[j]);
