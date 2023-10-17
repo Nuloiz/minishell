@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/16 20:42:50 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/17 11:01:49 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,10 @@ int	ft_child(int i, t_execute *exec)
 			return (ft_print_command_error(exec->commands, 127, i));
 		}
 		execve(command, command_array, *exec->envp);
-		perror("Execve error:");
+		perror("Execve error");
+		if (command != command_array[0])
+			free(command);
 		ft_free_array(command_array);
-		free(command);
 	}
 	exit (127);
 }
