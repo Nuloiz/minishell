@@ -67,15 +67,15 @@ static int	mod_countsplit(char const *s, char c)
 char	*mod_splitting(char *s, int *j, char c)
 {
 	char	*array;
+	int 	i;
 
 	if (s[*j] == 34 || s[*j] == 39)
 	{
-		array = ft_substr(s, *j, mod_possplit(&s[*j] + 1, s[*j]) + 2);
-		*j = *j + mod_possplit(&s[*j] + 1, s[*j]) + 2;
+		i = mod_possplit(&s[*j] + 1, s[*j]) + 2;
+		array = ft_substr(s, *j, i);
+		*j = *j + i;
 		if (s[*j] != ' ')
-		{
-			c = 39;
-		}
+			array = ft_strjoin(array, mod_splitting(s, j, c));
 	}
 	else
 	{
@@ -96,7 +96,7 @@ char	**mod_split(char *s, char c)
 	array = (char **)malloc(sizeof(char *) * (mod_countsplit(s, c) + 1));
 	if (!array)
 		return (0);
-	while ((s[j] != '\0'))
+	while ((s[j] && s[j] != '\0'))
 	{
 		while (s[j] == c)
 			j++;
