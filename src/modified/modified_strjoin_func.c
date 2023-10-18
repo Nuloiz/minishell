@@ -90,3 +90,37 @@ char	*modified_strjoin(char *s1, char *s2)
 	else
 		return (0);
 }
+
+char	*mod_nofree_strjoin(char *s1, char *s2)
+{
+	char	*joined;
+	int		i;
+	int		j;
+
+	i = -1;
+	j = -1;
+	joined = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (joined)
+	{
+		if (s1)
+		{
+			while (s1[++i])
+				joined[i] = s1[i];
+			i = ft_strlen(s1);
+		}
+		else
+			i = 0;
+		if (s2)
+		{
+			while (s2[++j])
+			{
+				joined[i] = s2[j];
+				i++;
+			}
+		}
+		joined[i] = 0;
+		return (joined);
+	}
+	else
+		return (0);
+}
