@@ -21,11 +21,12 @@ static char	*quotes(char *s, char c)
 	ret = ft_substr(s, 1, ft_strlen(s) - 2);
 	i = 0;
 	j = 0;
-	while (ret[i])
+	while (ret[i] != '\0')
 	{
 		if (ret[i] == c)
 		{
-			ret = modified_strjoin(ft_substr(ret, 0, i - 1), ft_substr(ret, i + 1, ft_strlen(ret - i)));
+			ret = modified_strjoin(ft_substr(ret, 0, i), ft_substr(ret, i + 1, ft_strlen(ret) - i));
+			i = i - 2;
 			j++;
 		}
 		i++;
@@ -93,7 +94,6 @@ static t_input	*new_node(char *s, char *s_one, char **envp, int *l_r)
 	if (new->type == 4)
 	{
 		new->word = env_var(new->word, envp, l_r);
-		free(s);
 	}
 	new->next = NULL;
 	return (new);
