@@ -94,7 +94,6 @@ static t_input	*new_node(char *s, char *s_one, char **envp, int *l_r)
 	if (new->type == 4)
 	{
 		new->word = env_var(new->word, envp, l_r);
-		free(s);
 	}
 	new->next = NULL;
 	return (new);
