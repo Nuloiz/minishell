@@ -43,6 +43,8 @@ char	*mod_get_env(char **envp, char *string, int j, char *s)
 		}
 		i++;
 	}
+	if (j == 1)
+		env = ft_strdup(s);
 	free(string_equal);
 	return (env);
 }
