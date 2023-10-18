@@ -88,6 +88,7 @@ int		nv_after_red(t_input **input, int i);
 char	*mod_get_env(char **envp, char *string, int j, char *s);
 char	**mod_split(char *s, char c);
 char	*mod_strjoin(char *s1, char *s2);
+char	*mod_nofree_strjoin(char *s1, char *s2);
 char	*modified_strjoin(char *s1, char *s2);
 char	**dup_array(char **array);
 void	free_array(char **array);
