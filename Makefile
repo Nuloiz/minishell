@@ -2,8 +2,8 @@ NAME := minishell
 
 CC := cc
 
-#CFLAGS := -Wall -g
-CFLAGS :=  -fsanitize=address -g
+CFLAGS := -g
+#CFLAGS :=  -fsanitize=address -g
 #CFLAGS := -Wall -Wextra -Werror -g
 # find / -name libreadline.aCFLAGS := $(CFLAGS) -fsanitize=address
 SRC :=	free.c dup.c print.c \
@@ -25,7 +25,10 @@ SRC :=	free.c dup.c print.c \
 		builtins/pwd.c \
 		builtins/unset.c \
 		builtins/cd.c \
-		builtins/exit.c
+		builtins/exit.c \
+		executer/init.c \
+		executer/pipe.c \
+		executer/pipe_utils.c
 
 SRC_DIR := src
 OBJ_DIR := obj

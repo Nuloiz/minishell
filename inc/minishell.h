@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/17 18:53:36 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/18 11:17:27 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,23 +66,23 @@ typedef struct s_command
 }				t_command;
 
 typedef struct s_execute {
-	char	*input;
-	int		append;
-	char	*output;
-	char	*limiter;
-	int		count_commands;
-	int		count_builtins;
-	int		count_children;
-	int		count_limiter;
-	int		*id;
-	int		count_pipes;
-	int		**pipe_fd;
-	int		error;
-	char	**commands;
-	char	***envp;
-	int		*types_commands;
-	int		*types;
-	t_command **token;
+	char		*input;
+	int			append;
+	char		*output;
+	char		*limiter;
+	int			count_commands;
+	int			count_builtins;
+	int			count_children;
+	int			count_limiter;
+	int			*id;
+	int			count_pipes;
+	int			**pipe_fd;
+	int			error;
+	char		**commands;
+	char		***envp;
+	int			*types_commands;
+	int			*types;
+	t_command	**token;
 }	t_execute;
 
 int		main(int argc, char **argv, char **envp);
@@ -135,8 +135,7 @@ char	*ft_remove_slash(char *deleted);
 int		ft_strchr_count(const char *string, char c);
 int		ft_init(t_execute *exec, t_command **token, char ***envp);
 int		ft_free_end(int ret, char **array, t_execute *exec);
-int		*ft_get_types_commands(t_execute *new);
+// int		*ft_get_types_commands(t_execute *new);
 int		ft_set_redirects(t_execute *exec, int i);
-int		ft_pipe_normal(t_execute *exec, int i);
 
 #endif

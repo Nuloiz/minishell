@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/17 18:32:48 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/18 13:02:10 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,16 +98,9 @@ int	ft_child(int i, t_execute *exec)
 	char	**command_array;
 	char	*command;
 
-	ft_close_fds(exec, i);
-	// if (i == 0)
-	// 	dup2(exec->pipe_fd[exec->count_pipes - 1][0], 0);
-	// else
-	// 	dup2(exec->pipe_fd[i - 1][0], 0);
-	// if (i == exec->count_children - 1)
-	// 	dup2(exec->pipe_fd[0][1], 1);
-	// else
-	// 	dup2(exec->pipe_fd[i][1], 1);
-	dprintf(2, "exec->token[i]->type: %i in child: %i\n",exec->token[i]->type, i);
+	if (ft_set_redirects(exec, i))
+		ft_exit(NULL, exec);
+	dprintf(2, "exec->token[i]->type: %i in child: %i and command: %s\n",exec->token[i]->type, i, exec->token[i]->command);
 	if (exec->token[i]->type == 6)
 	{
 		dprintf(2, "executing builtin: %s in child: %i\n", exec->token[i]->command, i);
@@ -144,6 +137,7 @@ int	ft_child(int i, t_execute *exec)
 			free(command);
 		ft_free_array(command_array);
 	}
+	ft_close_all_fds(exec);
 	exit (127);
 }
 
@@ -185,8 +179,7 @@ int	new_execute(char ***envp, t_command **token)
 		return (1);
 	if (exec.limiter)
 		ft_here_doc(&exec);
-
-	if (token[0]->index < 0)
+	if (!token[0])
 		return (ft_free_end(0, NULL, &exec));
 	error = ft_forking(&exec);
 	if (error)
@@ -199,25 +192,89 @@ int	execute(int *types, char **parsed, char ***envp)
 {
 	t_command	**token;
 
-	token = malloc(sizeof(t_command *) * 3);
+	token = malloc(sizeof(t_command *) * 10);
+	// token[0] = malloc(sizeof(t_command ));
+	// token[1] = malloc(sizeof(t_command ));
+	// token[2] = malloc(sizeof(t_command ));
+	// token[0]->index = 0;
+	// token[0]->command = "ls -a";
+	// token[0]->input = "input.txt";
+	// token[0]->output = NULL;
+	// token[0]->append = 0;
+	// token[0]->limiter = NULL;
+	// token[0]->type = 5;
+	// token[1]->index = 1;
+	// token[1]->command = "ls -a";
+	// token[1]->input = NULL;
+	// token[1]->output = "output.txt";
+	// token[1]->append = 1;
+	// token[1]->type = 5;
+	// token[1]->limiter = NULL;
+	// token[2] = NULL;
+	
+	// token[0] = malloc(sizeof(t_command ));
+	// token[1] = malloc(sizeof(t_command ));
+	// token[2] = malloc(sizeof(t_command ));
+	// token[3] = malloc(sizeof(t_command ));
+	// token[0]->index = 0;
+	// token[0]->command = "cat";
+	// token[0]->input = NULL;
+	// token[0]->output = NULL;
+	// token[0]->append = 0;
+	// token[0]->limiter = NULL;
+	// token[0]->type = 5;
+	// token[1]->index = 1;
+	// token[1]->command = "cat";
+	// token[1]->input = NULL;
+	// token[1]->output = NULL;
+	// token[1]->append = 1;
+	// token[1]->type = 5;
+	// token[1]->limiter = NULL;
+	// token[2]->index = 1;
+	// token[2]->command = "ls";
+	// token[2]->input = NULL;
+	// token[2]->output = NULL;
+	// token[2]->append = 1;
+	// token[2]->type = 5;
+	// token[2]->limiter = NULL;
+	// token[3] = NULL;
+
+	// token[0] = malloc(sizeof(t_command ));
+	// token[1] = malloc(sizeof(t_command ));
+	// token[0]->index = 0;
+	// token[0]->command = "cat -e";
+	// token[0]->input = "input.txt";
+	// token[0]->output = "output.txt";
+	// token[0]->append = 0;
+	// token[0]->limiter = NULL;
+	// token[0]->type = 5;
+	// token[1] = NULL;
+
 	token[0] = malloc(sizeof(t_command ));
 	token[1] = malloc(sizeof(t_command ));
 	token[2] = malloc(sizeof(t_command ));
 	token[0]->index = 0;
-	token[0]->command = "ls -a";
-	token[0]->input = "input.txt";
+	token[0]->command = "cat";
+	token[0]->input = NULL;
 	token[0]->output = NULL;
 	token[0]->append = 0;
 	token[0]->limiter = NULL;
 	token[0]->type = 5;
 	token[1]->index = 1;
-	token[1]->command = "ls -a";
+	token[1]->command = "cat";
 	token[1]->input = NULL;
-	token[1]->output = "output.txt";
-	token[1]->append = 1;
+	token[1]->output = NULL;
+	token[1]->append = 0;
 	token[1]->type = 5;
 	token[1]->limiter = NULL;
-	token[2]->index = -1;
+	token[2]->index = 1;
+	token[2]->command = "ls";
+	token[2]->input = NULL;
+	token[2]->output = NULL;
+	token[2]->append = 0;
+	token[2]->type = 5;
+	token[2]->limiter = NULL;
+	token[3] = NULL;
 	return (new_execute(envp, token));
 }
 

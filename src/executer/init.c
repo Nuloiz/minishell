@@ -6,47 +6,49 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:16:52 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/17 15:22:37 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/18 11:25:53 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	*ft_init_types(int *types, char **parsed, t_execute *new)
+static void	ft_init_from_token(t_execute *new, t_command **token)
 {
-	char	**limiter;
-	int		i;
-	int		j;
+	int	i;
 
-	i = 0;
-	j = 0;
-	types_commands = malloc(sizeof(int *) * (new->count_limiter + 1));
-	while (i < new->count_limiter)
+	i = -1;
+	while (token[++i])
 	{
-		if (new->types[j] == 5 || new->types[j] == 6)
-			types_commands[i++] = new->types[j];
-		j++;
+		dprintf(2, "token[%i]->type: %i\n", i, token[i]->type);
+		if (token[i]->type == 2)
+			new->count_limiter ++;
+		if (token[i]->type == 5)
+			new->count_commands ++;
+		if (token[i]->type == 6)
+			new->count_builtins ++;
 	}
-	types_commands[i] = NULL;
-	return (types_commands);
 }
 
-// returns array with just commands and builtins
-char	**ft_get_limiter(t_execute *new, char **parsed)
+int	ft_init_struct(t_execute *new, t_command **token, char ***envp)
 {
-	char	**limiter;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	limiter = malloc(sizeof(char *) * (new->count_limiter + 1));
-	while (i < new->count_limiter)
-	{
-		if (new->types[j] == 2)
-			limiter[i++] = ft_strdup(parsed[j]);
-		j++;
-	}
-	limiter[i] = NULL;
-	return (limiter);
+	new->input = NULL;
+	new->append = 0;
+	new->output = NULL;
+	new->limiter = NULL;
+	new->count_commands = 0;
+	new->count_builtins = 0;
+	new->count_limiter = 0;
+	ft_init_from_token(new, token);
+	new->count_children = new->count_commands + new->count_builtins;
+	new->id = malloc(sizeof(int) * (new->count_children));
+	new->count_pipes = new->count_children - 1;
+	if (new->count_limiter)
+		new->count_pipes++;
+	if (new->count_pipes < 1)
+		new->count_pipes = 1;
+	new->pipe_fd = malloc(sizeof(int *) * (new->count_pipes));
+	new->error = 0;
+	new->envp = envp;
+	new->token = token;
+	return (1);
 }
