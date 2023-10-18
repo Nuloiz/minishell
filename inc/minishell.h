@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/18 11:17:27 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/18 14:31:06 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,15 @@ typedef struct s_command
 }				t_command;
 
 typedef struct s_execute {
-	char		*input;
-	int			append;
-	char		*output;
-	char		*limiter;
+	int			count_limiter;
 	int			count_commands;
 	int			count_builtins;
 	int			count_children;
-	int			count_limiter;
 	int			*id;
 	int			count_pipes;
 	int			**pipe_fd;
 	int			error;
-	char		**commands;
 	char		***envp;
-	int			*types_commands;
-	int			*types;
 	t_command	**token;
 }	t_execute;
 

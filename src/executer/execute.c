@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/18 13:02:10 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/18 14:33:27 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ int	ft_parent(t_execute *exec)
 	stin_backup = dup(0);
 	sout_backup = dup(1);
 	i = -1;
-	dprintf(2, "exec->count_builtins == %i && exec->count_children == %i\n",exec->count_builtins,exec->count_children);
+	dprintf(2, "exec->count_builtins == %i && exec->count_children == %i\n",exec->count_builtins, exec->count_children);
 	if (exec->count_builtins == 1 && exec->count_children == 1)
 	{
 		dprintf(2, "one and only parent builtin\n");
 		close(exec->pipe_fd[0][0]);
 		close(exec->pipe_fd[0][1]);
-		if (exec->input)
+		if (exec->token[i]->input)
 		{
 			dprintf(2, "with input file\n");
 			exec->pipe_fd[0][0]
-				= open(exec->input, O_RDONLY);
+				= open(exec->token[i]->input, O_RDONLY);
 			if (exec->pipe_fd[0][0] < 1)
 			{
 				perror("Error Inputfile Parent");
@@ -41,14 +41,14 @@ int	ft_parent(t_execute *exec)
 		}
 		else
 			exec->pipe_fd[0][0] = 0;
-		if (exec->output)
+		if (exec->token[i]->output)
 		{
 			dprintf(2, "with output file\n");
-			if (exec->append)
-				exec->pipe_fd[0][1] = open(exec->output, O_RDWR
+			if (exec->token[i]->append)
+				exec->pipe_fd[0][1] = open(exec->token[i]->output, O_RDWR
 						| O_CREAT | O_APPEND, 0644);
 			else
-				exec->pipe_fd[0][1] = open(exec->output, O_RDWR
+				exec->pipe_fd[0][1] = open(exec->token[i]->output, O_RDWR
 						| O_CREAT | O_TRUNC, 0644);
 			if (exec->pipe_fd[0][1] < 1)
 			{
@@ -60,21 +60,21 @@ int	ft_parent(t_execute *exec)
 			exec->pipe_fd[0][1] = 1;
 		dup2(exec->pipe_fd[0][0], 0);
 		dup2(exec->pipe_fd[0][1], 1);
-		dprintf(2, "executing builtin: %s in parent\n", exec->commands[0]);
-		if (!ft_strncmp(exec->commands[0], "echo", 4))
-			ft_echo(exec->commands[0]);
-		else if (!ft_strncmp(exec->commands[0], "cd", 2))
-			ft_cd(exec->commands[0], exec->envp);
-		else if (!ft_strncmp(exec->commands[0], "pwd", 3))
+		dprintf(2, "executing builtin: %s in parent\n", exec->token[i]->command);
+		if (!ft_strncmp(exec->token[i]->command, "echo", 4))
+			ft_echo(exec->token[i]->command);
+		else if (!ft_strncmp(exec->token[i]->command, "cd", 2))
+			ft_cd(exec->token[i]->command, exec->envp);
+		else if (!ft_strncmp(exec->token[i]->command, "pwd", 3))
 			ft_pwd();
-		else if (!ft_strncmp(exec->commands[0], "export", 6))
-			ft_export(exec->envp, exec->commands[0]);
-		else if (!ft_strncmp(exec->commands[0], "unset", 5))
-			ft_unset(exec->envp, exec->commands[0]);
-		else if (!ft_strncmp(exec->commands[0], "env", 3))
+		else if (!ft_strncmp(exec->token[i]->command, "export", 6))
+			ft_export(exec->envp, exec->token[i]->command);
+		else if (!ft_strncmp(exec->token[i]->command, "unset", 5))
+			ft_unset(exec->envp, exec->token[i]->command);
+		else if (!ft_strncmp(exec->token[i]->command, "env", 3))
 			ft_env(*exec->envp);
-		else if (!ft_strncmp(exec->commands[0], "exit", 4))
-			ft_exit(exec->commands, exec);
+		// else if (!ft_strncmp(exec->token[i]->command, "exit", 4))
+		// 	ft_exit(exec->commands, exec);
 	}
 	ft_close_all_fds(exec);
 	i = -1;
@@ -129,7 +129,7 @@ int	ft_child(int i, t_execute *exec)
 		if (command == NULL)
 		{
 			ft_free_array(command_array);
-			return (ft_print_command_error(exec->commands, 127, i));
+			return (ft_print_command_error(&exec->token[i]->command, 127, i));
 		}
 		execve(command, command_array, *exec->envp);
 		perror("Execve error");
@@ -143,27 +143,27 @@ int	ft_child(int i, t_execute *exec)
 
 int	ft_here_doc(t_execute *exec)
 {
-	char	*red_line;
-	int		len;
+	// char	*red_line;
+	// int		len;
 
-	ft_printf("-> ");
-	red_line = get_next_line(0);
-	while (red_line != NULL)
-	{
-		if (ft_strlen(red_line) - 1 < ft_strlen(exec->limiter))
-			len = ft_strlen(exec->limiter);
-		else
-			len = ft_strlen(red_line) - 1;
-		if (ft_strncmp(red_line, exec->limiter, len) == 0)
-			break ;
-		write(exec->pipe_fd[exec->count_pipes - 1][1],
-			red_line, ft_strlen(red_line));
-		free(red_line);
-		ft_printf("-> ");
-		red_line = get_next_line(0);
-	}
-	close(exec->pipe_fd[exec->count_pipes - 1][1]);
-	free(red_line);
+	// ft_printf("-> ");
+	// red_line = get_next_line(0);
+	// while (red_line != NULL)
+	// {
+	// 	if (ft_strlen(red_line) - 1 < ft_strlen(exec->limiter))
+	// 		len = ft_strlen(exec->limiter);
+	// 	else
+	// 		len = ft_strlen(red_line) - 1;
+	// 	if (ft_strncmp(red_line, exec->limiter, len) == 0)
+	// 		break ;
+	// 	write(exec->pipe_fd[exec->count_pipes - 1][1],
+	// 		red_line, ft_strlen(red_line));
+	// 	free(red_line);
+	// 	ft_printf("-> ");
+	// 	red_line = get_next_line(0);
+	// }
+	// close(exec->pipe_fd[exec->count_pipes - 1][1]);
+	// free(red_line);
 	return (1);
 }
 
@@ -172,15 +172,15 @@ int	new_execute(char ***envp, t_command **token)
 	t_execute	exec;
 	int			error;
 
-	if (!*token)
+	if (!token || *token)
 		return (0);
 	error = 0;
 	if (ft_init(&exec, token, envp))
 		return (1);
-	if (exec.limiter)
-		ft_here_doc(&exec);
-	if (!token[0])
-		return (ft_free_end(0, NULL, &exec));
+	// if (!token[0])
+	// 	return (ft_free_end(0, NULL, &exec));
+	if (exec.count_limiter)
+		ft_heredoc(&exec);
 	error = ft_forking(&exec);
 	if (error)
 		return (error);
@@ -250,31 +250,32 @@ int	execute(int *types, char **parsed, char ***envp)
 	// token[0]->type = 5;
 	// token[1] = NULL;
 
-	token[0] = malloc(sizeof(t_command ));
-	token[1] = malloc(sizeof(t_command ));
-	token[2] = malloc(sizeof(t_command ));
-	token[0]->index = 0;
-	token[0]->command = "cat";
-	token[0]->input = NULL;
-	token[0]->output = NULL;
-	token[0]->append = 0;
-	token[0]->limiter = NULL;
-	token[0]->type = 5;
-	token[1]->index = 1;
-	token[1]->command = "cat";
-	token[1]->input = NULL;
-	token[1]->output = NULL;
-	token[1]->append = 0;
-	token[1]->type = 5;
-	token[1]->limiter = NULL;
-	token[2]->index = 1;
-	token[2]->command = "ls";
-	token[2]->input = NULL;
-	token[2]->output = NULL;
-	token[2]->append = 0;
-	token[2]->type = 5;
-	token[2]->limiter = NULL;
-	token[3] = NULL;
+	// token[0] = malloc(sizeof(t_command ));
+	// token[1] = malloc(sizeof(t_command ));
+	// token[2] = malloc(sizeof(t_command ));
+	// token[0]->index = 0;
+	// token[0]->command = "cat";
+	// token[0]->input = NULL;
+	// token[0]->output = NULL;
+	// token[0]->append = 0;
+	// token[0]->limiter = NULL;
+	// token[0]->type = 5;
+	// token[1]->index = 1;
+	// token[1]->command = "cat";
+	// token[1]->input = NULL;
+	// token[1]->output = NULL;
+	// token[1]->append = 0;
+	// token[1]->type = 5;
+	// token[1]->limiter = NULL;
+	// token[2]->index = 1;
+	// token[2]->command = "ls";
+	// token[2]->input = NULL;
+	// token[2]->output = NULL;
+	// token[2]->append = 0;
+	// token[2]->type = 5;
+	// token[2]->limiter = NULL;
+	// token[3] = NULL;
+	token[0] = NULL;
 	return (new_execute(envp, token));
 }
 

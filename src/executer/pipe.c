@@ -6,12 +6,15 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 18:20:52 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/18 13:08:09 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/18 14:28:49 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// setting redirections
+// reading from the pipe before (if first then last)
+// writing in the same pipe (if last then first)
 int	ft_pipe_normal(t_execute *exec, int i)
 {
 	if (i == 0)
