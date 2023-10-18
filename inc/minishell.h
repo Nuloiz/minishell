@@ -111,6 +111,7 @@ char	*ft_get_env(char **envp, char *string);
 int		ft_cd(char *command, char ***envp);
 void	print_list(t_input **input);
 void	print_cmds(char **s, int *type);
+void	print_commands(t_command **token);
 char	**ft_get_commands(t_execute *new, char **parsed);
 char	*ft_check_command_and_get_path(char *command, char **envp);
 void	ft_free_array(char **array);
