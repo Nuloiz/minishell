@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/19 13:04:30 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/19 15:56:45 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ int	ft_here_doc(t_execute *exec)
 	return (1);
 }
 
-int	new_execute(char ***envp, t_command **token)
+execute(char ***envp, t_command **token)
 {
 	t_execute	exec;
 	int			error;
@@ -208,136 +208,6 @@ int	new_execute(char ***envp, t_command **token)
 		return (error);
 	ft_free_data(&exec);
 	return (exec.error);
-}
-
-int	execute(int *types, char **parsed, char ***envp)
-{
-	t_command	**token;
-
-	token = malloc(sizeof(t_command *) * 10);
-	// token[0] = malloc(sizeof(t_command ));
-	// token[1] = malloc(sizeof(t_command ));
-	// token[2] = malloc(sizeof(t_command ));
-	// token[0]->index = 0;
-	// token[0]->command = "ls -a";
-	// token[0]->input = "input.txt";
-	// token[0]->output = NULL;
-	// token[0]->append = 0;
-	// token[0]->limiter = NULL;
-	// token[0]->type = 5;
-	// token[1]->index = 1;
-	// token[1]->command = "ls -a";
-	// token[1]->input = NULL;
-	// token[1]->output = "output.txt";
-	// token[1]->append = 1;
-	// token[1]->type = 5;
-	// token[1]->limiter = NULL;
-	// token[2] = NULL;
-	
-	token[0] = malloc(sizeof(t_command ));
-	token[1] = malloc(sizeof(t_command ));
-	token[2] = malloc(sizeof(t_command ));
-	token[3] = malloc(sizeof(t_command ));
-	token[0]->index = 0;
-	token[0]->command = "wc";
-	token[0]->input = NULL;
-	token[0]->output = NULL;
-	token[0]->append = 0;
-	token[0]->limiter = NULL;
-	token[0]->type = 5;
-	token[1]->index = 1;
-	token[1]->command = "grep hello";
-	token[1]->input = NULL;
-	token[1]->output = NULL;
-	token[1]->append = 0;
-	token[1]->type = 5;
-	token[1]->limiter = NULL;
-	token[2]->index = 2;
-	token[2]->command = "ls";
-	token[2]->input = NULL;
-	token[2]->output = NULL;
-	token[2]->append = 0;
-	token[2]->type = 5;
-	token[2]->limiter = NULL;
-	token[3] = NULL;
-
-	// token[0] = malloc(sizeof(t_command ));
-	// token[1] = malloc(sizeof(t_command ));
-	// token[0]->index = 0;
-	// token[0]->command = "env";
-	// token[0]->input = "input.txt";
-	// token[0]->output = "output.txt";
-	// token[0]->append = 0;
-	// token[0]->limiter = NULL;
-	// token[0]->type = 6;
-	// token[1] = NULL;
-
-	// token[0] = malloc(sizeof(t_command ));
-	// token[1] = malloc(sizeof(t_command ));
-	// token[2] = malloc(sizeof(t_command ));
-	// token[0]->index = 0;
-	// token[0]->command = "grep hello";
-	// token[0]->input = NULL;
-	// token[0]->output = "output.txt";
-	// token[0]->append = 0;
-	// token[0]->limiter = "end";
-	// token[0]->type = 5;
-	// token[1]->index = 1;
-	// token[1]->command = "wc -l";
-	// token[1]->input = NULL;
-	// token[1]->output = NULL;
-	// token[1]->append = 0;
-	// token[1]->type = 5;
-	// token[1]->limiter = NULL;
-	// token[2]->index = 2;
-	// token[2]->command = "cat -e";
-	// token[2]->input = NULL;
-	// token[2]->output = NULL;
-	// token[2]->append = 0;
-	// token[2]->type = 5;
-	// token[2]->limiter = "end3";
-	// token[3] = NULL;
-
-	// token[0] = malloc(sizeof(t_command ));
-	// token[1] = malloc(sizeof(t_command ));
-	// token[2] = malloc(sizeof(t_command ));
-	// token[0]->index = 0;
-	// token[0]->command = "grep hello";
-	// token[0]->input = NULL;
-	// token[0]->output = "output.txt";
-	// token[0]->append = 0;
-	// token[0]->limiter = "end";
-	// token[0]->type = 5;
-	// token[1]->index = 1;
-	// token[1]->command = "wc -l";
-	// token[1]->input = "input2.txt";
-	// token[1]->output = "output2.txt";
-	// token[1]->append = 1;
-	// token[1]->type = 5;
-	// token[1]->limiter = NULL;
-	// token[2]->index = 2;
-	// token[2]->command = "cat -e";
-	// token[2]->input = NULL;
-	// token[2]->output = NULL;
-	// token[2]->append = 0;
-	// token[2]->type = 5;
-	// token[2]->limiter = NULL;
-	// token[3] = NULL;
-
-	// token[0] = malloc(sizeof(t_command ));
-	// token[1] = malloc(sizeof(t_command ));
-	// token[2] = malloc(sizeof(t_command ));
-	// token[0]->index = 0;
-	// token[0]->command = "ls";
-	// token[0]->input = NULL;
-	// token[0]->output = NULL;
-	// token[0]->append = 0;
-	// token[0]->limiter =NULL;
-	// token[0]->type = 5;
-	// token[1] = NULL;
-
-	// token[0] = NULL;
-	return (new_execute(envp, token));
 }
 
 //call initialisation for struct, set here_doc and open pipes
