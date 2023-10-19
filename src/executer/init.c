@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:16:52 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/18 14:30:55 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/19 12:17:40 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_init_from_token(t_execute *new, t_command **token)
 	while (token[++i])
 	{
 		dprintf(2, "token[%i]->type: %i\n", i, token[i]->type);
-		if (token[i]->type == 2)
+		if (token[i]->limiter)
 			new->count_limiter ++;
 		if (token[i]->type == 5)
 			new->count_commands ++;
@@ -38,7 +38,7 @@ int	ft_init_struct(t_execute *new, t_command **token, char ***envp)
 	new->count_children = new->count_commands + new->count_builtins;
 	new->id = malloc(sizeof(int) * (new->count_children));
 	new->count_pipes = new->count_children - 1;
-	if (new->count_limiter)
+	if (token[0]->limiter)
 		new->count_pipes++;
 	if (new->count_pipes < 1)
 		new->count_pipes = 1;

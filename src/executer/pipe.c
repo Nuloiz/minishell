@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 18:20:52 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/18 14:28:49 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/19 12:57:11 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	ft_set_output(t_execute *exec, int i)
 	}
 	else
 	{
+		// only last should have stdout ?!
 		if (i == exec->count_children - 1)
 		{
 			close(exec->pipe_fd[pipe][1]);
@@ -74,6 +75,7 @@ int	ft_set_input(t_execute *exec, int i)
 		pipe = exec->count_pipes - 1;
 	else
 		pipe = i - 1;
+	// if (exec->token[i]->input && !exec->token[i]->limiter) idk why i did this
 	if (exec->token[i]->input)
 	{
 		close(exec->pipe_fd[pipe][0]);
@@ -86,6 +88,7 @@ int	ft_set_input(t_execute *exec, int i)
 	}
 	else
 	{
+		// only the first should have stdin !
 		if (i == 0)
 		{
 			close(exec->pipe_fd[pipe][0]);
