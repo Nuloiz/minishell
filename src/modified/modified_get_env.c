@@ -56,6 +56,7 @@ char	*mod_get_env(char **envp, char *string, int j, char *s)
 			}
 			i++;
 		}
+		string = ft_substr(string, 0, i);
 	}
 	i = 0;
 	string_equal = ft_strjoin(string, "=");
