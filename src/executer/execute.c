@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/19 12:25:25 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/19 13:04:30 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	ft_parent(t_execute *exec)
 	}
 	ft_close_all_fds(exec);
 	i = -1;
+	dprintf(2, "parent: exec->count_builtins: %i\n", exec->count_builtins);
 	while (++i < exec->count_children && !(exec->count_builtins == 1 && exec->count_children == 1))
 	{
 		waitpid(exec->id[i], &status, 0);
@@ -233,32 +234,32 @@ int	execute(int *types, char **parsed, char ***envp)
 	// token[1]->limiter = NULL;
 	// token[2] = NULL;
 	
-	// token[0] = malloc(sizeof(t_command ));
-	// token[1] = malloc(sizeof(t_command ));
-	// token[2] = malloc(sizeof(t_command ));
-	// token[3] = malloc(sizeof(t_command ));
-	// token[0]->index = 0;
-	// token[0]->command = "cat";
-	// token[0]->input = NULL;
-	// token[0]->output = NULL;
-	// token[0]->append = 0;
-	// token[0]->limiter = NULL;
-	// token[0]->type = 5;
-	// token[1]->index = 1;
-	// token[1]->command = "cat";
-	// token[1]->input = NULL;
-	// token[1]->output = NULL;
-	// token[1]->append = 1;
-	// token[1]->type = 5;
-	// token[1]->limiter = NULL;
-	// token[2]->index = 1;
-	// token[2]->command = "ls";
-	// token[2]->input = NULL;
-	// token[2]->output = NULL;
-	// token[2]->append = 1;
-	// token[2]->type = 5;
-	// token[2]->limiter = NULL;
-	// token[3] = NULL;
+	token[0] = malloc(sizeof(t_command ));
+	token[1] = malloc(sizeof(t_command ));
+	token[2] = malloc(sizeof(t_command ));
+	token[3] = malloc(sizeof(t_command ));
+	token[0]->index = 0;
+	token[0]->command = "wc";
+	token[0]->input = NULL;
+	token[0]->output = NULL;
+	token[0]->append = 0;
+	token[0]->limiter = NULL;
+	token[0]->type = 5;
+	token[1]->index = 1;
+	token[1]->command = "grep hello";
+	token[1]->input = NULL;
+	token[1]->output = NULL;
+	token[1]->append = 0;
+	token[1]->type = 5;
+	token[1]->limiter = NULL;
+	token[2]->index = 2;
+	token[2]->command = "ls";
+	token[2]->input = NULL;
+	token[2]->output = NULL;
+	token[2]->append = 0;
+	token[2]->type = 5;
+	token[2]->limiter = NULL;
+	token[3] = NULL;
 
 	// token[0] = malloc(sizeof(t_command ));
 	// token[1] = malloc(sizeof(t_command ));
@@ -323,17 +324,17 @@ int	execute(int *types, char **parsed, char ***envp)
 	// token[2]->limiter = NULL;
 	// token[3] = NULL;
 
-	token[0] = malloc(sizeof(t_command ));
-	token[1] = malloc(sizeof(t_command ));
-	token[2] = malloc(sizeof(t_command ));
-	token[0]->index = 0;
-	token[0]->command = "ls";
-	token[0]->input = NULL;
-	token[0]->output = NULL;
-	token[0]->append = 0;
-	token[0]->limiter =NULL;
-	token[0]->type = 5;
-	token[1] = NULL;
+	// token[0] = malloc(sizeof(t_command ));
+	// token[1] = malloc(sizeof(t_command ));
+	// token[2] = malloc(sizeof(t_command ));
+	// token[0]->index = 0;
+	// token[0]->command = "ls";
+	// token[0]->input = NULL;
+	// token[0]->output = NULL;
+	// token[0]->append = 0;
+	// token[0]->limiter =NULL;
+	// token[0]->type = 5;
+	// token[1] = NULL;
 
 	// token[0] = NULL;
 	return (new_execute(envp, token));
