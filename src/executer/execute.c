@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/19 12:19:49 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/19 12:25:25 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,43 +297,43 @@ int	execute(int *types, char **parsed, char ***envp)
 	// token[2]->limiter = "end3";
 	// token[3] = NULL;
 
-	token[0] = malloc(sizeof(t_command ));
-	token[1] = malloc(sizeof(t_command ));
-	token[2] = malloc(sizeof(t_command ));
-	token[0]->index = 0;
-	token[0]->command = "grep hello";
-	token[0]->input = NULL;
-	token[0]->output = "output.txt";
-	token[0]->append = 0;
-	token[0]->limiter = "end";
-	token[0]->type = 5;
-	token[1]->index = 1;
-	token[1]->command = "wc -l";
-	token[1]->input = "input2.txt";
-	token[1]->output = "output2.txt";
-	token[1]->append = 1;
-	token[1]->type = 5;
-	token[1]->limiter = NULL;
-	token[2]->index = 2;
-	token[2]->command = "cat -e";
-	token[2]->input = NULL;
-	token[2]->output = NULL;
-	token[2]->append = 0;
-	token[2]->type = 5;
-	token[2]->limiter = NULL;
-	token[3] = NULL;
-
 	// token[0] = malloc(sizeof(t_command ));
 	// token[1] = malloc(sizeof(t_command ));
 	// token[2] = malloc(sizeof(t_command ));
 	// token[0]->index = 0;
-	// token[0]->command = "cat -e";
+	// token[0]->command = "grep hello";
 	// token[0]->input = NULL;
-	// token[0]->output = NULL;
+	// token[0]->output = "output.txt";
 	// token[0]->append = 0;
 	// token[0]->limiter = "end";
 	// token[0]->type = 5;
-	// token[1] = NULL;
+	// token[1]->index = 1;
+	// token[1]->command = "wc -l";
+	// token[1]->input = "input2.txt";
+	// token[1]->output = "output2.txt";
+	// token[1]->append = 1;
+	// token[1]->type = 5;
+	// token[1]->limiter = NULL;
+	// token[2]->index = 2;
+	// token[2]->command = "cat -e";
+	// token[2]->input = NULL;
+	// token[2]->output = NULL;
+	// token[2]->append = 0;
+	// token[2]->type = 5;
+	// token[2]->limiter = NULL;
+	// token[3] = NULL;
+
+	token[0] = malloc(sizeof(t_command ));
+	token[1] = malloc(sizeof(t_command ));
+	token[2] = malloc(sizeof(t_command ));
+	token[0]->index = 0;
+	token[0]->command = "ls";
+	token[0]->input = NULL;
+	token[0]->output = NULL;
+	token[0]->append = 0;
+	token[0]->limiter =NULL;
+	token[0]->type = 5;
+	token[1] = NULL;
 
 	// token[0] = NULL;
 	return (new_execute(envp, token));
