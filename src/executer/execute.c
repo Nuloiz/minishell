@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/19 15:56:45 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/19 16:02:50 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ int	ft_here_doc(t_execute *exec)
 	return (1);
 }
 
-execute(char ***envp, t_command **token)
+int	execute(char ***envp, t_command **token)
 {
 	t_execute	exec;
 	int			error;
