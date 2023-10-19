@@ -32,3 +32,26 @@ void	print_cmds(char **s, int *type)
 		i++;
 	}
 }
+void	print_commands(t_command **token)
+{
+	int	i;
+
+	i = 0;
+	while (token[i])
+	{
+		printf("index: %i\n", token[i]->index);
+		if (token[i]->command)
+			printf("	command: %s\n", token[i]->command);
+		if (token[i]->input)
+			printf("	input: %s\n", token[i]->input);
+		if (token[i]->output)
+			printf("	output: %s\n", token[i]->output);
+		if (token[i]->append)
+			printf("	append: %i\n", token[i]->append);
+		if (token[i]->limiter)
+			printf("	limiter: %s\n", token[i]->limiter);
+		if (token[i]->type)
+			printf("	type: %i\n", token[i]->type);
+		i++;
+	}
+}

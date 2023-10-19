@@ -102,10 +102,11 @@ static int	fill_tmp(t_input **input, t_array array, int *count, char **tmp)
 
 int	sort_array(t_input **input, t_array	*array)
 {
-	char	*tmp;
-	int		count;
-	int		r;
-	int		i;
+	t_command	**token;
+	char		*tmp;
+	int			count;
+	int			r;
+	int			i;
 
 	array->cmds = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
 	count = 0;
@@ -123,7 +124,9 @@ int	sort_array(t_input **input, t_array	*array)
 	}
 	array->type[count] = 0;
 	print_cmds(array->cmds, array->type);
-	r = execute(array->type, array->cmds, array->envp);
+	token = get_commands(&array);
+	print_commands(token);
+	r = execute(array->envp, token);
 	free(array->type);
 	return (r);
 }
