@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 18:20:52 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/19 11:38:15 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/19 12:57:11 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	ft_set_output(t_execute *exec, int i)
 	}
 	else
 	{
-		// if (i == exec->count_children - 1)
+		// only last should have stdout ?!
+		if (i == exec->count_children - 1)
 		{
 			close(exec->pipe_fd[pipe][1]);
 			exec->pipe_fd[pipe][1] = 1;
@@ -87,6 +88,7 @@ int	ft_set_input(t_execute *exec, int i)
 	}
 	else
 	{
+		// only the first should have stdin !
 		if (i == 0)
 		{
 			close(exec->pipe_fd[pipe][0]);
