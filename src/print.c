@@ -39,8 +39,7 @@ void	print_commands(t_command **token)
 	i = 0;
 	while (token[i])
 	{
-		if (token[i]->index)
-			printf("index: %i\n", token[i]->index);
+		printf("index: %i\n", token[i]->index);
 		if (token[i]->command)
 			printf("	command: %s\n", token[i]->command);
 		if (token[i]->input)
@@ -53,5 +52,6 @@ void	print_commands(t_command **token)
 			printf("	limiter: %s\n", token[i]->limiter);
 		if (token[i]->type)
 			printf("	type: %i\n", token[i]->type);
+		i++;
 	}
 }

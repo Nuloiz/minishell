@@ -123,7 +123,9 @@ int	sort_array(t_input **input, t_array	*array)
 	}
 	array->type[count] = 0;
 	print_cmds(array->cmds, array->type);
-	r = execute(array->type, array->cmds, array->envp);
+	print_commands(get_commands(&array));
+	//r = execute(array->type, array->cmds, array->envp);
+	r = 0;
 	free(array->type);
 	return (r);
 }
