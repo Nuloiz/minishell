@@ -37,16 +37,17 @@ static int	count_alloc(t_array **array)
 	{
 		if (not_the_same((*array)->type[j], token) == 0)
 		{
-			if (token!= 5 && token != 6)
+			if (token != 5 && token != 6)
 				token = (*array)->type[j];
 			j++;
 		}
 		else
+		{
+			token  = 0;
 			i++;
-		if (i > j)
-			break;
+		}
 	}
-	return (token);
+	return (i);
 }
 
 t_command	**get_commands(t_array **array)
@@ -57,8 +58,15 @@ t_command	**get_commands(t_array **array)
 
 	i = 0;
 	j = 0;
-	token = ft_calloc(sizeof(t_command *), count_alloc(array));
+	token = ft_calloc(sizeof(t_command *), count_alloc(array) + 2);
+	while (i <= count_alloc(array))
+	{
+		token[i] = ft_calloc(sizeof(t_command), 1);
+		i++;
+	}
 	token[i] = ft_calloc(sizeof(t_command), 1);
+	token[i] = NULL;
+	i = 0;
 	while ((*array)->cmds[j] != NULL)
 	{
 		token[i]->index = i;
@@ -84,11 +92,7 @@ t_command	**get_commands(t_array **array)
 		else
 		{
 			i++;
-			token[i] = ft_calloc(sizeof (t_command), 1);
 		}
-		if (i > j)
-			break;
-		token[i + 1] = ft_calloc(sizeof (t_command), 1);
 	}
 	return (token);
 }
