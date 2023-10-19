@@ -126,7 +126,7 @@ int	sort_array(t_input **input, t_array	*array)
 	print_cmds(array->cmds, array->type);
 	token = get_commands(&array);
 	print_commands(token);
-	r = execute(token, array->envp);
+	r = execute(array->envp, token);
 	free(array->type);
 	return (r);
 }
