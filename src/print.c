@@ -21,14 +21,14 @@ void	print_list(t_input **input)
 	}
 }
 
-void	print_cmds(char **s, int *type)
+void	print_cmds(char **s, int *type, int *pipe)
 {
 	int	i;
 
 	i = 0;
 	while (s && s[i])
 	{
-		ft_printf("Array: %s\n Type: %i\n\n", s[i], type[i]);
+		ft_printf("Array: %s\n Type: %i\n Pipe: %i\n\n", s[i], type[i], pipe[i]);
 		i++;
 	}
 }

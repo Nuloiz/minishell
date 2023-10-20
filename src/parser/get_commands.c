@@ -28,22 +28,21 @@ static int	count_alloc(t_array **array)
 {
 	int			i;
 	int 		j;
-	int 		token;
+	int 		k;
 
 	i = 0;
 	j = 0;
-	token = 0;
+	k = 0;
 	while ((*array)->cmds[j] != NULL)
 	{
-		if (not_the_same((*array)->type[j], token) == 0)
+		if ((*array)->pipe[j] == 0 || k == 1)
 		{
-			if (token != 5 && token != 6)
-				token = (*array)->type[j];
+			k = 0;
 			j++;
 		}
 		else
 		{
-			token  = 0;
+			k = 1;
 			i++;
 		}
 	}
@@ -55,11 +54,13 @@ t_command	**get_commands(t_array **array)
 	t_command	**token;
 	int			i;
 	int 		j;
+	int 		alloc;
 
 	i = 0;
 	j = 0;
-	token = ft_calloc(sizeof(t_command *), count_alloc(array) + 2);
-	while (i <= count_alloc(array))
+	alloc = count_alloc(array) + 1;
+	token = ft_calloc(sizeof(t_command *),  alloc);
+	while (i < alloc)
 	{
 		token[i] = ft_calloc(sizeof(t_command), 1);
 		i++;
@@ -70,7 +71,7 @@ t_command	**get_commands(t_array **array)
 	while ((*array)->cmds[j] != NULL)
 	{
 		token[i]->index = i;
-		if (not_the_same((*array)->type[j], token[i]->type) == 0)
+		if ((*array)->pipe[j] == 0)
 		{
 			if (token[i]->type != 5 && token[i]->type != 6)
 				token[i]->type = (*array)->type[j];
@@ -91,6 +92,7 @@ t_command	**get_commands(t_array **array)
 		}
 		else
 		{
+			(*array)->pipe[j] = 0;
 			i++;
 		}
 	}

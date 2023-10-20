@@ -85,6 +85,7 @@ static int	fill_tmp(t_input **input, t_array array, int *count, char **tmp)
 				array.cmds[*count] = *tmp;
 				*tmp = NULL;
 				(*count)++;
+				array.pipe[*count] = 0;
 			}
 			i = type_redirect(input, array, count);
 		}
@@ -111,6 +112,8 @@ int	sort_array(t_input **input, t_array	*array)
 	array->cmds = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
 	count = 0;
 	array->type = malloc((count_alloc(*input) + 2) * sizeof(int));
+	array->pipe = malloc((count_alloc(*input) + 2) * sizeof(int));
+	array->pipe[0] = 0;
 	while (*input)
 	{
 		tmp = is_cmd(input, *array, count);
@@ -118,12 +121,18 @@ int	sort_array(t_input **input, t_array	*array)
 		if (i == 258)
 			return (i);
 		if (*input && (*input)->type == PIPE)
+		{
 			(*input) = (*input)->next;
+			array->pipe[count + 1] = 1;
+		}
+		else
+			array->pipe[count + 1] = 0;
 		array->cmds[count] = tmp;
 		count++;
 	}
 	array->type[count] = 0;
-	print_cmds(array->cmds, array->type);
+	array->pipe[count] = 0;
+	print_cmds(array->cmds, array->type, array->pipe);
 	token = get_commands(&array);
 	print_commands(token);
 	r = execute(array->envp, token);
