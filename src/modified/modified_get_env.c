@@ -23,6 +23,18 @@ static int	mod_get_single(char *string, int i)
 	return (j + 1);
 }
 
+char	*mod_valid_env(char *envp, char *string, int j, char *s)
+{
+	char	*env;
+
+	env = ft_strdup(envp);
+	ft_memmove(env, &env[ft_strlen(string) + 1], \
+					(ft_strlen(env) - ft_strlen(string)));
+	if (j == 1)
+		env = mod_nofree_strjoin(env, s);
+	return (env);
+}
+
 char	*mod_get_env_two(char **envp, char *string, int j, char *s)
 {
 	int		i;
@@ -38,12 +50,8 @@ char	*mod_get_env_two(char **envp, char *string, int j, char *s)
 	{
 		if (!ft_strncmp(envp[i], string_equal, ft_strlen(string_equal)))
 		{
-			env = ft_strdup(envp[i]);
-			ft_memmove(env, &env[ft_strlen(string) + 1], \
-					(ft_strlen(env) - ft_strlen(string)));
+			env = mod_valid_env(envp[i], string, j, s);
 			free(string_equal);
-			if (j == 1)
-				env = mod_nofree_strjoin(env, s);
 			return (env);
 		}
 		i++;
