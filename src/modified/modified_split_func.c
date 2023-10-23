@@ -27,7 +27,7 @@ static char	**mod_allocfails(char **array)
 	return (NULL);
 }
 
-static int	mod_possplit(const char *s, char c)
+int	mod_possplit(const char *s, char c)
 {
 	int	i;
 
@@ -40,18 +40,6 @@ static int	mod_possplit(const char *s, char c)
 			i++;
 	}
 	return (i);
-}
-
-void	mod_countsplitting(char *s, int *j, char c)
-{
-	if (s[*j] == 34 || s[*j] == 39)
-	{
-		*j = *j + mod_possplit(&s[*j] + 1, s[*j]) + 2;;
-		if (s[*j] != ' ')
-			mod_countsplitting(s, j, c);
-	}
-	else
-		*j = *j + mod_possplit(&s[*j], c);
 }
 
 static int	mod_countsplit(char const *s, char c)
@@ -76,7 +64,7 @@ static int	mod_countsplit(char const *s, char c)
 char	*mod_splitting(char *s, int *j, char c)
 {
 	char	*array;
-	int 	i;
+	int		i;
 
 	if (s[*j] == 34 || s[*j] == 39)
 	{

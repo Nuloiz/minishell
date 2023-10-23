@@ -28,10 +28,12 @@ void	print_cmds(char **s, int *type, int *pipe)
 	i = 0;
 	while (s && s[i])
 	{
-		ft_printf("Array: %s\n Type: %i\n Pipe: %i\n\n", s[i], type[i], pipe[i]);
+		ft_printf("Array: %s\n Type: %i\n Pipe: %i\n\n", \
+				s[i], type[i], pipe[i]);
 		i++;
 	}
 }
+
 void	print_commands(t_command **token)
 {
 	int	i;

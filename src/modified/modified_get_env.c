@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int mod_get_single(char *string, int i)
+static int	mod_get_single(char *string, int i)
 {
 	int	j;
 
@@ -37,8 +37,9 @@ char	*mod_get_env(char **envp, char *string, int j, char *s)
 		{
 			if (string[i] == '$')
 			{
-				s = mod_nofree_strjoin(mod_get_env(envp, ft_substr(string, i + 1, mod_get_single(string, i)), j, NULL), s);
-				break;
+				s = mod_nofree_strjoin(mod_get_env(envp, ft_substr(string, \
+				i + 1, mod_get_single(string, i)), j, NULL), s);
+				break ;
 			}
 			i++;
 		}
@@ -50,9 +51,10 @@ char	*mod_get_env(char **envp, char *string, int j, char *s)
 		{
 			if (string[i] == '$')
 			{
-				s = mod_strjoin(mod_get_env(envp, ft_substr(string, i + 1, ft_strlen(string) - i), j, NULL), NULL);
+				s = mod_strjoin(mod_get_env(envp, ft_substr(string, \
+				i + 1, ft_strlen(string) - i), j, NULL), NULL);
 				j = 1;
-				break;
+				break ;
 			}
 			i++;
 		}
@@ -67,7 +69,8 @@ char	*mod_get_env(char **envp, char *string, int j, char *s)
 		if (!ft_strncmp(envp[i], string_equal, ft_strlen(string_equal)))
 		{
 			env = ft_strdup(envp[i]);
-			ft_memmove(env, &env[ft_strlen(string) + 1], (ft_strlen(env) - ft_strlen(string)));
+			ft_memmove(env, &env[ft_strlen(string) + 1], \
+					(ft_strlen(env) - ft_strlen(string)));
 			free(string_equal);
 			if (j == 1)
 				env = mod_nofree_strjoin(env, s);

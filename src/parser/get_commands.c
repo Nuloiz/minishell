@@ -12,23 +12,11 @@
 
 #include "minishell.h"
 
-static int	not_the_same(int array, int token)
-{
-	if (array == 5 && (token != 5 && token != 6))
-		return (0);
-	else if (array == 6 && (token != 5 && token != 6))
-		return (0);
-	else if (array != 5 && array != 6)
-		return (0);
-	else
-		return (1);
-}
-
 static int	count_alloc(t_array **array)
 {
-	int			i;
-	int 		j;
-	int 		k;
+	int	i;
+	int	j;
+	int	k;
 
 	i = 0;
 	j = 0;
@@ -53,13 +41,13 @@ t_command	**get_commands(t_array **array)
 {
 	t_command	**token;
 	int			i;
-	int 		j;
-	int 		alloc;
+	int			j;
+	int			alloc;
 
 	i = 0;
 	j = 0;
 	alloc = count_alloc(array) + 1;
-	token = ft_calloc(sizeof(t_command *),  alloc);
+	token = ft_calloc(sizeof(t_command *), alloc);
 	while (i < alloc)
 	{
 		token[i] = ft_calloc(sizeof(t_command), 1);

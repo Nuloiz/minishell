@@ -63,7 +63,7 @@ char	*modified_strjoin(char *s1, char *s2)
 
 	i = -1;
 	j = -1;
-	joined = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1) , sizeof(char));
+	joined = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof(char));
 	if (joined)
 	{
 		if (s1)

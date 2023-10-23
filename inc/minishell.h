@@ -94,6 +94,8 @@ t_command	**get_commands(t_array **array);
 int		nv_after_red(t_input **input, int i);
 char	*mod_get_env(char **envp, char *string, int j, char *s);
 char	**mod_split(char *s, char c);
+void	mod_countsplitting(char *s, int *j, char c);
+int		mod_possplit(const char *s, char c);
 char	*mod_strjoin(char *s1, char *s2);
 char	*mod_nofree_strjoin(char *s1, char *s2);
 char	*modified_strjoin(char *s1, char *s2);

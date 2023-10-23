@@ -15,7 +15,7 @@
 static char	*quotes(char *s, char c)
 {
 	char	*ret;
-	int 	i;
+	int		i;
 	int		j;
 
 	ret = ft_substr(s, 1, ft_strlen(s) - 2);
@@ -25,13 +25,14 @@ static char	*quotes(char *s, char c)
 	{
 		if (ret[i] == c)
 		{
-			ret = modified_strjoin(ft_substr(ret, 0, i), ft_substr(ret, i + 1, ft_strlen(ret) - i));
+			ret = modified_strjoin(ft_substr(ret, 0, i), \
+			ft_substr(ret, i + 1, ft_strlen(ret) - i));
 			i = i - 2;
 			j++;
 		}
 		i++;
 	}
-	if (j%2 != 0)
+	if (j % 2 != 0)
 	{
 		ft_putstr_fd("Open Quotes", 0);
 		free(ret);
@@ -43,8 +44,8 @@ static char	*quotes(char *s, char c)
 static char	*env_var(char *s, char **envp, int *l_r)
 {
 	int		i;
-	int 	j;
-	int 	k;
+	int		j;
+	int		k;
 	char	*dup;
 
 	i = 0;
@@ -66,7 +67,7 @@ static char	*env_var(char *s, char **envp, int *l_r)
 	else
 	{
 		k = i;
-		while (s[k] &&  s[k] != 39)
+		while (s[k] && s[k] != 39)
 			k++;
 		dup = modified_strjoin(dup, mod_get_env(envp, &s[i + 1], j, &s[k]));
 	}
