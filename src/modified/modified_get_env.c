@@ -62,6 +62,26 @@ char	*mod_get_env_two(char **envp, char *string, int j, char *s)
 	return (env);
 }
 
+char	*mod_multiple_wo_quotes(char **envp, char *string, int *j, char **s)
+{
+	int		i;
+
+	i = 0;
+	while (string[i] != '\0')
+	{
+		if (string[i] == '$')
+		{
+			*s = mod_strjoin(mod_get_env(envp, ft_substr(string, \
+				i + 1, ft_strlen(string) - i), *j, NULL), NULL);
+			*j = 1;
+			break ;
+		}
+		i++;
+	}
+	string = ft_substr(string, 0, i);
+	return (string);
+}
+
 char	*mod_get_env(char **envp, char *string, int j, char *s)
 {
 	int		i;
@@ -82,19 +102,6 @@ char	*mod_get_env(char **envp, char *string, int j, char *s)
 		string = ft_substr(string, 0, i);
 	}
 	else
-	{
-		while (string[i] != '\0')
-		{
-			if (string[i] == '$')
-			{
-				s = mod_strjoin(mod_get_env(envp, ft_substr(string, \
-				i + 1, ft_strlen(string) - i), j, NULL), NULL);
-				j = 1;
-				break ;
-			}
-			i++;
-		}
-		string = ft_substr(string, 0, i);
-	}
+		string = mod_multiple_wo_quotes(envp, string, &j, &s);
 	return (mod_get_env_two(envp, string, j, s));
 }
