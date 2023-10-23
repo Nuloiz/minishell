@@ -89,6 +89,7 @@ int			is_built_in(char *s);
 int			is_pipe(char *s);
 int			is_red(char s);
 int			is_file(char *s);
+char		*env_var(char *s, char **envp, int *l_r);
 int			sort_array(t_input **input, t_array *array);
 t_command	**get_commands(t_array **array);
 int			nv_after_red(t_input **input, int i);

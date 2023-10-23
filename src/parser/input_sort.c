@@ -41,39 +41,6 @@ static char	*quotes(char *s, char c)
 	return (ret);
 }
 
-static char	*env_var(char *s, char **envp, int *l_r)
-{
-	int		i;
-	int		j;
-	int		k;
-	char	*dup;
-
-	i = 0;
-	j = 0;
-	while (s[i] != '$')
-		i++;
-	dup = ft_calloc(i + 1, 1);
-	while (j < i)
-	{
-		dup[j] = s[j];
-		j++;
-	}
-	if (j > 0 && dup[j - 1] == 39)
-		j = 1;
-	else
-		j = 0;
-	if (!ft_strncmp(&s[i], "$?", 3))
-		dup = modified_strjoin(dup, ft_itoa(*l_r));
-	else
-	{
-		k = i;
-		while (s[k] && s[k] != 39)
-			k++;
-		dup = modified_strjoin(dup, mod_get_env(envp, &s[i + 1], j, &s[k]));
-	}
-	return (dup);
-}
-
 static t_input	*new_node(char *s, char *s_one, char **envp, int *l_r)
 {
 	t_input	*new;
