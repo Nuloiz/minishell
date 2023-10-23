@@ -23,14 +23,42 @@ static int	mod_get_single(char *string, int i)
 	return (j + 1);
 }
 
-char	*mod_get_env(char **envp, char *string, int j, char *s)
+char	*mod_get_env_two(char **envp, char *string, int j, char *s)
 {
 	int		i;
 	char	*string_equal;
 	char	*env;
 
 	i = 0;
+	string_equal = ft_strjoin(string, "=");
 	env = NULL;
+	if (envp == NULL)
+		return (NULL);
+	while (envp[i])
+	{
+		if (!ft_strncmp(envp[i], string_equal, ft_strlen(string_equal)))
+		{
+			env = ft_strdup(envp[i]);
+			ft_memmove(env, &env[ft_strlen(string) + 1], \
+					(ft_strlen(env) - ft_strlen(string)));
+			free(string_equal);
+			if (j == 1)
+				env = mod_nofree_strjoin(env, s);
+			return (env);
+		}
+		i++;
+	}
+	if (j == 1)
+		env = ft_strdup(s);
+	free(string_equal);
+	return (env);
+}
+
+char	*mod_get_env(char **envp, char *string, int j, char *s)
+{
+	int		i;
+
+	i = 0;
 	if (j == 1)
 	{
 		while (string[i] != 39)
@@ -60,26 +88,5 @@ char	*mod_get_env(char **envp, char *string, int j, char *s)
 		}
 		string = ft_substr(string, 0, i);
 	}
-	i = 0;
-	string_equal = ft_strjoin(string, "=");
-	if (envp == NULL)
-		return (NULL);
-	while (envp[i])
-	{
-		if (!ft_strncmp(envp[i], string_equal, ft_strlen(string_equal)))
-		{
-			env = ft_strdup(envp[i]);
-			ft_memmove(env, &env[ft_strlen(string) + 1], \
-					(ft_strlen(env) - ft_strlen(string)));
-			free(string_equal);
-			if (j == 1)
-				env = mod_nofree_strjoin(env, s);
-			return (env);
-		}
-		i++;
-	}
-	if (j == 1)
-		env = ft_strdup(s);
-	free(string_equal);
-	return (env);
+	return (mod_get_env_two(envp, string, j, s));
 }
