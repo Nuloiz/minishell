@@ -23,7 +23,7 @@ static int	mod_get_single(char *string, int i)
 	return (j + 1);
 }
 
-char	*mod_valid_env(char *envp, char *string, int j, char *s)
+static char	*mod_valid_env(char *envp, char *string, int j, char *s)
 {
 	char	*env;
 
@@ -35,7 +35,7 @@ char	*mod_valid_env(char *envp, char *string, int j, char *s)
 	return (env);
 }
 
-char	*mod_get_env_two(char **envp, char *string, int j, char *s)
+static char	*mod_get_env_two(char **envp, char *string, int j, char *s)
 {
 	int		i;
 	char	*string_equal;
@@ -62,7 +62,7 @@ char	*mod_get_env_two(char **envp, char *string, int j, char *s)
 	return (env);
 }
 
-char	*mod_multiple_wo_quotes(char **envp, char *string, int *j, char **s)
+static char	*mod_multiple_wo_quotes(char **envp, char *string, int *j, char **s)
 {
 	int		i;
 
