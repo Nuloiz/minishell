@@ -37,6 +37,35 @@ static int	count_alloc(t_array **array)
 	return (i);
 }
 
+static int	sort_commands(t_command **token, t_array **array, int *i, int j)
+{
+	if ((*array)->pipe[j] == 0)
+	{
+		if (token[*i]->type != 5 && token[*i]->type != 6)
+			token[*i]->type = (*array)->type[j];
+		if ((*array)->type[j] == 1)
+			token[*i]->input = (*array)->cmds[j];
+		else if ((*array)->type[j] == 2)
+			token[*i]->limiter = (*array)->cmds[j];
+		else if ((*array)->type[j] == 3)
+			token[*i]->output = (*array)->cmds[j];
+		else if ((*array)->type[j] == 4)
+		{
+			token[*i]->output = (*array)->cmds[j];
+			token[*i]->append = 1;
+		}
+		else
+			token[*i]->command = (*array)->cmds[j];
+		j++;
+	}
+	else
+	{
+		(*array)->pipe[j] = 0;
+		*i = *i + 1;
+	}
+	return (j);
+}
+
 t_command	**get_commands(t_array **array)
 {
 	t_command	**token;
@@ -59,30 +88,7 @@ t_command	**get_commands(t_array **array)
 	while ((*array)->cmds[j] != NULL)
 	{
 		token[i]->index = i;
-		if ((*array)->pipe[j] == 0)
-		{
-			if (token[i]->type != 5 && token[i]->type != 6)
-				token[i]->type = (*array)->type[j];
-			if ((*array)->type[j] == 1)
-				token[i]->input = (*array)->cmds[j];
-			else if ((*array)->type[j] == 2)
-				token[i]->limiter = (*array)->cmds[j];
-			else if ((*array)->type[j] == 3)
-				token[i]->output = (*array)->cmds[j];
-			else if ((*array)->type[j] == 4)
-			{
-				token[i]->output = (*array)->cmds[j];
-				token[i]->append = 1;
-			}
-			else
-				token[i]->command = (*array)->cmds[j];
-			j++;
-		}
-		else
-		{
-			(*array)->pipe[j] = 0;
-			i++;
-		}
+		j = sort_commands(token, array, &i, j);
 	}
 	return (token);
 }
