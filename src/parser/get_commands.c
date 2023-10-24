@@ -76,7 +76,7 @@ t_command	**get_commands(t_array **array)
 	i = 0;
 	j = 0;
 	alloc = count_alloc(array) + 1;
-	token = ft_calloc(sizeof(t_command *), alloc);
+	token = ft_calloc(sizeof(t_command *), alloc + 1);
 	while (i < alloc)
 	{
 		token[i] = ft_calloc(sizeof(t_command), 1);
