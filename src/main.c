@@ -48,6 +48,8 @@ int	main(int argc, char **argv, char **envp)
 	// rl_replace_line("hello", 1);
 	// rl_redisplay();
 	new_env = dup_array(envp);
+	if (!new_env)
+		return (-1);
 	//line = readline("minishell: ");
 	//add_history(line);
 	last_return = 0;
