@@ -71,6 +71,17 @@ static int	type_redirect(t_input **input, t_array array, int *count)
 	return (i);
 }
 
+static void	redirect_after_param(t_array array, int *count, char **tmp)
+{
+	if (*tmp != NULL)
+	{
+		array.cmds[*count] = *tmp;
+		*tmp = NULL;
+		(*count)++;
+		array.pipe[*count] = 0;
+	}
+}
+
 static int	fill_tmp(t_input **input, t_array array, int *count, char **tmp)
 {
 	int	i;
@@ -80,13 +91,7 @@ static int	fill_tmp(t_input **input, t_array array, int *count, char **tmp)
 	{
 		if ((*input)->type == REDIRECT)
 		{
-			if (*tmp != NULL)
-			{
-				array.cmds[*count] = *tmp;
-				*tmp = NULL;
-				(*count)++;
-				array.pipe[*count] = 0;
-			}
+			redirect_after_param(array, count, tmp);
 			i = type_redirect(input, array, count);
 		}
 		else
