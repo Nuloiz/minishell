@@ -50,35 +50,45 @@ static char	*is_cmd(t_input **input, t_array array, int count)
 	return (tmp);
 }
 
-int	sort_array(t_input **input, t_array	*array)
+static t_array	*fill_array(t_input **input, t_array *array, int *i, int *count)
 {
-	t_command	**token;
 	char		*tmp;
-	int			count;
-	int			r;
-	int			i;
 
-	array->cmds = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
-	count = 0;
-	array->type = malloc((count_alloc(*input) + 2) * sizeof(int));
-	array->pipe = malloc((count_alloc(*input) + 2) * sizeof(int));
-	array->pipe[0] = 0;
 	while (*input)
 	{
-		tmp = is_cmd(input, *array, count);
-		i = fill_tmp(input, *array, &count, &tmp);
-		if (i == 258)
-			return (i);
+		tmp = is_cmd(input, *array, *count);
+		*i = fill_tmp(input, *array, count, &tmp);
+		if (*i == 258)
+			return (NULL);
 		if (*input && (*input)->type == PIPE)
 		{
 			(*input) = (*input)->next;
-			array->pipe[count + 1] = 1;
+			array->pipe[(*count) + 1] = 1;
 		}
 		else
-			array->pipe[count + 1] = 0;
-		array->cmds[count] = tmp;
-		count++;
+			array->pipe[(*count) + 1] = 0;
+		array->cmds[(*count)] = tmp;
+		*count = *count + 1;
 	}
+	return (array);
+}
+
+int	sort_array(t_input **input, t_array	*array)
+{
+	t_command	**token;
+	int			count;
+	int			i;
+	int			r;
+
+	array->cmds = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
+	count = 0;
+	i = 0;
+	array->type = malloc((count_alloc(*input) + 2) * sizeof(int));
+	array->pipe = malloc((count_alloc(*input) + 2) * sizeof(int));
+	array->pipe[0] = 0;
+	array = fill_array(input, array, &i, &count);
+	if (array == NULL)
+		return (i);
 	array->type[count] = 0;
 	array->pipe[count] = 0;
 	print_cmds(array->cmds, array->type, array->pipe);
