@@ -19,6 +19,8 @@ static char	*string_before_env(char *s, int *i, int *j)
 	while (s[*i] != '$')
 		*i = *i + 1;
 	dup = ft_calloc(*i + 1, 1);
+	if (!dup)
+		return (NULL);
 	while (*j < *i)
 	{
 		dup[*j] = s[*j];
@@ -41,6 +43,8 @@ char	*env_var(char *s, char **envp, int *l_r)
 	i = 0;
 	j = 0;
 	dup = string_before_env(s, &i, &j);
+	if (!dup)
+		return (NULL);
 	if (!ft_strncmp(&s[i], "$?", 3))
 		dup = modified_strjoin(dup, ft_itoa(*l_r));
 	else
@@ -50,5 +54,7 @@ char	*env_var(char *s, char **envp, int *l_r)
 			k++;
 		dup = modified_strjoin(dup, mod_get_env(envp, &s[i + 1], j, &s[k]));
 	}
+	if (!dup)
+		return (NULL);
 	return (dup);
 }
