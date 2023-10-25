@@ -12,6 +12,25 @@
 
 #include "minishell.h"
 
+static char	*end_of_quote(char *ret, int *i, int *j, char c)
+{
+	char	*tmp;
+
+	if (ret[*i] == c)
+	{
+		tmp = modified_strjoin(ft_substr(ret, 0, *i), \
+			ft_substr(ret, (*i) + 1, ft_strlen(ret) - *i));
+		free(ret);
+		if (!tmp)
+			return (NULL);
+		ret = tmp;
+		*i = *i - 2;
+		*j = *j + 1;
+	}
+	*i = *i + 1;
+	return (ret);
+}
+
 static char	*quotes(char *s, char c)
 {
 	char	*ret;
@@ -19,18 +38,15 @@ static char	*quotes(char *s, char c)
 	int		j;
 
 	ret = ft_substr(s, 1, ft_strlen(s) - 2);
+	if (!ret)
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (ret[i] != '\0')
 	{
-		if (ret[i] == c)
-		{
-			ret = modified_strjoin(ft_substr(ret, 0, i), \
-			ft_substr(ret, i + 1, ft_strlen(ret) - i));
-			i = i - 2;
-			j++;
-		}
-		i++;
+		ret = end_of_quote(ret, &i, &j, c);
+		if (!ret)
+			return (NULL);
 	}
 	if (j % 2 != 0)
 	{
@@ -56,6 +72,7 @@ static t_input	*new_node(char *s, char *s_one, char **envp, int *l_r)
 			return (NULL);
 		if (is_env_var(s))
 			new->type = 4;
+		free(s);
 	}
 	else
 		new->word = s;
@@ -106,6 +123,12 @@ int	input_sort(char *line, char ***envp, int *l_r)
 		return (0);
 	cmd = mod_split(line, ' ');
 	linked_list_start(cmd, *envp, &input, l_r);
+	if (!input)
+	{
+		free_array(cmd);
+		free_list(&input);
+		return (-1);
+	}
 	r = sort_array(&input, &array);
 	free_list(&input);
 	return (r);

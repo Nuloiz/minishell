@@ -61,6 +61,7 @@ int	main(int argc, char **argv, char **envp)
 		if (last_return == -1)
 		{
 			free_array(new_env);
+			free(line);
 			return (-1);
 		}
 		free(line);
