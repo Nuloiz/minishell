@@ -110,10 +110,8 @@ char	*mod_nofree_strjoin(char *s1, char *s2)
 {
 	char	*joined;
 	int		i;
-	int		j;
 
 	i = -1;
-	j = -1;
 	joined = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (joined)
 		return (modified_strjoin_join(joined, s1, s2, i));
