@@ -70,13 +70,19 @@ char	*mod_splitting(char *s, int *j, char c)
 	{
 		i = mod_possplit(&s[*j] + 1, s[*j]) + 2;
 		array = ft_substr(s, *j, i);
+		if (!array)
+			return (NULL);
 		*j = *j + i;
 		if (s[*j] != ' ')
-			array = ft_strjoin(array, mod_splitting(s, j, c));
+			array = modified_strjoin(array, mod_splitting(s, j, c));
+		if (!array)
+			return (NULL);
 	}
 	else
 	{
 		array = ft_substr(s, *j, mod_possplit(&s[*j], c));
+		if (!array)
+			return (NULL);
 		*j = *j + mod_possplit(&s[*j], c);
 	}
 	return (array);

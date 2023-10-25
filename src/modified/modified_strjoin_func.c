@@ -97,7 +97,13 @@ char	*modified_strjoin(char *s1, char *s2)
 		return (joined);
 	}
 	else
-		return (0);
+	{
+		if (s1)
+			free(s1);
+		if (s2)
+			free(s2);
+	}
+	return (0);
 }
 
 char	*mod_nofree_strjoin(char *s1, char *s2)
