@@ -73,12 +73,14 @@ static char	*mod_multiple_wo_quotes(char **envp, char *string, int *j, char **s)
 		{
 			*s = mod_strjoin(mod_get_env(envp, ft_substr(string, \
 				i + 1, ft_strlen(string) - i), *j, NULL), NULL);
+			if (!*s)
+				return (free(string), NULL);
 			*j = 1;
 			break ;
 		}
 		i++;
 	}
-	string = ft_substr(string, 0, i);
+	string = mod_substr(string, 0, i);
 	return (string);
 }
 
@@ -99,9 +101,11 @@ char	*mod_get_env(char **envp, char *string, int j, char *s)
 			}
 			i++;
 		}
-		string = ft_substr(string, 0, i);
+		string = mod_substr(string, 0, i);
 	}
 	else
 		string = mod_multiple_wo_quotes(envp, string, &j, &s);
+	if (!string)
+		return (NULL);
 	return (mod_get_env_two(envp, string, j, s));
 }

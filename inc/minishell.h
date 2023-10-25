@@ -101,6 +101,7 @@ int			mod_possplit(const char *s, char c);
 char		*mod_strjoin(char *s1, char *s2);
 char		*mod_nofree_strjoin(char *s1, char *s2);
 char		*modified_strjoin(char *s1, char *s2);
+char		*mod_substr(char const *s, unsigned int start, size_t len);
 char		**dup_array(char **array);
 void		free_array(char **array);
 void		free_list(t_input **input);
