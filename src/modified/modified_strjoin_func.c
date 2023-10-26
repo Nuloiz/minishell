@@ -55,7 +55,7 @@ char	*mod_strjoin(char *s1, char *s2)
 		return (0);
 }
 
-static char	*modified_strjoin_join(char *joined, char *s1, char *s2, int i)
+char	*modified_strjoin_join(char *joined, char *s1, char *s2, int i)
 {
 	int	j;
 
@@ -87,22 +87,20 @@ char	*modified_strjoin(char *s1, char *s2)
 	int		i;
 
 	i = -1;
+	if (!s1 || !s2)
+		return (NULL);
 	joined = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof(char));
 	if (joined)
 	{
 		joined = modified_strjoin_join(joined, s1, s2, i);
-		if (s1)
-			free(s1);
-		if (s2)
-			free(s2);
+		free(s1);
+		free(s2);
 		return (joined);
 	}
 	else
 	{
-		if (s1)
-			free(s1);
-		if (s2)
-			free(s2);
+		free(s1);
+		free(s2);
 	}
 	return (0);
 }

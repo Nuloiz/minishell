@@ -52,7 +52,16 @@ char	*env_var(char *s, char **envp, int *l_r)
 	else
 		dup = NULL;
 	if (!ft_strncmp(&s[i], "$?", 3))
-		dup = modified_strjoin(dup, ft_itoa(*l_r));
+	{
+		tmp = ft_itoa(*l_r);
+		if (!tmp)
+		{
+			if (dup)
+				free(s);
+			return (NULL);
+		}
+		dup = mod_nocheck_strjoin(dup, tmp);
+	}
 	else
 	{
 		k = i;
