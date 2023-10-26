@@ -39,12 +39,18 @@ char	*env_var(char *s, char **envp, int *l_r)
 	int		j;
 	int		k;
 	char	*dup;
+	char	*tmp;
 
 	i = 0;
 	j = 0;
-	dup = string_before_env(s, &i, &j);
-	if (!dup)
-		return (NULL);
+	if (s[0] != '$')
+	{
+		dup = string_before_env(s, &i, &j);
+		if (!dup)
+			return (NULL);
+	}
+	else
+		dup = NULL;
 	if (!ft_strncmp(&s[i], "$?", 3))
 		dup = modified_strjoin(dup, ft_itoa(*l_r));
 	else
@@ -52,7 +58,10 @@ char	*env_var(char *s, char **envp, int *l_r)
 		k = i;
 		while (s[k] && s[k] != 39)
 			k++;
-		dup = modified_strjoin(dup, mod_get_env(envp, &s[i + 1], j, &s[k]));
+		tmp = mod_get_env(envp, &s[i + 1], j, &s[k]);
+		if (!tmp)
+			return (NULL);
+		dup = modified_strjoin(dup, tmp);
 	}
 	if (!dup)
 		return (NULL);
