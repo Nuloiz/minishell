@@ -76,16 +76,16 @@ static t_array	*fill_array(t_input **input, t_array *array, int *i, int *count)
 static t_array	*array_alloc(t_input **input, t_array *array)
 {
 	array->cmds = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
-	if (array->cmds)
+	if (!array->cmds)
 		return (NULL);
 	array->type = malloc((count_alloc(*input) + 2) * sizeof(int));
-	if (array->type)
+	if (!array->type)
 	{
 		free(array->cmds);
 		return (array);
 	}
 	array->pipe = malloc((count_alloc(*input) + 2) * sizeof(int));
-	if (array->pipe)
+	if (!array->pipe)
 	{
 		free(array->cmds);
 		free(array->type);
@@ -108,8 +108,10 @@ int	sort_array(t_input **input, t_array	*array)
 	count = 0;
 	i = 0;
 	array = fill_array(input, array, &i, &count);
-	if (array == NULL)
-		return (i);
+	if (i == 258)
+		return (258);
+	if (!array)
+		return (-1);
 	array->type[count] = 0;
 	array->pipe[count] = 0;
 	print_cmds(array->cmds, array->type, array->pipe);

@@ -33,7 +33,7 @@ void	free_list(t_input **input)
 	{
 		tmp = *input;
 		free((*input)->word);
-		free(*input);
 		*input = tmp->next;
 	}
+	free(*input);
 }

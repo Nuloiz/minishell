@@ -57,25 +57,26 @@ static char	*quotes(char *s, char c)
 	return (ret);
 }
 
-static t_input	*new_node(char *s, char *s_one, char **envp, int *l_r)
+static t_input	*new_node(char **s, char *s_one, char **envp, int *l_r)
 {
 	t_input	*new;
 
 	new = ft_calloc(1, sizeof(t_input));
 	if (!new)
 		return (NULL);
-	new->type = input_type(s, s_one, envp);
-	if (s[0] == 34 || s[0] == 39)
+	new->type = input_type(*s, s_one, envp);
+	if (*s[0] == 34 || *s[0] == 39)
 	{
-		new->word = quotes(s, s[0]);
+		new->word = quotes(*s, *s[0]);
 		if (!new->word)
 			return (NULL);
-		if (is_env_var(s))
+		if (is_env_var(*s))
 			new->type = 4;
-		free(s);
+		free(*s);
+		*s = new->word;
 	}
 	else
-		new->word = s;
+		new->word = *s;
 	if (new->type == 4)
 	{
 		new->word = env_var(new->word, envp, l_r);
@@ -100,9 +101,9 @@ static t_input	**linked_list_start(char **cmd, char **envp, \
 	while (i < num)
 	{
 		if (i == 0)
-			new = new_node (cmd[0], NULL, envp, l_r);
+			new = new_node (&cmd[0], NULL, envp, l_r);
 		else
-			new = new_node(cmd[i], cmd[i - 1], envp, l_r);
+			new = new_node(&cmd[i], cmd[i - 1], envp, l_r);
 		if (!new)
 			return (NULL);
 		mod_lstadd_back(input, new);
