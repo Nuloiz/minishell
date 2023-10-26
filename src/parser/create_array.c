@@ -73,6 +73,28 @@ static t_array	*fill_array(t_input **input, t_array *array, int *i, int *count)
 	return (array);
 }
 
+static t_array	*array_alloc(t_input **input, t_array *array)
+{
+	array->cmds = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
+	if (array->cmds)
+		return (NULL);
+	array->type = malloc((count_alloc(*input) + 2) * sizeof(int));
+	if (array->type)
+	{
+		free(array->cmds);
+		return (array);
+	}
+	array->pipe = malloc((count_alloc(*input) + 2) * sizeof(int));
+	if (array->pipe)
+	{
+		free(array->cmds);
+		free(array->type);
+		return (array);
+	}
+	array->pipe[0] = 0;
+	return (array);
+}
+
 int	sort_array(t_input **input, t_array	*array)
 {
 	t_command	**token;
@@ -80,12 +102,11 @@ int	sort_array(t_input **input, t_array	*array)
 	int			i;
 	int			r;
 
-	array->cmds = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
+	array = array_alloc(input, array);
+	if (!array)
+		return (-1);
 	count = 0;
 	i = 0;
-	array->type = malloc((count_alloc(*input) + 2) * sizeof(int));
-	array->pipe = malloc((count_alloc(*input) + 2) * sizeof(int));
-	array->pipe[0] = 0;
 	array = fill_array(input, array, &i, &count);
 	if (array == NULL)
 		return (i);
