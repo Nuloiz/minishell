@@ -77,12 +77,18 @@ t_command	**get_commands(t_array **array)
 	j = 0;
 	alloc = count_alloc(array) + 1;
 	token = ft_calloc(sizeof(t_command *), alloc + 1);
+	if (!token)
+		return (NULL);
 	while (i < alloc)
 	{
 		token[i] = ft_calloc(sizeof(t_command), 1);
+		if (!token[i])
+			return (free_command(token, i), NULL);
 		i++;
 	}
 	token[i] = ft_calloc(sizeof(t_command), 1);
+	if (!token[i])
+		return (free_command(token, i), NULL);
 	token[i] = NULL;
 	i = 0;
 	while ((*array)->cmds[j] != NULL)

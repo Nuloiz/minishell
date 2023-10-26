@@ -37,3 +37,16 @@ void	free_list(t_input **input)
 	}
 	free(*input);
 }
+
+void	free_command(t_command **token, int j)
+{
+	int i;
+
+	i = 0;
+	while (i <= j)
+	{
+		free(token[i]);
+		i++;
+	}
+	free(token);
+}

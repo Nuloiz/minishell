@@ -107,6 +107,7 @@ char		*mod_substr(char const *s, unsigned int start, size_t len);
 char		**dup_array(char **array);
 void		free_array(char **array);
 void		free_list(t_input **input);
+void		free_command(t_command **token, int j);
 int			ft_array_size(char **array);
 int			ft_echo(char *args);
 int			ft_env(char **envp);
