@@ -80,7 +80,7 @@ static char	*mod_multiple_wo_quotes(char **envp, char *string, int *j, char **s)
 		}
 		i++;
 	}
-	string = mod_substr(string, 0, i);
+	string = ft_substr(string, 0, i);
 	return (string);
 }
 
@@ -101,7 +101,7 @@ char	*mod_get_env(char **envp, char *string, int j, char *s)
 			}
 			i++;
 		}
-		string = mod_substr(string, 0, i);
+		string = ft_substr(string, 0, i);
 	}
 	else
 		string = mod_multiple_wo_quotes(envp, string, &j, &s);

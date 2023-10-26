@@ -70,10 +70,11 @@ static char	*modified_strjoin_join(char *joined, char *s1, char *s2, int i)
 		i = 0;
 	if (s2)
 	{
-		while (s2[++j])
+		while (s2[j])
 		{
 			joined[i] = s2[j];
 			i++;
+			j++;
 		}
 	}
 	joined[i] = 0;
