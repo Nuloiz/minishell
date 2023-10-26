@@ -61,6 +61,8 @@ char	*env_var(char *s, char **envp, int *l_r)
 			return (NULL);
 		}
 		dup = mod_nocheck_strjoin(dup, tmp);
+		if (!dup)
+			return (NULL);
 	}
 	else
 	{
