@@ -57,7 +57,7 @@ char	*env_var(char *s, char **envp, int *l_r)
 		if (!tmp)
 		{
 			if (dup)
-				free(s);
+				free(dup);
 			return (NULL);
 		}
 		dup = mod_nocheck_strjoin(dup, tmp);
@@ -71,10 +71,15 @@ char	*env_var(char *s, char **envp, int *l_r)
 			k++;
 		tmp = mod_get_env(envp, &s[i + 1], j, &s[k]);
 		if (!tmp)
+		{
+			if (dup)
+				free(dup);
 			return (NULL);
+		}
 		dup = modified_strjoin(dup, tmp);
 	}
 	if (!dup)
 		return (NULL);
+	free(s);
 	return (dup);
 }
