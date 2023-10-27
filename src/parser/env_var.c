@@ -80,6 +80,5 @@ char	*env_var(char *s, char **envp, int *l_r)
 	}
 	if (!dup)
 		return (NULL);
-	free(s);
 	return (dup);
 }
