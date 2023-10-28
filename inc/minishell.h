@@ -6,9 +6,10 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/19 15:59:45 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/19 22:40:35 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -66,6 +67,7 @@ typedef struct s_command
 }				t_command;
 
 typedef struct s_execute {
+	int			count_only_files;
 	int			count_limiter;
 	int			count_commands;
 	int			count_builtins;
