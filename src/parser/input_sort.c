@@ -144,10 +144,11 @@ int	input_sort(char *line, char ***envp, int *l_r)
 	if (!line)
 		return (0);
 	cmd = mod_split(line, ' ');
+	if (!cmd)
+		return (-1);
 	linked_list_start(cmd, *envp, &input, l_r);
 	if (!input)
 	{
-		free_array(cmd);
 		free_list(&input);
 		return (-1);
 	}
