@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/19 16:02:50 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 11:23:11 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ int	ft_child(int i, t_execute *exec)
 	if (ft_set_redirects(exec, i))
 		ft_exit(NULL, exec);
 	dprintf(2, "exec->token[i]->type: %i in child: %i and command: %s\n",exec->token[i]->type, i, exec->token[i]->command);
+	if (!(exec->token[i]->command))
+		ft_exit(NULL, exec);
 	if (exec->token[i]->type == 6)
 	{
 		// dprintf(2, "executing builtin: %s in child: %i\n", exec->token[i]->command, i);
@@ -117,8 +119,8 @@ int	ft_child(int i, t_execute *exec)
 			ft_unset(exec->envp, exec->token[i]->command);
 		else if (!ft_strncmp(exec->token[i]->command, "env", 3))
 			ft_env(*exec->envp);
-		// else if (!ft_strncmp(exec->token[i]->command, "exit", 4))
-		// 	ft_exit(exec->commands, exec);
+		else if (!ft_strncmp(exec->token[i]->command, "exit", 4))
+			ft_exit(exec->commands, exec);
 		ft_close_all_fds(exec);
 		exit(0);
 	}
