@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/30 16:46:41 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 17:08:07 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	ft_child(int i, t_execute *exec)
 		else if (!ft_strncmp(exec->token[i]->command, "env", 3))
 			ft_env(*exec->envp);
 		else if (!ft_strncmp(exec->token[i]->command, "exit", 4))
-			ft_exit(exec->token[i]->command, exec);
+			ft_exit(&exec->token[i]->command, exec);
 		ft_close_all_fds(exec);
 		exit(0);
 	}
