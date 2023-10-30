@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/30 17:33:34 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 16:51:52 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 	// rl_replace_line("hello", 1);
 	// rl_redisplay();
 	if (argc && argv)
-		;
+		argc = 1;
 	new_env = dup_array(envp);
 	if (!new_env)
 		return (-1);
