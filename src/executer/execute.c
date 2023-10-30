@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/30 11:23:11 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 11:43:27 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int	ft_parent(t_execute *exec)
 			ft_unset(exec->envp, exec->token[i]->command);
 		else if (!ft_strncmp(exec->token[i]->command, "env", 3))
 			ft_env(*exec->envp);
-		// else if (!ft_strncmp(exec->token[i]->command, "exit", 4))
-		// 	ft_exit(exec->commands, exec);
+		else if (!ft_strncmp(exec->token[i]->command, "exit", 4))
+			ft_exit(NULL, exec);
 	}
 	ft_close_all_fds(exec);
 	i = -1;
@@ -106,7 +106,7 @@ int	ft_child(int i, t_execute *exec)
 		ft_exit(NULL, exec);
 	if (exec->token[i]->type == 6)
 	{
-		// dprintf(2, "executing builtin: %s in child: %i\n", exec->token[i]->command, i);
+		dprintf(2, "executing builtin: %s in child: %i\n", exec->token[i]->command, i);
 		if (!ft_strncmp(exec->token[i]->command, "echo", 4))
 			ft_echo(exec->token[i]->command);
 		else if (!ft_strncmp(exec->token[i]->command, "cd", 2))
@@ -120,7 +120,7 @@ int	ft_child(int i, t_execute *exec)
 		else if (!ft_strncmp(exec->token[i]->command, "env", 3))
 			ft_env(*exec->envp);
 		else if (!ft_strncmp(exec->token[i]->command, "exit", 4))
-			ft_exit(exec->commands, exec);
+			ft_exit(exec->token[i]->command, exec);
 		ft_close_all_fds(exec);
 		exit(0);
 	}
