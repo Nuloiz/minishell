@@ -57,6 +57,29 @@ static char	*quotes(char *s, char c)
 	return (ret);
 }
 
+static t_input	*found_quote(t_input *new, char **s)
+{
+	char 	*tmp;
+	int 	i;
+
+	i = 0;
+	while (*s[i] && *s[i] != 34 && *s[i] != 39)
+		i++;
+	tmp = ft_substr(*s, 0, i);
+	if (!tmp && i > 0)
+		return (NULL);
+	new->word = quotes(*s, *s[i]);
+	if (!new->word)
+		return (NULL);
+	new->word = mod_nocheck_strjoin(tmp, new->word);
+	if (!new->word)
+		return (NULL);
+	if (is_env_var(*s))
+		new->type = 4;
+	free(*s);
+	*s = new->word;
+	return (new);
+}
 static t_input	*new_node(char **s, char *s_one, char **envp, int *l_r)
 {
 	t_input	*new;
@@ -65,15 +88,11 @@ static t_input	*new_node(char **s, char *s_one, char **envp, int *l_r)
 	if (!new)
 		return (NULL);
 	new->type = input_type(*s, s_one, envp);
-	if (*s[0] == 34 || *s[0] == 39)
+	if (ft_strchr(*s, 39) || ft_strchr(*s, 34))
 	{
-		new->word = quotes(*s, *s[0]);
-		if (!new->word)
+		new = found_quote(new, s);
+		if (!new)
 			return (NULL);
-		if (is_env_var(*s))
-			new->type = 4;
-		free(*s);
-		*s = new->word;
 	}
 	else
 		new->word = *s;
