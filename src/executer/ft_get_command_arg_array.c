@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_command_arg_array.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 09:32:28 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/30 17:35:20 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 17:00:34 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ char	**ft_delete_char_and_split(char *command, char c)
 		ft_strrchr(command, c) + 1, size);
 	deleted = ft_remove_slash(deleted);
 	command_array = ft_special_split(command, ' ');
-	command_array[(sizeof(command_array) / sizeof(char *))] = deleted;
+	// command_array[(sizeof(command_array) / sizeof(char *))] = deleted;
+	command_array[ft_array_size(command_array)] = deleted;
 	return (command_array);
 }
 
