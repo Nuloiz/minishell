@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/19 22:40:35 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 16:53:38 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include "../tools/ft_printf/ft_printf.h"
 // # include "../src/executer/pipex.h"
 # include <errno.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 # define COMMAND 1
 # define FLAGS	2
