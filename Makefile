@@ -3,8 +3,8 @@ NAME := minishell
 CC := cc
 
 #CFLAGS := -g
-CFLAGS :=  -fsanitize=address -g
-#CFLAGS := -Wall -Wextra -Werror -g
+#CFLAGS :=  -fsanitize=address -g
+CFLAGS := -Wall -Wextra -Werror -g
 # find / -name libreadline.aCFLAGS := $(CFLAGS) -fsanitize=address
 SRC :=	free.c dup.c print.c \
         parser/input_sort.c parser/input_type.c parser/input_type_strncmp.c parser/env_var.c parser/create_array.c parser/fill_tmp.c parser/error_msg.c parser/get_commands.c \
@@ -40,25 +40,26 @@ OBJ := $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 READLINE_PATH = ${PWD}/readline
 
-INCLUDES := -I inc -I tools/ft_printf  -I${READLINE_PATH}/includes -L${READLINE_PATH}/lib -lreadline -lhistory -ltermcap
+#INCLUDES := -I inc -I tools/ft_printf  -I${READLINE_PATH}/includes -L${READLINE_PATH}/lib -lreadline -lhistory -ltermcap
+INCLUDES := -I inc -I tools/ft_printf  -I${READLINE_PATH}/includes 
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-#	@make -C tools/ft_printf
+	@make -C tools/ft_printf
 
 
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) tools/ft_printf/libftprintf.a $(INCLUDES)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) tools/ft_printf/libftprintf.a $(INCLUDES) -lreadline -lhistory -ltermcap -L${READLINE_PATH}/lib 
 #	@echo "Linking $(NAME)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/
-	@make -C tools/ft_printf
+#	@make -C tools/ft_printf
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/parser
 	@mkdir -p $(OBJ_DIR)/modified
 	@mkdir -p $(OBJ_DIR)/executer
 	@mkdir -p $(OBJ_DIR)/builtins
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES) tools/ft_printf/libftprintf.a
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
 	@echo "Compiling $<"
 
 clean:
