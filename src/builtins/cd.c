@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:43:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/14 19:04:33 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 16:46:41 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_set_pwd(char ***envp, char *path)
 	}
 	else
 		new_pwd = ft_strjoin("export PWD=", path);
-	dprintf(2, "new_pwd: %s\n", new_pwd);
+	// dprintf(2, "new_pwd: %s\n", new_pwd);
 	ft_export(envp, new_pwd);
 	free(new_pwd);
 	return (0);
@@ -60,7 +60,7 @@ int	ft_set_pwd_home(char ***envp)
 	char	*old_pwd;
 
 	home = ft_get_env(*envp, "HOME");
-	dprintf(2, "home: %s\n", home);
+	// dprintf(2, "home: %s\n", home);
 	if (!home)
 	{
 		ft_putstr_fd("Minishell: Error: cd: PATH HOME not set\n", 2);
@@ -90,18 +90,18 @@ int	ft_cd(char *command, char ***envp)
 	char	**splitted;
 	char	*old_pwd;
 
-	dprintf(2, "command to split: %s\n", command);
+	// dprintf(2, "command to split: %s\n", command);
 	splitted = ft_split(command, ' ');
-	dprintf(2, "splitted: %s\n", splitted[0]);
+	// dprintf(2, "splitted: %s\n", splitted[0]);
 	if (!splitted)
 	{
 		ft_putstr_fd("minishell: cd: error split\n", 2);
 		return (1);
 	}
-	dprintf(2, "splitted: %s\n", splitted[0]);
+	// dprintf(2, "splitted: %s\n", splitted[0]);
 	if (splitted[1])
 	{
-		dprintf(2, "set pwd: %s\n", splitted[1]);
+		// dprintf(2, "set pwd: %s\n", splitted[1]);
 		old_pwd = ft_get_pwd(envp);
 		if (chdir(splitted[1]) == -1)
 		{
@@ -118,7 +118,7 @@ int	ft_cd(char *command, char ***envp)
 	}
 	else
 	{
-		dprintf(2, "set pwd home\n");
+		// dprintf(2, "set pwd home\n");
 		ft_set_pwd_home(envp);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/12 12:05:32 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 16:46:41 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,12 @@ int	ft_export(char ***envp, char *string)
 
 	splitted = ft_split(string, ' ');
 	found = 0;
-	dprintf(2, "export started\n");
+	// dprintf(2, "export started\n");
 	if (!*envp)
 		ft_putstr_fd("NO ENVP\n", 2);
 	if (!splitted[1])
 	{
-		dprintf(2, "export without arguements\n");
+		// dprintf(2, "export without arguements\n");
 		ft_sorted_print_array(*envp);
 		return (0);
 	}
@@ -111,7 +111,7 @@ int	ft_export(char ***envp, char *string)
 	ft_memmove(string, &string[7], (ft_strlen(string) - 6));
 	while ((*envp)[i])
 	{
-		// dprintf(2, "ft_strncmp((*envp)[%i]: %s, string: %s, (ft_strchr(string, '=') - string + 1): %i)\n", i, (*envp)[i], string, ft_strchr(string, '=') - string + 1);
+		// // dprintf(2, "ft_strncmp((*envp)[%i]: %s, string: %s, (ft_strchr(string, '=') - string + 1): %i)\n", i, (*envp)[i], string, ft_strchr(string, '=') - string + 1);
 		if (!ft_strncmp((*envp)[i], string, (ft_strchr(string, '=') - string + 1)))
 		{
 			free((*envp)[i]);

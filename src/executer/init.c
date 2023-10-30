@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:16:52 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/19 18:53:43 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 16:46:41 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	ft_init_from_token(t_execute *new, t_command **token)
 	i = -1;
 	while (token[++i])
 	{
-		dprintf(2, "token[%i]->type: %i\n", i, token[i]->type);
+		// dprintf(2, "token[%i]->type: %i\n", i, token[i]->type);
 		if (token[i]->limiter)
 			new->count_limiter ++;
 		if (token[i]->type == 5)
