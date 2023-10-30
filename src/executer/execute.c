@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/30 17:08:07 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 17:34:24 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ft_parent(t_execute *exec)
 		if (!ft_strncmp(exec->token[0]->command, "echo", 4))
 			ft_echo(exec->token[0]->command);
 		else if (!ft_strncmp(exec->token[0]->command, "cd", 2))
-			ft_cd(exec->token[i]->command, exec->envp);
+			ft_cd(exec->token[0]->command, exec->envp);
 		else if (!ft_strncmp(exec->token[0]->command, "pwd", 3))
 			ft_pwd();
 		else if (!ft_strncmp(exec->token[0]->command, "export", 6))
