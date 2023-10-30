@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nschutz <nschutz@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/12 10:03:48 by nschutz          ###   ########.fr       */
+/*   Updated: 2023/10/30 17:33:34 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	main(int argc, char **argv, char **envp)
 	// signal(SIGQUIT, SIG_IGN);
 	// rl_replace_line("hello", 1);
 	// rl_redisplay();
+	if (argc && argv)
+		;
 	new_env = dup_array(envp);
 	if (!new_env)
 		return (-1);
