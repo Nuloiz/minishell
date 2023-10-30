@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 09:32:28 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/16 16:34:30 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 10:56:59 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ char	**ft_get_command_arg_array(char *command)
 {
 	char			**command_array;
 
+	if (!command)
+		return (NULL);
 	if (ft_strchr_count(command, '\'') == 2)
 	{
 		command_array = ft_delete_char_and_split(command, '\'');
