@@ -6,13 +6,13 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:43:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/30 16:46:41 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 17:38:01 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_get_pwd(char ***envp)
+char	*ft_get_pwd(void)
 {
 	char	pwd[PATH_MAX];
 	char	*oldpwd;
@@ -68,7 +68,7 @@ int	ft_set_pwd_home(char ***envp)
 	}
 	else
 	{
-		old_pwd = ft_get_pwd(envp);
+		old_pwd = ft_get_pwd();
 		if (chdir(home) == -1)
 		{
 			ft_putstr_fd("cd: ", 2);
@@ -102,7 +102,7 @@ int	ft_cd(char *command, char ***envp)
 	if (splitted[1])
 	{
 		// dprintf(2, "set pwd: %s\n", splitted[1]);
-		old_pwd = ft_get_pwd(envp);
+		old_pwd = ft_get_pwd();
 		if (chdir(splitted[1]) == -1)
 		{
 			ft_putstr_fd("cd: ", 2);
