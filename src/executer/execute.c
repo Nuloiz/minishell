@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/30 17:34:24 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 23:43:56 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,9 +167,9 @@ int	ft_here_doc(t_execute *exec)
 			// ft_printf("-> ");
 			// red_line = get_next_line(0);
 			red_line = readline("-> ");
-			red_line_newline = ft_strjoin(red_line, "\n");
 			while (red_line != NULL)
 			{
+				red_line_newline = ft_strjoin(red_line, "\n");
 				if (ft_strlen(red_line) - 1 < ft_strlen(exec->token[i]->limiter))
 					len = ft_strlen(exec->token[i]->limiter);
 				else
@@ -184,7 +184,6 @@ int	ft_here_doc(t_execute *exec)
 				// ft_printf("-> ");
 				// red_line = get_next_line(0);
 				red_line = readline("-> ");
-				red_line_newline = ft_strjoin(red_line, "\n");
 			}
 			close(exec->pipe_fd[pipe][1]);
 			free(red_line);
