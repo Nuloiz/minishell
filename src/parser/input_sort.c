@@ -132,6 +132,18 @@ static t_input	**linked_list_start(char **cmd, char **envp, \
 	return (input);
 }
 
+int just_space(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i] && !isspace(line[i]))
+		i++;
+	if (!line[i])
+		return (0);
+	return (1);
+}
+
 int	input_sort(char *line, char ***envp, int *l_r)
 {
 	t_input	*input;
@@ -141,7 +153,7 @@ int	input_sort(char *line, char ***envp, int *l_r)
 
 	input = NULL;
 	array.envp = envp;
-	if (!line)
+	if (!line || just_space(line))
 		return (0);
 	cmd = mod_split(line, ' ');
 	if (!cmd)
