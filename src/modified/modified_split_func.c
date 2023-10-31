@@ -41,7 +41,7 @@ int	mod_possplit(const char *s, char c)
 	return (i);
 }
 
-static int	mod_countsplit(char const *s, char c)
+static int	mod_countsplit(char *s, char c)
 {
 	int		i;
 	int		j;
