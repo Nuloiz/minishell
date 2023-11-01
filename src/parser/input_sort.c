@@ -137,7 +137,7 @@ int just_space(char *line)
 	int i;
 
 	i = 0;
-	while (line[i] && !isspace(line[i]))
+	while (line[i] && isspace(line[i]))
 		i++;
 	if (!line[i])
 		return (1);
