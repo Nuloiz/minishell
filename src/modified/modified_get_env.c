@@ -23,19 +23,19 @@ static int	mod_get_single(char *string, int i)
 	return (j + 1);
 }
 
-static char	*mod_valid_env(char *envp, char *string, int j, char *s)
+static char	*mod_valid_env(char *envp, char *string, t_boollr *j, char *s)
 {
 	char	*env;
 
 	env = ft_strdup(envp);
 	ft_memmove(env, &env[ft_strlen(string) + 1], \
 					(ft_strlen(env) - ft_strlen(string)));
-	if (j == 1)
+	if (j->bool == 1)
 		env = mod_nofree_strjoin(env, s);
 	return (env);
 }
 
-static char	*mod_get_env_two(char **envp, char *string, int j, char *s)
+static char	*mod_get_env_two(char **envp, char *string, t_boollr *j, char *s)
 {
 	int		i;
 	char	*string_equal;
@@ -56,13 +56,21 @@ static char	*mod_get_env_two(char **envp, char *string, int j, char *s)
 		}
 		i++;
 	}
-	if (j == 1)
+	if (!ft_strncmp(string, "?", 2))
+	{
+		env = ft_itoa(j->l_r);
+		if (j->bool == 1)
+			env = mod_nofree_strjoin(env, s);
+		free(string_equal);
+		return (env);
+	}
+	if (j->bool == 1)
 		env = ft_strdup(s);
 	free(string_equal);
 	return (env);
 }
 
-static char	*mod_multiple_wo_quotes(char **envp, char *string, int *j, char **s)
+static char	*mod_multiple_wo_quotes(char **envp, char *string, t_boollr *j, char **s)
 {
 	int		i;
 
@@ -72,10 +80,10 @@ static char	*mod_multiple_wo_quotes(char **envp, char *string, int *j, char **s)
 		if (string[i] == '$')
 		{
 			*s = mod_strjoin(mod_get_env(envp, ft_substr(string, \
-				i + 1, ft_strlen(string) - i), *j, NULL), NULL);
+				i + 1, ft_strlen(string) - i), j, NULL), NULL);
 			if (!*s)
 				return (free(string), NULL);
-			*j = 1;
+			j->bool = 1;
 			break ;
 		}
 		i++;
@@ -84,12 +92,12 @@ static char	*mod_multiple_wo_quotes(char **envp, char *string, int *j, char **s)
 	return (string);
 }
 
-char	*mod_get_env(char **envp, char *string, int j, char *s)
+char	*mod_get_env(char **envp, char *string, t_boollr *j, char *s)
 {
 	int		i;
 
 	i = 0;
-	if (j == 1)
+	if (j->bool == 1)
 	{
 		while (string[i] != 39)
 		{
@@ -104,7 +112,7 @@ char	*mod_get_env(char **envp, char *string, int j, char *s)
 		string = ft_substr(string, 0, i);
 	}
 	else
-		string = mod_multiple_wo_quotes(envp, string, &j, &s);
+		string = mod_multiple_wo_quotes(envp, string, j, &s);
 	if (!string)
 		return (NULL);
 	return (mod_get_env_two(envp, string, j, s));

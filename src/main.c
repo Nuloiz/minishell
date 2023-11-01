@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("minishell: ");
 		add_history(line);
-		last_return = input_sort(line, &new_env, &last_return);
+		last_return = input_sort(line, &new_env, last_return);
 		if (last_return == -1)
 		{
 			free_array(new_env);

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static char	*string_before_env(char *s, int *i, int *j)
+static char	*string_before_env(char *s, int *i, t_boollr *j)
 {
 	char	*dup;
 
@@ -21,28 +21,29 @@ static char	*string_before_env(char *s, int *i, int *j)
 	dup = ft_calloc(*i + 1, 1);
 	if (!dup)
 		return (NULL);
-	while (*j < *i)
+	while (j->bool < *i)
 	{
-		dup[*j] = s[*j];
-		*j = *j + 1;
+		dup[j->bool] = s[j->bool];
+		j->bool = j->bool + 1;
 	}
-	if (*j > 0 && dup[*j - 1] == 39)
-		*j = 1;
+	if (j->bool > 0 && dup[j->bool - 1] == 39)
+		j->bool = 1;
 	else
-		*j = 0;
+		j->bool   = 0;
 	return (dup);
 }
 
-char	*env_var(char *s, char **envp, int *l_r)
+char	*env_var(char *s, char **envp, int l_r)
 {
 	int		i;
-	int		j;
+	t_boollr j;
 	int		k;
 	char	*dup;
 	char	*tmp;
 
 	i = 0;
-	j = 0;
+	j.l_r = l_r;
+	j.bool = 0;
 	if (s[0] != '$')
 	{
 		dup = string_before_env(s, &i, &j);
@@ -51,33 +52,17 @@ char	*env_var(char *s, char **envp, int *l_r)
 	}
 	else
 		dup = NULL;
-	if (!ft_strncmp(&s[i], "$?", 3))
+	k = i;
+	while (s[k] && s[k] != 39)
+		k++;
+	tmp = mod_get_env(envp, &s[i + 1], &j, &s[k]);
+	if (!tmp)
 	{
-		tmp = ft_itoa(*l_r);
-		if (!tmp)
-		{
-			if (dup)
-				free(dup);
-			return (NULL);
-		}
-		dup = mod_nocheck_strjoin(dup, tmp);
-		if (!dup)
-			return (NULL);
+		if (dup)
+			free(dup);
+		return (NULL);
 	}
-	else
-	{
-		k = i;
-		while (s[k] && s[k] != 39)
-			k++;
-		tmp = mod_get_env(envp, &s[i + 1], j, &s[k]);
-		if (!tmp)
-		{
-			if (dup)
-				free(dup);
-			return (NULL);
-		}
-		dup = mod_nocheck_strjoin(dup, tmp);
-	}
+	dup = mod_nocheck_strjoin(dup, tmp);
 	if (!dup)
 		return (NULL);
 	return (dup);

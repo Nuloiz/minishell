@@ -80,7 +80,7 @@ static t_input	*found_quote(t_input *new, char **s)
 	*s = new->word;
 	return (new);
 }
-static t_input	*new_node(char **s, char *s_one, char **envp, int *l_r)
+static t_input	*new_node(char **s, char *s_one, char **envp, int l_r)
 {
 	t_input	*new;
 
@@ -107,7 +107,7 @@ static t_input	*new_node(char **s, char *s_one, char **envp, int *l_r)
 }
 
 static t_input	**linked_list_start(char **cmd, char **envp, \
-									t_input **input, int *l_r)
+									t_input **input, int l_r)
 {
 	int		num;
 	int		i;
@@ -144,7 +144,7 @@ int just_space(char *line)
 	return (0);
 }
 
-int	input_sort(char *line, char ***envp, int *l_r)
+int	input_sort(char *line, char ***envp, int l_r)
 {
 	t_input	*input;
 	t_array	array;

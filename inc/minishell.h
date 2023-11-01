@@ -69,6 +69,12 @@ typedef struct s_command
 	int		type;
 }				t_command;
 
+typedef struct s_boollr
+{
+	int		bool;
+	int 	l_r;
+}	t_boollr;
+
 typedef struct s_execute {
 	int			count_only_files;
 	int			count_limiter;
@@ -84,7 +90,7 @@ typedef struct s_execute {
 }	t_execute;
 
 int			main(int argc, char **argv, char **envp);
-int			input_sort(char *line, char ***envp, int *l_r);
+int			input_sort(char *line, char ***envp, int l_r);
 void		mod_lstadd_back(t_input **lst, t_input *new);
 t_input		*mod_lstlast(t_input *lst);
 int			input_type(char *s, char *s_one, char **envp);
@@ -93,12 +99,12 @@ int			is_built_in(char *s);
 int			is_pipe(char *s);
 int			is_red(char s);
 int			is_file(char *s);
-char		*env_var(char *s, char **envp, int *l_r);
+char		*env_var(char *s, char **envp, int l_r);
 int			sort_array(t_input **input, t_array *array);
 int			fill_tmp(t_input **input, t_array array, int *count, char **tmp);
 int			nv_after_red(t_input **input, int i);
 t_command	**get_commands(t_array **array);
-char		*mod_get_env(char **envp, char *string, int j, char *s);
+char		*mod_get_env(char **envp, char *string, t_boollr *j, char *s);
 char		**mod_split(char *s, char c);
 void		mod_countsplitting(char *s, int *j, char c);
 int			mod_possplit(const char *s, char c);
