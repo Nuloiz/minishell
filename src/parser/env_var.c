@@ -76,7 +76,7 @@ char	*env_var(char *s, char **envp, int *l_r)
 				free(dup);
 			return (NULL);
 		}
-		dup = modified_strjoin(dup, tmp);
+		dup = mod_nocheck_strjoin(dup, tmp);
 	}
 	if (!dup)
 		return (NULL);
