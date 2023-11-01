@@ -140,8 +140,8 @@ int just_space(char *line)
 	while (line[i] && !isspace(line[i]))
 		i++;
 	if (!line[i])
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
 int	input_sort(char *line, char ***envp, int *l_r)
