@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/30 16:53:38 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/01 10:25:17 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ char		**ft_get_command_arg_array(char *command);
 void		ft_remove(char *start, char *end);
 void		ft_close_fds(t_execute *exec, int current_child);
 void		ft_close_all_fds(t_execute *exec);
-int			ft_print_command_error(char **parsed, int error_code, int i);
+int			ft_print_command_error(char *parsed, int error_code);
 int			ft_init_struct(t_execute *new, t_command **token, char ***envp);
 void		ft_free_data(t_execute *exec);
 int			ft_forking(t_execute *exec);
@@ -146,5 +146,6 @@ int			ft_init(t_execute *exec, t_command **token, char ***envp);
 int			ft_free_end(int ret, char **array, t_execute *exec);
 // int			*ft_get_types_commands(t_execute *new);
 int			ft_set_redirects(t_execute *exec, int i);
+void		write_newline(int pipe, int i, t_execute *exec);
 
 #endif
