@@ -6,38 +6,42 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/30 17:35:45 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/01 11:40:03 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	print_splitted(char **splitted)
+{
+	int	i;
+	int	once;
+
+	i = 0;
+	once = 0;
+	while (splitted[i])
+	{
+		ft_printf("%s", splitted[i]);
+		if (splitted[i + 1] && !once)
+		{
+			once = 1;
+			ft_printf("=\"");
+		}
+		i++;
+	}
+}
+
 void	ft_print_export(char **envp)
 {
 	int		i;
-	int		j;
 	char	**splitted;
-	int		once;
 
 	i = 0;
-	j = 0;
-	once = 0;
 	while (envp[i])
 	{
 		splitted = ft_split(envp[i], '=');
 		ft_printf("declare -x ");
-		while (splitted[j])
-		{
-			ft_printf("%s", splitted[j]);
-			if (splitted[j + 1] && !once)
-			{
-				once = 1;
-				ft_printf("=\"");
-			}
-			j++;
-		}
-		j = 0;
-		once = 0;
+		print_splitted(splitted);
 		free_array(splitted);
 		ft_printf("\"\n");
 		i++;
@@ -96,33 +100,24 @@ int	ft_export(char ***envp, char *string)
 
 	splitted = ft_split(string, ' ');
 	found = 0;
-	// dprintf(2, "export started\n");
 	if (!*envp)
 		ft_putstr_fd("NO ENVP\n", 2);
 	if (!splitted[1])
-	{
-		// dprintf(2, "export without arguements\n");
-		ft_sorted_print_array(*envp);
-		return (0);
-	}
-	i = 0;
-	//ft_memmove(env, &env[ft_strlen(string) + 1], (ft_strlen(env) - ft_strlen(string)));
+		return (ft_sorted_print_array(*envp), 0);
+	i = -1;
 	ft_memmove(string, &string[7], (ft_strlen(string) - 6));
-	while ((*envp)[i])
+	while ((*envp)[++i])
 	{
-		// // dprintf(2, "ft_strncmp((*envp)[%i]: %s, string: %s, (ft_strchr(string, '=') - string + 1): %i)\n", i, (*envp)[i], string, ft_strchr(string, '=') - string + 1);
-		if (!ft_strncmp((*envp)[i], string, (ft_strchr(string, '=') - string + 1)))
+		if (!ft_strncmp((*envp)[i], string,
+			(ft_strchr(string, '=') - string + 1)))
 		{
 			free((*envp)[i]);
 			(*envp)[i] = ft_strdup(string);
 			found = 1;
 		}
-		i++;
 	}
 	if (!found)
-	{
 		*envp = ft_append_string_to_array(*envp, string);
-	}
 	return (0);
 }
 
