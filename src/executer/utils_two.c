@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/01 10:12:36 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/01 10:47:28 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,44 @@ void	write_newline(int pipe, int i, t_execute *exec)
 		red_line = readline("-> ");
 	}
 	free(red_line);
+}
+
+//executes builtin
+void	execute_builtin(int i, t_execute *exec)
+{
+	if (!ft_strncmp(exec->token[i]->command, "echo", 4))
+		ft_echo(exec->token[i]->command);
+	else if (!ft_strncmp(exec->token[i]->command, "cd", 2))
+		ft_cd(exec->token[i]->command, exec->envp);
+	else if (!ft_strncmp(exec->token[i]->command, "pwd", 3))
+		ft_pwd();
+	else if (!ft_strncmp(exec->token[i]->command, "export", 6))
+		ft_export(exec->envp, exec->token[i]->command);
+	else if (!ft_strncmp(exec->token[i]->command, "unset", 5))
+		ft_unset(exec->envp, exec->token[i]->command);
+	else if (!ft_strncmp(exec->token[i]->command, "env", 3))
+		ft_env(*exec->envp);
+	else if (!ft_strncmp(exec->token[i]->command, "exit", 4))
+		ft_exit(&exec->token[i]->command, exec);
+}
+
+int	execute_command(int i, t_execute *exec)
+{
+	char	**command_array;
+	char	*command;
+
+	command_array = ft_get_command_arg_array
+		(exec->token[i]->command);
+	command = ft_check_command_and_get_path(command_array[0], *exec->envp);
+	if (command == NULL)
+	{
+		ft_free_array(command_array);
+		return (ft_print_command_error(exec->token[i]->command, 127));
+	}
+	execve(command, command_array, *exec->envp);
+	perror("Execve error");
+	if (command != command_array[0])
+		free(command);
+	ft_free_array(command_array);
+	return (127);
 }
