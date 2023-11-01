@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/19 22:40:35 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/01 11:56:09 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include "../tools/ft_printf/ft_printf.h"
 // # include "../src/executer/pipex.h"
 # include <errno.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 # define COMMAND 1
 # define FLAGS	2
@@ -132,7 +134,7 @@ char		**ft_get_command_arg_array(char *command);
 void		ft_remove(char *start, char *end);
 void		ft_close_fds(t_execute *exec, int current_child);
 void		ft_close_all_fds(t_execute *exec);
-int			ft_print_command_error(char **parsed, int error_code, int i);
+int			ft_print_command_error(char *parsed, int error_code);
 int			ft_init_struct(t_execute *new, t_command **token, char ***envp);
 void		ft_free_data(t_execute *exec);
 int			ft_forking(t_execute *exec);
@@ -144,5 +146,10 @@ int			ft_init(t_execute *exec, t_command **token, char ***envp);
 int			ft_free_end(int ret, char **array, t_execute *exec);
 // int			*ft_get_types_commands(t_execute *new);
 int			ft_set_redirects(t_execute *exec, int i);
+void		write_newline(int pipe, int i, t_execute *exec);
+int			execute_command(int i, t_execute *exec);
+void		execute_builtin(int i, t_execute *exec);
+void		set_output_fd(t_execute *exec, int i, int pipe);
+int			get_input_pipe(t_execute *exec, int i);
 
 #endif

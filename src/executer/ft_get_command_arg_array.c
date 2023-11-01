@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_command_arg_array.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 09:32:28 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/30 10:56:59 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 17:00:34 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,18 @@ int	ft_get_pos(char *s, char c)
 char	**ft_delete_char_and_split(char *command, char c)
 {
 	unsigned int	size;
-	int				pos;
 	char			**command_array;
 	char			*deleted;
 
 	size = (ft_strrchr(command, c)
 			- ft_strchr(command, c)) / sizeof(char);
-	pos = ft_get_pos(command, c);
 	deleted = ft_substr(command, ft_get_pos(command, c) + 1, size - 1);
 	ft_memmove(ft_strchr(command, c) - 1,
 		ft_strrchr(command, c) + 1, size);
 	deleted = ft_remove_slash(deleted);
 	command_array = ft_special_split(command, ' ');
-	command_array[(sizeof(command_array) / sizeof(char *))] = deleted;
+	// command_array[(sizeof(command_array) / sizeof(char *))] = deleted;
+	command_array[ft_array_size(command_array)] = deleted;
 	return (command_array);
 }
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   modified_libft_func.c                              :+:      :+:    :+:   */
+/*   modified_split_func.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nschutz <nschutz@student.42wolfsburg.de>   +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 11:08:15 by nschutz           #+#    #+#             */
-/*   Updated: 2023/09/19 11:08:15 by nschutz          ###   ########.fr       */
+/*   Updated: 2023/10/30 16:50:00 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	mod_countsplit(char *s, char c)
 			j++;
 		if (!s[j])
 			break ;
-		mod_countsplitting(s, &j, c);
+		mod_countsplitting((char *)s, &j, c);
 		i++;
 	}
 	return (i);

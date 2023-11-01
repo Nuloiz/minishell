@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 19:57:58 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/04 19:27:05 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/10/30 17:36:20 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,12 @@ char	**ft_delete_from_array(char **array, char *string)
 //add or replace the value of the string in the 2D envp array
 int	ft_unset(char ***envp, char *string)
 {
-	int		size;
 	char	*string_equal;
-	char	**pommes;
 	char	**splitted;
 
 	splitted = ft_split(string, ' ');
 	if (!splitted[1])
 		return (0);
-	size = ft_array_size(*envp);
 	if (!*envp)
 		ft_putstr_fd("NO ENVP\n", 2);
 	string_equal = ft_strjoin(splitted[1], "=");

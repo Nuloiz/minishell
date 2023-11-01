@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/18 14:19:59 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/01 10:47:28 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,24 +72,67 @@ int	ft_free_end(int ret, char **array, t_execute *exec)
 	return (ret);
 }
 
-// returns array with just commands and builtins
-// int	*ft_get_types_commands(t_execute *new)
-// {
-// 	int	*types_commands;
-// 	int	i;
-// 	int	j;
-// 	int	size;
+void	write_newline(int pipe, int i, t_execute *exec)
+{
+	int		len;
+	char	*red_line_newline;
+	char	*red_line;
 
-// 	i = 0;
-// 	j = 0;
-// 	size = new->count_builtins + new->count_commands;
-// 	types_commands = malloc(sizeof(int *) * (size + 1));
-// 	while (i < size)
-// 	{
-// 		if (new->types[j] == 5 || new->types[j] == 6)
-// 			types_commands[i++] = new->types[j];
-// 		j++;
-// 	}
-// 	types_commands[i] = NULL;
-// 	return (types_commands);
-// }
+	red_line = readline("-> ");
+	while (red_line != NULL)
+	{
+		red_line_newline = ft_strjoin(red_line, "\n");
+		if (ft_strlen(red_line) - 1 < ft_strlen(exec->token[i]->limiter))
+			len = ft_strlen(exec->token[i]->limiter);
+		else
+			len = ft_strlen(red_line);
+		if (ft_strncmp(red_line, exec->token[i]->limiter, len) == 0)
+			break ;
+		write(exec->pipe_fd[pipe][1],
+			red_line_newline, ft_strlen(red_line_newline));
+		free(red_line_newline);
+		free(red_line);
+		red_line = readline("-> ");
+	}
+	free(red_line);
+}
+
+//executes builtin
+void	execute_builtin(int i, t_execute *exec)
+{
+	if (!ft_strncmp(exec->token[i]->command, "echo", 4))
+		ft_echo(exec->token[i]->command);
+	else if (!ft_strncmp(exec->token[i]->command, "cd", 2))
+		ft_cd(exec->token[i]->command, exec->envp);
+	else if (!ft_strncmp(exec->token[i]->command, "pwd", 3))
+		ft_pwd();
+	else if (!ft_strncmp(exec->token[i]->command, "export", 6))
+		ft_export(exec->envp, exec->token[i]->command);
+	else if (!ft_strncmp(exec->token[i]->command, "unset", 5))
+		ft_unset(exec->envp, exec->token[i]->command);
+	else if (!ft_strncmp(exec->token[i]->command, "env", 3))
+		ft_env(*exec->envp);
+	else if (!ft_strncmp(exec->token[i]->command, "exit", 4))
+		ft_exit(&exec->token[i]->command, exec);
+}
+
+int	execute_command(int i, t_execute *exec)
+{
+	char	**command_array;
+	char	*command;
+
+	command_array = ft_get_command_arg_array
+		(exec->token[i]->command);
+	command = ft_check_command_and_get_path(command_array[0], *exec->envp);
+	if (command == NULL)
+	{
+		ft_free_array(command_array);
+		return (ft_print_command_error(exec->token[i]->command, 127));
+	}
+	execve(command, command_array, *exec->envp);
+	perror("Execve error");
+	if (command != command_array[0])
+		free(command);
+	ft_free_array(command_array);
+	return (127);
+}
