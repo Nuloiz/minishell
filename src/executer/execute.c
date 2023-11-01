@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/01 09:36:44 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/01 10:25:33 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	ft_child(int i, t_execute *exec)
 		if (command == NULL)
 		{
 			ft_free_array(command_array);
-			return (ft_print_command_error(&exec->token[i]->command, 127, i));
+			return (ft_print_command_error(exec->token[i]->command, 127));
 		}
 		execve(command, command_array, *exec->envp);
 		perror("Execve error");
@@ -149,11 +149,8 @@ int	ft_child(int i, t_execute *exec)
 
 int	ft_here_doc(t_execute *exec)
 {
-	char	*red_line;
-	int		len;
 	int		i;
 	int		pipe;
-	char	*red_line_newline;
 
 	i = -1;
 	while (exec->token[++i])
@@ -164,30 +161,8 @@ int	ft_here_doc(t_execute *exec)
 				pipe = exec->count_pipes - 1;
 			else
 				pipe = exec->token[i]->index - 1;
-			// dprintf(2, "exec->count_pipes: %i pipe: %i i: %i\n", exec->count_pipes, pipe, i);
-			// ft_printf("-> ");
-			// red_line = get_next_line(0);
-			red_line = readline("-> ");
-			while (red_line != NULL)
-			{
-				red_line_newline = ft_strjoin(red_line, "\n");
-				if (ft_strlen(red_line) - 1 < ft_strlen(exec->token[i]->limiter))
-					len = ft_strlen(exec->token[i]->limiter);
-				else
-					len = ft_strlen(red_line);
-				// // dprintf(2, "ft_strncmp(red_line :%s exec->token[%i]->limiter: %s, len: %i): %i == 0\n",red_line, i, exec->token[i]->limiter, len, ft_strncmp(red_line, exec->token[i]->limiter, len));
-				if (ft_strncmp(red_line, exec->token[i]->limiter, len) == 0)
-					break ;
-				write(exec->pipe_fd[pipe][1],
-					red_line_newline, ft_strlen(red_line_newline));
-				free(red_line);
-				free(red_line_newline);
-				// ft_printf("-> ");
-				// red_line = get_next_line(0);
-				red_line = readline("-> ");
-			}
+			write_newline(pipe, i, exec);
 			close(exec->pipe_fd[pipe][1]);
-			free(red_line);
 		}
 	}
 	return (1);
