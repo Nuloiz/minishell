@@ -3,61 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/30 16:51:52 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/01 18:53:38 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// #include <unistd.h>
-// #include <signal.h>
-// #include <stdio.h>
-// #include "executer/pipex.h"
-
-// void	ft_sig_handle(int sig)
-// {
-// 	if (sig == 2)
-// 	{
-// 		// rl_replace_line("", 0);
-// 		// printf("signal: %i caught! i will be a new promt on new line\n", sig);
-// 		// printf("minishell after signal2-0.1$ ");
-// 		// 
-// 		rl_replace_line("hello\n", 0);
-// 		// write(0, "\n", 2);
-// 		rl_on_new_line();
-// 		rl_redisplay();
-// 		// readline, rl_clear_history, rl_on_new_line,
-// 		// rl_replace_line, rl_redisplay
-// 	}
-// 	else
-// 		printf("signal: %i caught!\n", sig);
-// }
 
 int	main(int argc, char **argv, char **envp)
 {
 	char				**new_env;
 	char				*line;
-	int 				last_return;
+	int					last_return;
+	struct sigaction			sa;
 
-	// sa.sa_handler = &ft_sig_handle;
-	// sa.sa_flags = SA_RESTART;
-	// sigaction(SIGINT, &sa, NULL);
-	// signal(SIGQUIT, SIG_IGN);
-	// rl_replace_line("hello", 1);
-	// rl_redisplay();
+	sa.sa_handler = &ft_sig_handle;
+	sa.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
+	turn_off_ctl_echo();
+	g_signal = 0;
 	if (argc && argv)
 		argc = 1;
 	new_env = dup_array(envp);
 	if (!new_env)
 		return (-1);
-	//line = readline("minishell: ");
-	//add_history(line);
 	last_return = 0;
 	while (1)
 	{
 		line = readline("minishell: ");
+		if (!line)
+		{
+			// rl_replace_line("minishell: exit", 0);
+			printf("exit\n");
+			free_array(new_env);
+			free(line);
+			break ;
+		}
+
 		add_history(line);
 		last_return = input_sort(line, &new_env, last_return);
 		if (last_return == -1)

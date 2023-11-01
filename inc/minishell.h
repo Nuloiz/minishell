@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/01 11:56:09 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/01 18:53:25 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@
 # include "../tools/ft_printf/ft_printf.h"
 // # include "../src/executer/pipex.h"
 # include <errno.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <signal.h>
+# include <termios.h>
 
 # define COMMAND 1
 # define FLAGS	2
@@ -42,6 +44,8 @@
 # define REDIRECT 6
 # define BUILTIN	 7
 # define PARAM	 8
+
+int	g_signal;
 
 typedef struct s_input
 {
@@ -157,5 +161,7 @@ int			execute_command(int i, t_execute *exec);
 void		execute_builtin(int i, t_execute *exec);
 void		set_output_fd(t_execute *exec, int i, int pipe);
 int			get_input_pipe(t_execute *exec, int i);
+void		ft_sig_handle(int sig);
+void		turn_off_ctl_echo(void);
 
 #endif

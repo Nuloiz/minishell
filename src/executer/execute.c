@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/01 12:58:53 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/01 18:58:24 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,13 @@ int	ft_parent(t_execute *exec)
 		waitpid(exec->id[i], &status, 0);
 	dup2(stin_backup, 0);
 	dup2(sout_backup, 1);
+	close(stin_backup);
+	close(sout_backup);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
-	return (0);
+	if (g_signal)
+		return (77);
+	return (999);
 }
 
 // standard input now last pipe read end
