@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/01 12:07:49 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/01 12:58:53 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ int	ft_parent(t_execute *exec)
 // standard output now pipe write end
 int	ft_child(int i, t_execute *exec)
 {
-	char	**command_array;
-	char	*command;
 	int		return_val;
 
 	return_val = 0;
