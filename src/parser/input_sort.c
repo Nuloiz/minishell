@@ -63,12 +63,12 @@ static t_input	*found_quote(t_input *new, char **s)
 	int 	i;
 
 	i = 0;
-	while (*s[i] && *s[i] != 34 && *s[i] != 39)
+	while ((*s)[i] && (*s)[i] != 34 && (*s)[i] != 39)
 		i++;
 	tmp = ft_substr(*s, 0, i);
 	if (!tmp && i > 0)
 		return (NULL);
-	new->word = quotes(*s, *s[i]);
+	new->word = quotes(&(*s)[i], (*s)[i]);
 	if (!new->word)
 		return (NULL);
 	new->word = mod_nocheck_strjoin(tmp, new->word);
