@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/01 10:45:39 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/01 11:56:09 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,7 @@ int			ft_set_redirects(t_execute *exec, int i);
 void		write_newline(int pipe, int i, t_execute *exec);
 int			execute_command(int i, t_execute *exec);
 void		execute_builtin(int i, t_execute *exec);
+void		set_output_fd(t_execute *exec, int i, int pipe);
+int			get_input_pipe(t_execute *exec, int i);
 
 #endif
