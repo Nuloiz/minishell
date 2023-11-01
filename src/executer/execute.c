@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/30 23:43:56 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/01 09:36:44 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	ft_parent(t_execute *exec)
 
 	stin_backup = dup(0);
 	sout_backup = dup(1);
+	status = 0;
 	// i = 0;
 	// dprintf(2, "exec->count_builtins == %i && exec->count_children == %i && exec->count_pipes == %i\n",exec->count_builtins, exec->count_children, exec->count_pipes);
 	if (exec->count_builtins == 1 && exec->count_children == 1)
@@ -197,7 +198,7 @@ int	execute(char ***envp, t_command **token)
 	t_execute	exec;
 	int			error;
 
-	dprintf(3, "hello im the execute function\n");
+	// dprintf(3, "hello im the execute function\n");
 	if (!token || !*token)
 		return (0);
 	error = 0;
