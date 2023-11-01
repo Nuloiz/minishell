@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 18:20:52 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/19 12:57:11 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/01 11:55:15 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,7 @@ int	ft_set_output(t_execute *exec, int i)
 	if (exec->token[i]->output)
 	{
 		close(exec->pipe_fd[pipe][1]);
-		if (exec->token[i]->append)
-			exec->pipe_fd[pipe][1] = open(exec->token[i]->output, O_RDWR
-					| O_CREAT | O_APPEND, 0644);
-		else
-			exec->pipe_fd[pipe][1] = open(exec->token[i]->output, O_RDWR
-					| O_CREAT | O_TRUNC, 0644);
+		set_output_fd(exec, i, pipe);
 		if (exec->pipe_fd[pipe][1] < 1)
 		{
 			perror("Error");
@@ -54,7 +49,6 @@ int	ft_set_output(t_execute *exec, int i)
 	}
 	else
 	{
-		// only last should have stdout ?!
 		if (i == exec->count_children - 1)
 		{
 			close(exec->pipe_fd[pipe][1]);
@@ -71,11 +65,7 @@ int	ft_set_input(t_execute *exec, int i)
 
 	if (exec->token[i]->limiter)
 		return (0);
-	if (i == 0)
-		pipe = exec->count_pipes - 1;
-	else
-		pipe = i - 1;
-	// if (exec->token[i]->input && !exec->token[i]->limiter) idk why i did this
+	pipe = get_input_pipe(exec, i);
 	if (exec->token[i]->input)
 	{
 		close(exec->pipe_fd[pipe][0]);
@@ -88,7 +78,6 @@ int	ft_set_input(t_execute *exec, int i)
 	}
 	else
 	{
-		// only the first should have stdin !
 		if (i == 0)
 		{
 			close(exec->pipe_fd[pipe][0]);
