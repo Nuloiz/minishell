@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/18 14:19:59 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/01 10:12:36 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,24 +72,27 @@ int	ft_free_end(int ret, char **array, t_execute *exec)
 	return (ret);
 }
 
-// returns array with just commands and builtins
-// int	*ft_get_types_commands(t_execute *new)
-// {
-// 	int	*types_commands;
-// 	int	i;
-// 	int	j;
-// 	int	size;
+void	write_newline(int pipe, int i, t_execute *exec)
+{
+	int		len;
+	char	*red_line_newline;
+	char	*red_line;
 
-// 	i = 0;
-// 	j = 0;
-// 	size = new->count_builtins + new->count_commands;
-// 	types_commands = malloc(sizeof(int *) * (size + 1));
-// 	while (i < size)
-// 	{
-// 		if (new->types[j] == 5 || new->types[j] == 6)
-// 			types_commands[i++] = new->types[j];
-// 		j++;
-// 	}
-// 	types_commands[i] = NULL;
-// 	return (types_commands);
-// }
+	red_line = readline("-> ");
+	while (red_line != NULL)
+	{
+		red_line_newline = ft_strjoin(red_line, "\n");
+		if (ft_strlen(red_line) - 1 < ft_strlen(exec->token[i]->limiter))
+			len = ft_strlen(exec->token[i]->limiter);
+		else
+			len = ft_strlen(red_line);
+		if (ft_strncmp(red_line, exec->token[i]->limiter, len) == 0)
+			break ;
+		write(exec->pipe_fd[pipe][1],
+			red_line_newline, ft_strlen(red_line_newline));
+		free(red_line_newline);
+		free(red_line);
+		red_line = readline("-> ");
+	}
+	free(red_line);
+}
