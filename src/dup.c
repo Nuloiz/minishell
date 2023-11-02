@@ -33,13 +33,13 @@ char	**dup_array(char **array)
 	i = 0;
 	while (array[i])
 		i++;
-	new = ft_calloc(sizeof(char *), i + 1); //leaks (168 in 1 still_reachable)
+	new = ft_calloc(sizeof(char *), i + 1);
 	if (!new)
 		return (NULL);
 	i = 0;
 	while (array[i])
 	{
-		new[i] = ft_strdup(array[i]); //leaks (733 in 20 still reach)
+		new[i] = ft_strdup(array[i]);
 		if (!new[i])
 			return (free_dup_array(new, i), NULL);
 		i++;
