@@ -97,7 +97,7 @@ int			main(int argc, char **argv, char **envp);
 int			input_sort(char *line, char ***envp, int l_r);
 void		mod_lstadd_back(t_input **lst, t_input *new);
 t_input		*mod_lstlast(t_input *lst);
-int			input_type(char *s, char *s_one, char **envp);
+int			input_type(char *s, char **envp);
 int			is_env_var(char *s);
 int			is_built_in(char *s);
 int			is_pipe(char *s);
