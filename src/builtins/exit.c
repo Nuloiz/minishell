@@ -6,17 +6,29 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:41:17 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/18 12:34:49 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 14:45:46 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit(char **array, t_execute *exec)
+void	ft_exit(t_execute *exec)
 {
-	if (array)
-		ft_free_array(array);
-	// ft_free_array(exec->commands);
+	int		i;
+
+	i = 0;
+	while (exec->token[i])
+	{
+		free(exec->token[i]->command);
+		free(exec->token[i]->input);
+		free(exec->token[i]->output);
+		free(exec->token[i]->limiter);
+		free(exec->token[i]);
+		i++;
+	}
+	free(exec->token[i]);
+	free(exec->token);
+	ft_free_array(*exec->envp);
 	ft_close_all_fds(exec);
 	exit(0);
 }
