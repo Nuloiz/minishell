@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/02 14:46:42 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 20:56:24 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,8 +161,10 @@ int			execute_command(int i, t_execute *exec);
 void		execute_builtin(int i, t_execute *exec);
 void		set_output_fd(t_execute *exec, int i, int pipe);
 int			get_input_pipe(t_execute *exec, int i);
-void		set_sig_handle_prompt(struct sigaction *sa);
-void		set_sig_handle_executer(struct sigaction *sa);
+// void		set_sig_handle_prompt(struct sigaction *sa);
+// void		set_sig_handle_executer(struct sigaction *sa);
+void		set_sig_handle_prompt(void);
+void		set_sig_handle_executer(void);
 void		turn_off_ctl_echo(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/02 15:55:57 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 20:59:12 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	ft_here_doc(t_execute *exec)
 	int		pipe;
 
 	i = -1;
+	set_sig_handle_prompt();
 	while (exec->token[++i])
 	{
 		if (exec->token[i]->limiter)
@@ -96,6 +97,7 @@ int	ft_here_doc(t_execute *exec)
 			close(exec->pipe_fd[pipe][1]);
 		}
 	}
+	set_sig_handle_executer();
 	return (1);
 }
 
