@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/02 10:16:45 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 14:07:09 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,28 @@ char	*ft_remove_slash(char *deleted)
 // 	return (commands);
 // }
 
-int	ft_free_end(int ret, char **array, t_execute *exec)
+void	ft_free_end(t_execute *exec)
 {
-	ft_free_array(array);
-	// ft_free_array(exec->commands);
-	// free(exec->types_commands);
-	ft_close_all_fds(exec);
-	return (ret);
+	int		i;
+
+	i = 0;
+	dprintf(2, "free end called!\n");
+	ft_free_array(*exec->envp);
+	while (exec->token[i])
+	{
+		free(exec->token[i]->command);
+		free(exec->token[i]->input);
+		free(exec->token[i]->output);
+		free(exec->token[i]->limiter);
+		free(exec->token[i]);
+		i++;
+	}
+	free(exec->token[i]);
+	free(exec->token);
+	// ft_close_all_fds(exec);
 }
 
+//calling readline and writing it in pipe
 void	write_newline(int pipe, int i, t_execute *exec)
 {
 	int		len;
