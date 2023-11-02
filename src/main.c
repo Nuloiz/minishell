@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/01 18:53:38 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 11:04:09 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	int					last_return;
 	struct sigaction			sa;
 
-	sa.sa_handler = &ft_sig_handle;
-	sa.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
+	set_sig_handle_prompt(&sa);
 	turn_off_ctl_echo();
 	g_signal = 0;
 	if (argc && argv)
@@ -44,6 +41,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 
 		add_history(line);
+		set_sig_handle_executer(&sa);
 		last_return = input_sort(line, &new_env, last_return);
 		if (last_return == -1)
 		{
@@ -51,6 +49,8 @@ int	main(int argc, char **argv, char **envp)
 			free(line);
 			return (-1);
 		}
+		g_signal = 0;
+		set_sig_handle_prompt(&sa);
 		free(line);
 	}
 	free(line);
