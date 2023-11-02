@@ -88,7 +88,7 @@ static char	*mod_multiple_wo_quotes(char **envp, char *string, t_boollr *j, char
 		}
 		i++;
 	}
-	string = ft_substr(string, 0, i);
+	string = ft_substr(string, 0, i); //leak (5 in 1 def lost)
 	return (string);
 }
 
@@ -112,7 +112,7 @@ char	*mod_get_env(char **envp, char *string, t_boollr *j, char *s)
 		string = ft_substr(string, 0, i);
 	}
 	else
-		string = mod_multiple_wo_quotes(envp, string, j, &s);
+		string = mod_multiple_wo_quotes(envp, string, j, &s); //leaks
 	if (!string)
 		return (NULL);
 	return (mod_get_env_two(envp, string, j, s));

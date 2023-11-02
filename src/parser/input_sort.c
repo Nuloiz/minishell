@@ -84,7 +84,7 @@ static t_input	*new_node(char **s, char *s_one, char **envp, int l_r)
 {
 	t_input	*new;
 
-	new = ft_calloc(1, sizeof(t_input));
+	new = ft_calloc(1, sizeof(t_input)); //leak (72 in 2 def lost && 24 in 1 indir lost)
 	if (!new)
 		return (NULL);
 	new->type = input_type(*s, s_one, envp);
@@ -98,7 +98,7 @@ static t_input	*new_node(char **s, char *s_one, char **envp, int l_r)
 		new->word = *s;
 	if (new->type == 4)
 	{
-		new->word = env_var(new->word, envp, l_r);
+		new->word = env_var(new->word, envp, l_r); //leaks
 		if (!new->word)
 			return (NULL);
 	}
@@ -120,9 +120,9 @@ static t_input	**linked_list_start(char **cmd, char **envp, \
 	while (i < num)
 	{
 		if (i == 0)
-			new = new_node (&cmd[0], NULL, envp, l_r);
+			new = new_node (&cmd[0], NULL, envp, l_r); //leaks
 		else
-			new = new_node(&cmd[i], cmd[i - 1], envp, l_r);
+			new = new_node(&cmd[i], cmd[i - 1], envp, l_r); //leaks
 		if (!new)
 			return (NULL);
 		mod_lstadd_back(input, new);
@@ -155,10 +155,10 @@ int	input_sort(char *line, char ***envp, int l_r)
 	array.envp = envp;
 	if (!line || just_space(line))
 		return (0);
-	cmd = mod_split(line, ' ');
+	cmd = mod_split(line, ' '); //leaks
 	if (!cmd)
 		return (-1);
-	linked_list_start(cmd, *envp, &input, l_r);
+	linked_list_start(cmd, *envp, &input, l_r); //leaks
 	if (!input)
 	{
 		free_list(&input);

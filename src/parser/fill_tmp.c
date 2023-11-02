@@ -58,7 +58,7 @@ int	fill_tmp(t_input **input, t_array array, int *count, char **tmp)
 		}
 		else
 		{
-			*tmp = mod_strjoin(*tmp, (*input)->word);
+			*tmp = mod_strjoin(*tmp, (*input)->word); //leak
 			if (!*tmp)
 				return (-1);
 			i--;

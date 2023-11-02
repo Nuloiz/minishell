@@ -57,7 +57,7 @@ static t_array	*fill_array(t_input **input, t_array *array, int *i, int *count)
 	while (*input)
 	{
 		tmp = is_cmd(input, *array, *count);
-		*i = fill_tmp(input, *array, count, &tmp);
+		*i = fill_tmp(input, *array, count, &tmp); //leaks
 		if (*i == 258)
 			return (NULL);
 		if (*input && (*input)->type == PIPE)
@@ -75,16 +75,16 @@ static t_array	*fill_array(t_input **input, t_array *array, int *i, int *count)
 
 static t_array	*array_alloc(t_input **input, t_array *array)
 {
-	array->cmds = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
+	array->cmds = ft_calloc(count_alloc(*input) + 1, sizeof(char *)); //leak (149 in 1 stil reach)
 	if (!array->cmds)
 		return (NULL);
-	array->type = malloc((count_alloc(*input) + 2) * sizeof(int));
+	array->type = malloc((count_alloc(*input) + 2) * sizeof(int)); //leak (12 in 1 still reachable)
 	if (!array->type)
 	{
 		free(array->cmds);
 		return (array);
 	}
-	array->pipe = malloc((count_alloc(*input) + 2) * sizeof(int));
+	array->pipe = malloc((count_alloc(*input) + 2) * sizeof(int)); //leak (12 in 1 def lost && 12 in 1 still reach)
 	if (!array->pipe)
 	{
 		free(array->cmds);
@@ -102,12 +102,12 @@ int	sort_array(t_input **input, t_array	*array)
 	int			i;
 	int			r;
 
-	array = array_alloc(input, array);
+	array = array_alloc(input, array); //leaks
 	if (!array)
 		return (-1);
 	count = 0;
 	i = 0;
-	array = fill_array(input, array, &i, &count);
+	array = fill_array(input, array, &i, &count); //leaks
 	if (i == 258)
 		return (258);
 	if (!array)
@@ -115,7 +115,7 @@ int	sort_array(t_input **input, t_array	*array)
 	array->type[count] = 0;
 	array->pipe[count] = 0;
 	print_cmds(array->cmds, array->type, array->pipe);
-	token = get_commands(&array);
+	token = get_commands(&array); //leaks
 	print_commands(token);
 	r = execute(array->envp, token);
 	free(array->type);
