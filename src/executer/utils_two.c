@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/02 14:07:09 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 14:47:20 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ void	ft_free_end(t_execute *exec)
 	int		i;
 
 	i = 0;
-	dprintf(2, "free end called!\n");
-	ft_free_array(*exec->envp);
 	while (exec->token[i])
 	{
 		free(exec->token[i]->command);
@@ -126,7 +124,7 @@ void	execute_builtin(int i, t_execute *exec)
 	else if (!ft_strncmp(exec->token[i]->command, "env", 3))
 		ft_env(*exec->envp);
 	else if (!ft_strncmp(exec->token[i]->command, "exit", 4))
-		ft_exit(&exec->token[i]->command, exec);
+		ft_exit(exec);
 }
 
 int	execute_command(int i, t_execute *exec)
