@@ -95,19 +95,19 @@ static t_array	*array_alloc(t_input **input, t_array *array)
 	return (array);
 }
 
-int	sort_array(t_input **input, t_array	*array)
+int	sort_array(t_input *input, t_array	*array)
 {
 	t_command	**token;
 	int			count;
 	int			i;
 	int			r;
 
-	array = array_alloc(input, array); //leaks
+	array = array_alloc(&input, array); //leaks
 	if (!array)
 		return (-1);
 	count = 0;
 	i = 0;
-	array = fill_array(input, array, &i, &count); //leaks
+	array = fill_array(&input, array, &i, &count); //leaks
 	if (i == 258)
 		return (258);
 	if (!array)

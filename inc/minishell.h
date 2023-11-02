@@ -104,7 +104,7 @@ int			is_pipe(char *s);
 int			is_red(char s);
 int			is_file(char *s);
 char		*env_var(char *s, char **envp, int l_r);
-int			sort_array(t_input **input, t_array *array);
+int			sort_array(t_input *input, t_array *array);
 int			fill_tmp(t_input **input, t_array array, int *count, char **tmp);
 int			nv_after_red(t_input **input, int i);
 t_command	**get_commands(t_array **array);

@@ -32,10 +32,10 @@ void	free_list(t_input **input)
 	while (*input)
 	{
 		tmp = *input;
-		free((*input)->word);
 		*input = tmp->next;
+		free(tmp);
 	}
-	free(*input);
+	free(input);
 }
 
 void	free_command(t_command **token, int j)
