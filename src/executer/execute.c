@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/02 14:47:05 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 15:55:57 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,16 @@ int	ft_parent(t_execute *exec)
 	int	stin_backup;
 	int	sout_backup;
 
-	stin_backup = dup(0);
-	sout_backup = dup(1);
 	status = 0;
 	// dprintf(2, "exec->count_builtins == %i && exec->count_children == %i && exec->count_pipes == %i\n",exec->count_builtins, exec->count_children, exec->count_pipes);
 	if (exec->count_builtins == 1 && exec->count_children == 1)
 	{
 		// dprintf(2, "one and only parent builtin\n");
+		if (ft_strncmp(exec->token[0]->command, "exit", 4))
+		{
+			stin_backup = dup(0);
+			sout_backup = dup(1);
+		}
 		if (ft_set_redirects(exec, 0))
 			return (ft_close_all_fds(exec), 1);
 		// dprintf(2, "executing builtin: %s in parent\n", exec->token[0]->command);
