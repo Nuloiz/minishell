@@ -84,7 +84,7 @@ static t_input	*new_node(char **s, char *s_one, char **envp, int l_r)
 {
 	t_input	*new;
 
-	new = ft_calloc(1, sizeof(t_input)); //leak (72 in 2 def lost && 24 in 1 indir lost)
+	new = ft_calloc(1, sizeof(t_input));
 	if (!new)
 		return (NULL);
 	new->type = input_type(*s, s_one, envp);
@@ -120,7 +120,7 @@ static t_input	**linked_list_start(char **cmd, char **envp, \
 	while (i < num)
 	{
 		if (i == 0)
-			new = new_node (&cmd[0], NULL, envp, l_r); //leaks
+			new = new_node (&cmd[0], NULL, envp, l_r);
 		else
 			new = new_node(&cmd[i], cmd[i - 1], envp, l_r); //leaks
 		if (!new)

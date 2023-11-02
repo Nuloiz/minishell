@@ -63,6 +63,7 @@ static int	sort_commands(t_command **token, t_array **array, int *i, int j)
 		(*array)->pipe[j] = 0;
 		*i = *i + 1;
 	}
+	free((*array)->pipe);
 	return (j);
 }
 

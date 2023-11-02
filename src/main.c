@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **envp)
 	g_signal = 0;
 	if (argc && argv)
 		argc = 1;
-	new_env = dup_array(envp); //leak
+	new_env = dup_array(envp);
 	if (!new_env)
 		return (-1);
 	last_return = 0;
