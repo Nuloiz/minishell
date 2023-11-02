@@ -80,14 +80,14 @@ static t_input	*found_quote(t_input *new, char **s)
 	*s = new->word;
 	return (new);
 }
-static t_input	*new_node(char **s, char *s_one, char **envp, int l_r)
+static t_input	*new_node(char **s, char **envp, int l_r)
 {
 	t_input	*new;
 
 	new = ft_calloc(1, sizeof(t_input));
 	if (!new)
 		return (NULL);
-	new->type = input_type(*s, s_one, envp);
+	new->type = input_type(*s, envp);
 	if (ft_strchr(*s, 39) || ft_strchr(*s, 34))
 	{
 		new = found_quote(new, s);
@@ -119,10 +119,7 @@ static t_input	**linked_list_start(char **cmd, char **envp, \
 		num++;
 	while (i < num)
 	{
-		if (i == 0)
-			new = new_node (&cmd[0], NULL, envp, l_r);
-		else
-			new = new_node(&cmd[i], cmd[i - 1], envp, l_r); //leaks
+		new = new_node (&cmd[i], envp, l_r); //leaks
 		if (!new)
 			return (NULL);
 		mod_lstadd_back(input, new);

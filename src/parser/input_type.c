@@ -58,34 +58,20 @@ static int	find_path(char *cmd, char **envp)
 	return (free_array(new_path), 0);
 }
 
-static int	is_flag(char *s)
-{
-	if (!s)
-		return (0);
-	else if (s[0] == '-' && s[1] != '\n')
-		return (1);
-	return (0);
-}
-
-static int	is_cmd(char *s, char *s_one, char **envp)
+static int	is_cmd(char *s, char **envp)
 {
 	if (find_path(s, envp))
 		return (1);
-	else if (find_path(s_one, envp) || is_flag(s_one))
-	{
-		if (is_flag(s) == 1)
-			return (2);
-	}
 	return (0);
 }
 
-int	input_type(char *s, char *s_one, char **envp)
+int	input_type(char *s, char **envp)
 {
 	int	i;
 
 	if (is_built_in(s))
 		return (7);
-	i = is_cmd(s, s_one, envp);
+	i = is_cmd(s, envp);
 	if (i > 0)
 		return (i);
 	else if (is_file(s))
