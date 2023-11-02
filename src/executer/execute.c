@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/01 18:58:24 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 11:19:17 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,13 @@ int	ft_parent(t_execute *exec)
 	{
 		// dprintf(2, "one and only parent builtin\n");
 		if (ft_set_redirects(exec, 0))
-			return (1);
+			return (ft_close_all_fds(exec), 1);
 		// dprintf(2, "executing builtin: %s in parent\n", exec->token[0]->command);
 		execute_builtin(0, exec);
 	}
 	ft_close_all_fds(exec);
 	i = -1;
-	// dprintf(2, "parent: exec->count_builtins: %i\n", exec->count_builtins);
-	while (++i < exec->count_children && !(exec->count_builtins
+	while (++i <= exec->count_children && !(exec->count_builtins
 			== 1 && exec->count_children == 1))
 		waitpid(exec->id[i], &status, 0);
 	dup2(stin_backup, 0);
@@ -43,9 +42,9 @@ int	ft_parent(t_execute *exec)
 	close(sout_backup);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
-	if (g_signal)
-		return (77);
-	return (999);
+	else if (g_signal)
+		return (g_signal + 128);
+	return (0);
 }
 
 // standard input now last pipe read end
