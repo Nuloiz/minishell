@@ -55,7 +55,7 @@ char	*env_var(char *s, char **envp, int l_r)
 	k = i;
 	while (s[k] && s[k] != 39)
 		k++;
-	tmp = mod_get_env(envp, &s[i + 1], &j, &s[k]);
+	tmp = mod_get_env(envp, &s[i + 1], &j, &s[k]); //leaks
 	if (!tmp)
 	{
 		if (dup)

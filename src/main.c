@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **envp)
 	g_signal = 0;
 	if (argc && argv)
 		argc = 1;
-	new_env = dup_array(envp);
+	new_env = dup_array(envp); //leak
 	if (!new_env)
 		return (-1);
 	last_return = 0;
@@ -53,6 +53,5 @@ int	main(int argc, char **argv, char **envp)
 		set_sig_handle_prompt(&sa);
 		free(line);
 	}
-	free(line);
 	return (0);
 }

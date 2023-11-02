@@ -76,17 +76,17 @@ t_command	**get_commands(t_array **array)
 	i = 0;
 	j = 0;
 	alloc = count_alloc(array) + 1;
-	token = ft_calloc(sizeof(t_command *), alloc + 1);
+	token = ft_calloc(sizeof(t_command *), alloc + 1); //leak (72 in 1 def lost && 16 still reach)
 	if (!token)
 		return (NULL);
 	while (i < alloc)
 	{
-		token[i] = ft_calloc(sizeof(t_command), 1);
+		token[i] = ft_calloc(sizeof(t_command), 1); //56 in 1 indir lost && 56 in  1 still reach && 56 bytes alloced but only 8 used)
 		if (!token[i])
 			return (free_command(token, i), NULL);
 		i++;
 	}
-	token[i] = ft_calloc(sizeof(t_command), 1);
+	token[i] = ft_calloc(sizeof(t_command), 1); //leak (112 in 2 def lost)
 	if (!token[i])
 		return (free_command(token, i), NULL);
 	token[i] = NULL;
