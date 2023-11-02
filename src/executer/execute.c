@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/02 11:19:17 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 14:08:33 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	ft_parent(t_execute *exec)
 	dup2(sout_backup, 1);
 	close(stin_backup);
 	close(sout_backup);
+	ft_free_end(exec);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (g_signal)
