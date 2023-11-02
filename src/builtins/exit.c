@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:41:17 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/02 14:45:46 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 15:58:15 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ void	ft_exit(t_execute *exec)
 	free(exec->token);
 	ft_free_array(*exec->envp);
 	ft_close_all_fds(exec);
+	ft_free_data(exec);
 	exit(0);
 }
