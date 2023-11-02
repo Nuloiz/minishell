@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/02 14:08:33 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 14:47:05 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_parent(t_execute *exec)
 	}
 	ft_close_all_fds(exec);
 	i = -1;
-	while (++i <= exec->count_children && !(exec->count_builtins
+	while (++i < exec->count_children && !(exec->count_builtins
 			== 1 && exec->count_children == 1))
 		waitpid(exec->id[i], &status, 0);
 	dup2(stin_backup, 0);
@@ -58,10 +58,10 @@ int	ft_child(int i, t_execute *exec)
 
 	return_val = 0;
 	if (ft_set_redirects(exec, i))
-		ft_exit(NULL, exec);
+		ft_exit(exec);
 	// dprintf(2, "exec->token[i]->type: %i in child: %i and command: %s\n",exec->token[i]->type, i, exec->token[i]->command);
 	if (!(exec->token[i]->command))
-		ft_exit(NULL, exec);
+		ft_exit(exec);
 	if (exec->token[i]->type == 6)
 	{
 		// dprintf(2, "executing builtin: %s in child: %i\n", exec->token[i]->command, i);
