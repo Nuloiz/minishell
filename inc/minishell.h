@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/02 13:10:23 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 14:46:42 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ char		**ft_append_string_to_array(char **array, char *string);
 int			ft_pwd(void);
 int			ft_unset(char ***envp, char *string);
 int			execute(char ***envp, t_command **token);
-void		ft_exit(char **array, t_execute *exec);
+void		ft_exit(t_execute *exec);
 char		*ft_get_env(char **envp, char *string);
 int			ft_cd(char *command, char ***envp);
 void		print_list(t_input **input);
