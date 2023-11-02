@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/02 10:55:28 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 13:10:23 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int			ft_parent(t_execute *exec);
 char		*ft_remove_slash(char *deleted);
 int			ft_strchr_count(const char *string, char c);
 int			ft_init(t_execute *exec, t_command **token, char ***envp);
-int			ft_free_end(int ret, char **array, t_execute *exec);
+void		ft_free_end(t_execute *exec);
 // int			*ft_get_types_commands(t_execute *new);
 int			ft_set_redirects(t_execute *exec, int i);
 void		write_newline(int pipe, int i, t_execute *exec);
