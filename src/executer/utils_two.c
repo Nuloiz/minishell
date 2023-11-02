@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/01 10:47:28 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 10:16:45 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int	execute_command(int i, t_execute *exec)
 	command = ft_check_command_and_get_path(command_array[0], *exec->envp);
 	if (command == NULL)
 	{
+		ft_close_all_fds(exec);
 		ft_free_array(command_array);
 		return (ft_print_command_error(exec->token[i]->command, 127));
 	}
