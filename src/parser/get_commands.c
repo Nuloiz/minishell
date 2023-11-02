@@ -86,9 +86,6 @@ t_command	**get_commands(t_array **array)
 			return (free_command(token, i), NULL);
 		i++;
 	}
-	token[i] = ft_calloc(sizeof(t_command), 1); //leak (112 in 2 def lost)
-	if (!token[i])
-		return (free_command(token, i), NULL);
 	token[i] = NULL;
 	i = 0;
 	while ((*array)->cmds[j] != NULL)
