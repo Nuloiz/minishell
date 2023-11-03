@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 11:26:51 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 12:25:19 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	execute(char ***envp, t_command **token)
 	// if (!token[0])
 	// 	return (ft_free_end(0, NULL, &exec));
 	if (exec.count_limiter && ft_here_doc(&exec) == -1)
-		return(ft_free_end(&exec), 1);
+		return (ft_free_end(&exec), 1);
 	error = ft_forking(&exec);
 	if (error)
 		return (error);
