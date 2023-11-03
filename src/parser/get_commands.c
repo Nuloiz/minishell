@@ -81,9 +81,6 @@ static int	sort_commands(t_command **token, t_array **array, int *i, int j)
 		(*array)->pipe[j] = 0;
 		*i = *i + 1;
 	}
-	free((*array)->pipe);
-	free_array((*array)->cmds);
-	free((*array)->type);
 	return (j);
 }
 
@@ -116,5 +113,8 @@ t_command	**get_commands(t_array **array)
 		if (j == -1)
 			return (free_token(token), NULL);
 	}
+	free((*array)->pipe);
+	free((*array)->type);
+	free_array((*array)->cmds);
 	return (token);
 }

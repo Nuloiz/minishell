@@ -52,6 +52,7 @@ static char	*mod_get_env_two(char **envp, char *string, t_boollr *j, char *s)
 		{
 			env = mod_valid_env(envp[i], string, j, s);
 			free(string_equal);
+			free(string);
 			return (env);
 		}
 		i++;
