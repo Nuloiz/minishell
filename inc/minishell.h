@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/03 14:12:54 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 14:31:12 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,5 +168,6 @@ void		set_sig_handle_executer(void);
 void		turn_off_ctl_echo(void);
 void		free_token(t_command **token);
 void		set_sig_handle_ignore(void);
+int			ft_here_doc(t_execute *exec);
 
 #endif
