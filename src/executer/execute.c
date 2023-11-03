@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 14:52:48 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 17:09:59 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_parent(t_execute *exec)
 	}
 	ret_value = wait_return(exec, stin_backup, sout_backup);
 	ft_close_all_fds(exec);
-	return (0);
+	return (ret_value);
 }
 
 // standard input now last pipe read end
