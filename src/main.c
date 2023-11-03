@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/02 20:56:57 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 09:15:59 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	char				**new_env;
 	char				*line;
 	int					last_return;
-	// struct sigaction			sa;
 
-	// set_sig_handle_prompt(&sa);
 	set_sig_handle_prompt();
 	turn_off_ctl_echo();
 	g_signal = 0;
