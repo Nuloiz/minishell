@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:43:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/01 11:46:22 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 14:32:49 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	ft_set_pwd(char ***envp, char *path)
 	}
 	else
 		new_pwd = ft_strjoin("export PWD=", path);
-	// dprintf(2, "new_pwd: %s\n", new_pwd);
 	ft_export(envp, new_pwd);
 	free(new_pwd);
 	return (0);
@@ -61,7 +60,8 @@ int	ft_set_pwd_home(char ***envp)
 
 	home = ft_get_env(*envp, "HOME");
 	if (!home)
-		return (ft_putstr_fd("Minishell: Error: cd: PATH HOME not set\n", 2), 1);
+		return (ft_putstr_fd
+			("Minishell: Error: cd: PATH HOME not set\n", 2), 1);
 	else
 	{
 		old_pwd = ft_get_pwd();

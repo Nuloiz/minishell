@@ -6,16 +6,24 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 12:25:19 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 14:45:54 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	restore_stfds(int stin_backup, int sout_backup)
+{
+	dup2(stin_backup, 0);
+	dup2(sout_backup, 1);
+	close(stin_backup);
+	close(sout_backup);
+}
+
 int	ft_parent(t_execute *exec)
 {
 	int	i;
-	int	status;
+	int	ret_value;
 	int	stin_backup;
 	int	sout_backup;
 
@@ -34,20 +42,8 @@ int	ft_parent(t_execute *exec)
 		// dprintf(2, "executing builtin: %s in parent\n", exec->token[0]->command);
 		execute_builtin(0, exec);
 	}
+	ret_value = wait_return(exec, stin_backup, sout_backup);
 	ft_close_all_fds(exec);
-	i = -1;
-	while (++i < exec->count_children && !(exec->count_builtins
-			== 1 && exec->count_children == 1))
-		waitpid(exec->id[i], &status, 0);
-	dup2(stin_backup, 0);
-	dup2(sout_backup, 1);
-	close(stin_backup);
-	close(sout_backup);
-	ft_free_end(exec);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	else if (g_signal)
-		return (g_signal + 128);
 	return (0);
 }
 
@@ -76,43 +72,6 @@ int	ft_child(int i, t_execute *exec)
 		return_val = execute_command(i, exec);
 	ft_close_all_fds(exec);
 	exit (return_val);
-}
-
-int	ft_here_doc(t_execute *exec)
-{
-	int		i;
-	int		pipe;
-	int		id;
-	int		status;
-
-	set_sig_handle_ignore();
-	i = -1;
-	id = fork();
-	if (id == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		while (exec->token[++i])
-		{
-			if (exec->token[i]->limiter)
-			{
-				if (exec->token[i]->index == 0)
-					pipe = exec->count_pipes - 1;
-				else
-					pipe = exec->token[i]->index - 1;
-				write_newline(pipe, i, exec);
-				close(exec->pipe_fd[pipe][1]);
-			}
-		}
-		exit(0);
-	}
-	waitpid(id, &status, 0);
-	if (WTERMSIG(status) == SIGINT)
-	{
-		write(1, "\n", 1);
-		return (-1);
-	}
-	set_sig_handle_executer();
-	return (1);
 }
 
 int	execute(char ***envp, t_command **token)

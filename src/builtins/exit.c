@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:41:17 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 12:16:26 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 14:32:13 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	ft_exit(t_execute *exec, char *args)
 			if (is_numeric(splitted[1]) != 0)
 				ret_value = ft_atoi(splitted[1]);
 			else
-				ft_putstr_fd("minishell: exit: a: numeric argument required\n", 2);
+				ft_putstr_fd
+					("minishell: exit: a: numeric argument required\n", 2);
 		}
 	}
 	free_token(exec->token);
