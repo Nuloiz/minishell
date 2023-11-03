@@ -79,7 +79,7 @@ char	*mod_splitting(char *s, int *j, char c)
 	}
 	else
 	{
-		array = ft_substr(s, *j, mod_possplit(&s[*j], c)); //leak (6 in 1 def lost)
+		array = ft_substr(s, *j, mod_possplit(&s[*j], c));
 		if (!array)
 			return (NULL);
 		*j = *j + mod_possplit(&s[*j], c);
@@ -104,7 +104,7 @@ char	**mod_split(char *s, char c)
 			j++;
 		if (!s[j])
 			break ;
-		array[i] = mod_splitting(s, &j, c); //leaks
+		array[i] = mod_splitting(s, &j, c);
 		if (array[i] == NULL)
 			return (mod_allocfails(array));
 		i++;

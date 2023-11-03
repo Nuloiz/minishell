@@ -40,7 +40,7 @@ void	free_list(t_input **input)
 
 void	free_command(t_command **token, int j)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i <= j)
