@@ -44,18 +44,36 @@ static int	sort_commands(t_command **token, t_array **array, int *i, int j)
 		if (token[*i]->type != 5 && token[*i]->type != 6)
 			token[*i]->type = (*array)->type[j];
 		if ((*array)->type[j] == 1)
-			token[*i]->input = (*array)->cmds[j];
+		{
+			token[*i]->input = ft_strdup((*array)->cmds[j]);
+			if (!token[*i]->input)
+				j = -2;
+		}
 		else if ((*array)->type[j] == 2)
-			token[*i]->limiter = (*array)->cmds[j];
+		{
+			token[*i]->limiter =  ft_strdup((*array)->cmds[j]);
+			if (!token[*i]->limiter)
+				j = -2;
+		}
 		else if ((*array)->type[j] == 3)
-			token[*i]->output = (*array)->cmds[j];
+		{
+			token[*i]->output =  ft_strdup((*array)->cmds[j]);
+			if (!token[*i]->output)
+				j = -2;
+		}
 		else if ((*array)->type[j] == 4)
 		{
-			token[*i]->output = (*array)->cmds[j];
+			token[*i]->output =  ft_strdup((*array)->cmds[j]);
 			token[*i]->append = 1;
+			if (!token[*i]->output)
+				j = -2;
 		}
 		else
-			token[*i]->command = (*array)->cmds[j];
+		{
+			token[*i]->command =  ft_strdup((*array)->cmds[j]);
+			if (!token[*i]->command)
+				j = -2;
+		}
 		j++;
 	}
 	else
@@ -64,6 +82,8 @@ static int	sort_commands(t_command **token, t_array **array, int *i, int j)
 		*i = *i + 1;
 	}
 	free((*array)->pipe);
+	free_array((*array)->cmds);
+	free((*array)->type);
 	return (j);
 }
 
@@ -93,6 +113,8 @@ t_command	**get_commands(t_array **array)
 	{
 		token[i]->index = i;
 		j = sort_commands(token, array, &i, j);
+		if (j == -1)
+			return (free_token(token), NULL);
 	}
 	return (token);
 }
