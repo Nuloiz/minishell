@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:41:17 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 11:34:53 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 12:16:26 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,18 @@ void	ft_exit(t_execute *exec, char *args)
 	int		ret_value;
 
 	ret_value = 0;
-	splitted = ft_split(args, ' ');
-	if (ft_array_size(splitted) > 2)
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-	if (splitted[1])
+	if (args)
 	{
-		if (is_numeric(splitted[1]) != 0)
-			ret_value = ft_atoi(splitted[1]);
-		else
-			ft_putstr_fd("minishell: exit: a: numeric argument required\n", 2);
+		splitted = ft_split(args, ' ');
+		if (ft_array_size(splitted) > 2)
+			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		if (splitted[1])
+		{
+			if (is_numeric(splitted[1]) != 0)
+				ret_value = ft_atoi(splitted[1]);
+			else
+				ft_putstr_fd("minishell: exit: a: numeric argument required\n", 2);
+		}
 	}
 	free_token(exec->token);
 	ft_free_array(*exec->envp);
