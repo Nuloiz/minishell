@@ -49,8 +49,7 @@ static int	find_path(char *cmd, char **envp)
 		if (access(path_c, R_OK) == 0)
 		{
 			free_array(new_path);
-			free(path_c);
-			return (1);
+			return (free(path_c), 1);
 		}
 		free(path_c);
 		i++;
