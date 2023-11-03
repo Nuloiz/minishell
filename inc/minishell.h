@@ -103,6 +103,7 @@ int			is_built_in(char *s);
 int			is_pipe(char *s);
 int			is_red(char s);
 int			is_file(char *s);
+t_input		*found_quote(t_input *new, char **s, char c);
 char		*env_var(char *s, char **envp, int l_r);
 int			sort_array(t_input *input, t_array *array);
 int			fill_tmp(t_input **input, t_array array, int *count, char **tmp);
