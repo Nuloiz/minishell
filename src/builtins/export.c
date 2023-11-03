@@ -6,21 +6,24 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/01 11:40:03 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 13:37:31 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_splitted(char **splitted)
+int	print_splitted(char **splitted)
 {
 	int	i;
 	int	once;
+	int	ret_value;
 
 	i = 0;
 	once = 0;
+	ret_value = 0;
 	while (splitted[i])
 	{
+		ret_value = 1;
 		ft_printf("%s", splitted[i]);
 		if (splitted[i + 1] && !once)
 		{
@@ -29,6 +32,7 @@ void	print_splitted(char **splitted)
 		}
 		i++;
 	}
+	return (ret_value);
 }
 
 void	ft_print_export(char **envp)
@@ -41,9 +45,11 @@ void	ft_print_export(char **envp)
 	{
 		splitted = ft_split(envp[i], '=');
 		ft_printf("declare -x ");
-		print_splitted(splitted);
+		if (!print_splitted(splitted))
+			ft_printf("\"\n");
+		else
+			ft_printf("\n");
 		free_array(splitted);
-		ft_printf("\"\n");
 		i++;
 	}
 }
