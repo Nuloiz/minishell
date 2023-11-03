@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 11:15:38 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/02 11:16:00 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 10:37:28 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,10 @@ void	turn_off_ctl_echo(void)
 		term.c_lflag = term.c_lflag & ~ECHOCTL;
 		tcsetattr(STDERR_FILENO, TCSANOW, &term);
 	}
+}
+
+void	set_sig_handle_ignore(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
