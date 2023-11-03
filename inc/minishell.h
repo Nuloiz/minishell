@@ -6,10 +6,9 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/03 11:23:21 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 14:12:54 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -76,7 +75,7 @@ typedef struct s_command
 typedef struct s_boollr
 {
 	int		bool;
-	int 	l_r;
+	int		l_r;
 }	t_boollr;
 
 typedef struct s_execute {
