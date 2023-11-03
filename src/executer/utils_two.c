@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 11:27:48 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 11:47:49 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,29 +86,28 @@ void	ft_free_end(t_execute *exec)
 void	write_newline(int pipe, int i, t_execute *exec)
 {
 	int		len;
-	char	*red_line_newline;
-	char	*red_line;
+	char	*read_line;
 
 	while (1)
 	{
-		red_line = readline("-> ");
-		if (ft_strlen(red_line) - 1 < ft_strlen(exec->token[i]->limiter))
+		read_line = readline("-> ");
+		if (ft_strlen(read_line) - 1 < ft_strlen(exec->token[i]->limiter))
 			len = ft_strlen(exec->token[i]->limiter);
 		else
-			len = ft_strlen(red_line);
+			len = ft_strlen(read_line);
 		dprintf(2, "len: %i\n", len);
-		if (len != 0 && ft_strncmp(red_line, exec->token[i]->limiter, len) == 0)
+		if (len != 0 && ft_strncmp(read_line, exec->token[i]->limiter, len) == 0)
 		{
 			dprintf(2, "im out!\n");
 			break ;
 		}
 		write(exec->pipe_fd[pipe][1],
-			red_line, ft_strlen(red_line));
+			read_line, ft_strlen(read_line));
 		write(exec->pipe_fd[pipe][1], "\n", 1);
-		// free(red_line_newline);
-		free(red_line);
+		// free(read_line_newline);
+		free(read_line);
 	}
-	free(red_line);
+	free(read_line);
 }
 
 //executes builtin
