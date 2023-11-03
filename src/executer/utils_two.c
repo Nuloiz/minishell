@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 11:47:49 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 12:11:03 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	write_newline(int pipe, int i, t_execute *exec)
 		else
 			len = ft_strlen(read_line);
 		dprintf(2, "len: %i\n", len);
-		if (len != 0 && ft_strncmp(read_line, exec->token[i]->limiter, len) == 0)
+		if ((len != 0 && ft_strncmp(read_line, exec->token[i]->limiter, len) == 0) || read_line == NULL)
 		{
 			dprintf(2, "im out!\n");
 			break ;
@@ -106,6 +106,8 @@ void	write_newline(int pipe, int i, t_execute *exec)
 		write(exec->pipe_fd[pipe][1], "\n", 1);
 		// free(read_line_newline);
 		free(read_line);
+		// read_line = readline("-> ");
+		// dprintf(2, "readline: %s\n", read_line);
 	}
 	free(read_line);
 }
