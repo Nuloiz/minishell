@@ -20,6 +20,7 @@ SRC :=	free.c dup.c print.c \
 		executer/ft_get_command_arg_array.c \
 		executer/fork.c \
 		executer/utils_two.c \
+		executer/heredoc.c \
 		builtins/builtins_utils.c \
 		builtins/echo.c \
 		builtins/env.c \
