@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/02 21:32:43 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 11:27:48 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	execute_builtin(int i, t_execute *exec)
 	else if (!ft_strncmp(exec->token[i]->command, "env", 3))
 		ft_env(*exec->envp);
 	else if (!ft_strncmp(exec->token[i]->command, "exit", 4))
-		ft_exit(exec);
+		ft_exit(exec, exec->token[i]->command);
 }
 
 int	execute_command(int i, t_execute *exec)

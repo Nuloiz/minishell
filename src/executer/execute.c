@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 10:35:50 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 11:26:51 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ int	ft_child(int i, t_execute *exec)
 
 	return_val = 0;
 	if (ft_set_redirects(exec, i))
-		ft_exit(exec);
+		ft_exit(exec, NULL);
 	// dprintf(2, "exec->token[i]->type: %i in child: %i and command: %s\n",exec->token[i]->type, i, exec->token[i]->command);
 	if (!(exec->token[i]->command))
-		ft_exit(exec);
+		ft_exit(exec, NULL);
 	if (exec->token[i]->type == 6)
 	{
 		// dprintf(2, "executing builtin: %s in child: %i\n", exec->token[i]->command, i);
