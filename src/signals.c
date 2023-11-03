@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 17:36:43 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/02 11:15:56 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/02 20:57:15 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,30 @@ void	sig_handle_executer(int sig)
 		printf("signal: %i caught!\n", sig);
 }
 
-void	set_sig_handle_executer(struct sigaction *sa)
+// void	set_sig_handle_executer(struct sigaction *sa)
+// {
+// 	sa->sa_handler = &ft_sig_handle_execute;
+// 	sa->sa_flags = SA_RESTART;
+// 	sigaction(SIGINT, sa, NULL);
+// 	sigaction(SIGQUIT, sa, NULL);
+// }
+
+// void	set_sig_handle_prompt(struct sigaction *sa)
+// {
+// 	sa->sa_handler = &ft_sig_handle_prompt;
+// 	sa->sa_flags = SA_RESTART;
+// 	sigaction(SIGINT, sa, NULL);
+// 	signal(SIGQUIT, SIG_IGN);
+// }
+
+void	set_sig_handle_executer(void)
 {
-	sa->sa_handler = &ft_sig_handle_execute;
-	sa->sa_flags = SA_RESTART;
-	sigaction(SIGINT, sa, NULL);
-	sigaction(SIGQUIT, sa, NULL);
+	signal(SIGINT, ft_sig_handle_execute);
+	signal(SIGQUIT, ft_sig_handle_execute);
 }
 
-void	set_sig_handle_prompt(struct sigaction *sa)
+void	set_sig_handle_prompt(void)
 {
-	sa->sa_handler = &ft_sig_handle_prompt;
-	sa->sa_flags = SA_RESTART;
-	sigaction(SIGINT, sa, NULL);
+	signal(SIGINT, ft_sig_handle_prompt);
 	signal(SIGQUIT, SIG_IGN);
 }

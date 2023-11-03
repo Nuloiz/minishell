@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:41:17 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/02 15:58:15 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 09:57:32 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,27 @@
 
 void	ft_exit(t_execute *exec)
 {
-	int		i;
-
-	i = 0;
-	while (exec->token[i])
-	{
-		free(exec->token[i]->command);
-		free(exec->token[i]->input);
-		free(exec->token[i]->output);
-		free(exec->token[i]->limiter);
-		free(exec->token[i]);
-		i++;
-	}
-	free(exec->token[i]);
-	free(exec->token);
+	free_token(exec->token);
 	ft_free_array(*exec->envp);
 	ft_close_all_fds(exec);
 	ft_free_data(exec);
 	exit(0);
+}
+
+void	free_token(t_command **token)
+{
+	int	i;
+
+	i = 0;
+	while (token[i])
+	{
+		free(token[i]->command);
+		free(token[i]->input);
+		free(token[i]->output);
+		free(token[i]->limiter);
+		free(token[i]);
+		i++;
+	}
+	free(token[i]);
+	free(token);
 }
