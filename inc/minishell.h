@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/03 14:31:12 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 14:53:17 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,5 +169,7 @@ void		turn_off_ctl_echo(void);
 void		free_token(t_command **token);
 void		set_sig_handle_ignore(void);
 int			ft_here_doc(t_execute *exec);
+int			wait_return(t_execute *exec, int stin_backup, int sout_backup);
+void		restore_stfds(int stin_backup, int sout_backup);
 
 #endif

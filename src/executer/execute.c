@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 14:45:54 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 14:52:48 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	restore_stfds(int stin_backup, int sout_backup)
 
 int	ft_parent(t_execute *exec)
 {
-	int	i;
 	int	ret_value;
 	int	stin_backup;
 	int	sout_backup;
 
-	status = 0;
+	stin_backup = 0;
+	sout_backup = 1;
 	// dprintf(2, "exec->count_builtins == %i && exec->count_children == %i && exec->count_pipes == %i\n",exec->count_builtins, exec->count_children, exec->count_pipes);
 	if (exec->count_builtins == 1 && exec->count_children == 1)
 	{
