@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/02 20:59:12 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 10:35:50 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,34 @@ int	ft_here_doc(t_execute *exec)
 {
 	int		i;
 	int		pipe;
+	int		id;
+	int		status;
 
+	set_sig_handle_ignore();
 	i = -1;
-	set_sig_handle_prompt();
-	while (exec->token[++i])
+	id = fork();
+	if (id == 0)
 	{
-		if (exec->token[i]->limiter)
+		signal(SIGINT, SIG_DFL);
+		while (exec->token[++i])
 		{
-			if (exec->token[i]->index == 0)
-				pipe = exec->count_pipes - 1;
-			else
-				pipe = exec->token[i]->index - 1;
-			write_newline(pipe, i, exec);
-			close(exec->pipe_fd[pipe][1]);
+			if (exec->token[i]->limiter)
+			{
+				if (exec->token[i]->index == 0)
+					pipe = exec->count_pipes - 1;
+				else
+					pipe = exec->token[i]->index - 1;
+				write_newline(pipe, i, exec);
+				close(exec->pipe_fd[pipe][1]);
+			}
 		}
+		exit(0);
+	}
+	waitpid(id, &status, 0);
+	if (WTERMSIG(status) == SIGINT)
+	{
+		write(1, "\n", 1);
+		return (-1);
 	}
 	set_sig_handle_executer();
 	return (1);
@@ -114,8 +128,8 @@ int	execute(char ***envp, t_command **token)
 		return (1);
 	// if (!token[0])
 	// 	return (ft_free_end(0, NULL, &exec));
-	if (exec.count_limiter)
-		ft_here_doc(&exec);
+	if (exec.count_limiter && ft_here_doc(&exec) == -1)
+		return(ft_free_end(&exec), 1);
 	error = ft_forking(&exec);
 	if (error)
 		return (error);
