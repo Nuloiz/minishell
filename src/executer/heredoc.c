@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:25:50 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 14:45:27 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 20:09:06 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	wait_return(t_execute *exec, int stin_backup, int sout_backup)
 	int	i;
 	int	status;
 
+	status = 0;
 	i = -1;
 	while (++i < exec->count_children && !(exec->count_builtins
 			== 1 && exec->count_children == 1))
