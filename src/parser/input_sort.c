@@ -59,8 +59,8 @@ static char	*quotes(char *s, char c)
 
 static t_input	*found_quote(t_input *new, char **s, char c)
 {
-	char 	*tmp;
-	int 	i;
+	char	*tmp;
+	int		i;
 
 	i = 0;
 	while ((*s)[i] && (*s)[i] != c)
@@ -80,6 +80,7 @@ static t_input	*found_quote(t_input *new, char **s, char c)
 	*s = new->word;
 	return (new);
 }
+
 static t_input	*new_node(char **s, char **envp, int l_r)
 {
 	int		i;
@@ -137,9 +138,9 @@ static t_input	**linked_list_start(char **cmd, char **envp, \
 	return (input);
 }
 
-int just_space(char *line)
+int	just_space(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i] && isspace(line[i]))
@@ -160,10 +161,10 @@ int	input_sort(char *line, char ***envp, int l_r)
 	array.envp = envp;
 	if (!line || just_space(line))
 		return (0);
-	cmd = mod_split(line, ' '); //leaks
+	cmd = mod_split(line, ' ');
 	if (!cmd)
 		return (-1);
-	linked_list_start(cmd, *envp, &input, l_r); //leaks
+	linked_list_start(cmd, *envp, &input, l_r);
 	if (!input)
 	{
 		free_list(&input);

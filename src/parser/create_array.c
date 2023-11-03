@@ -57,7 +57,7 @@ static t_array	*fill_array(t_input *input, t_array *array, int *i, int *count)
 	while (input)
 	{
 		tmp = is_cmd(&input, *array, *count);
-		*i = fill_tmp(&input, *array, count, &tmp); //leaks
+		*i = fill_tmp(&input, *array, count, &tmp);
 		if (*i == 258)
 			return (NULL);
 		if (input && (input)->type == PIPE)
@@ -75,10 +75,10 @@ static t_array	*fill_array(t_input *input, t_array *array, int *i, int *count)
 
 static t_array	*array_alloc(t_input *input, t_array *array)
 {
-	array->cmds = ft_calloc(count_alloc(input) + 1, sizeof(char *)); //leaks
+	array->cmds = ft_calloc(count_alloc(input) + 1, sizeof(char *));
 	if (!array->cmds)
 		return (NULL);
-	array->type = malloc((count_alloc(input) + 2) * sizeof(int)); //leaks
+	array->type = malloc((count_alloc(input) + 2) * sizeof(int));
 	if (!array->type)
 	{
 		free(array->cmds);

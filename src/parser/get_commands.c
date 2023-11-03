@@ -51,26 +51,26 @@ static int	sort_commands(t_command **token, t_array **array, int *i, int j)
 		}
 		else if ((*array)->type[j] == 2)
 		{
-			token[*i]->limiter =  ft_strdup((*array)->cmds[j]);
+			token[*i]->limiter = ft_strdup((*array)->cmds[j]);
 			if (!token[*i]->limiter)
 				j = -2;
 		}
 		else if ((*array)->type[j] == 3)
 		{
-			token[*i]->output =  ft_strdup((*array)->cmds[j]);
+			token[*i]->output = ft_strdup((*array)->cmds[j]);
 			if (!token[*i]->output)
 				j = -2;
 		}
 		else if ((*array)->type[j] == 4)
 		{
-			token[*i]->output =  ft_strdup((*array)->cmds[j]);
+			token[*i]->output = ft_strdup((*array)->cmds[j]);
 			token[*i]->append = 1;
 			if (!token[*i]->output)
 				j = -2;
 		}
 		else
 		{
-			token[*i]->command =  ft_strdup((*array)->cmds[j]);
+			token[*i]->command = ft_strdup((*array)->cmds[j]);
 			if (!token[*i]->command)
 				j = -2;
 		}
@@ -94,12 +94,12 @@ t_command	**get_commands(t_array **array)
 	i = 0;
 	j = 0;
 	alloc = count_alloc(array) + 1;
-	token = ft_calloc(sizeof(t_command *), alloc + 1); //leak (72 in 1 def lost && 16 still reach)
+	token = ft_calloc(sizeof(t_command *), alloc + 1);
 	if (!token)
 		return (NULL);
 	while (i < alloc)
 	{
-		token[i] = ft_calloc(sizeof(t_command), 1); //56 in 1 indir lost && 56 in  1 still reach && 56 bytes alloced but only 8 used)
+		token[i] = ft_calloc(sizeof(t_command), 1);
 		if (!token[i])
 			return (free_command(token, i), NULL);
 		i++;

@@ -29,17 +29,17 @@ static char	*string_before_env(char *s, int *i, t_boollr *j)
 	if (j->bool > 0 && dup[j->bool - 1] == 39)
 		j->bool = 1;
 	else
-		j->bool   = 0;
+		j->bool = 0;
 	return (dup);
 }
 
 char	*env_var(char *s, char **envp, int l_r)
 {
-	int		i;
-	t_boollr j;
-	int		k;
-	char	*dup;
-	char	*tmp;
+	int			i;
+	t_boollr	j;
+	int			k;
+	char		*dup;
+	char		*tmp;
 
 	i = 0;
 	j.l_r = l_r;
@@ -55,7 +55,7 @@ char	*env_var(char *s, char **envp, int l_r)
 	k = i;
 	while (s[k] && s[k] != 39)
 		k++;
-	tmp = mod_get_env(envp, &s[i + 1], &j, &s[k]);//leaks
+	tmp = mod_get_env(envp, &s[i + 1], &j, &s[k]);
 	free(s);
 	if (!tmp)
 	{

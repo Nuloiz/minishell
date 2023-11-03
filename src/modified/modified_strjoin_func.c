@@ -34,7 +34,7 @@ char	*mod_strjoin(char *s1, char *s2)
 	int		j;
 
 	j = 0;
-	joined = ft_calloc((ft_strlen(s1) + ft_strlen(s2)) + 2, 1); //leak (133 in 1 indirect lost)
+	joined = ft_calloc((ft_strlen(s1) + ft_strlen(s2)) + 2, 1);
 	if (joined)
 	{
 		joined = string_one(s1, joined);
