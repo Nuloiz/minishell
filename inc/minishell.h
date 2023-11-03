@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/02 20:56:24 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 10:40:09 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,5 +166,7 @@ int			get_input_pipe(t_execute *exec, int i);
 void		set_sig_handle_prompt(void);
 void		set_sig_handle_executer(void);
 void		turn_off_ctl_echo(void);
+void		free_token(t_command **token);
+void		set_sig_handle_ignore(void);
 
 #endif
