@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 19:57:58 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/30 17:36:20 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 09:07:25 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,23 @@ int	ft_unset(char ***envp, char *string)
 {
 	char	*string_equal;
 	char	**splitted;
+	char	*env;
 
 	splitted = ft_split(string, ' ');
 	if (!splitted[1])
+	{
+		free_array(splitted);
 		return (0);
+	}
 	if (!*envp)
 		ft_putstr_fd("NO ENVP\n", 2);
+	env = ft_get_env(*envp, splitted[1]);
+	if (env == NULL)
+	{
+		free_array(splitted);
+		free(env);
+		return (0);
+	}
 	string_equal = ft_strjoin(splitted[1], "=");
 	*envp = ft_delete_from_array(*envp, string_equal);
 	free(string_equal);
