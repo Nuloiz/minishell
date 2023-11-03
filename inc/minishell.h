@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/03 14:53:17 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/03 19:21:45 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define BUILTIN	 7
 # define PARAM	 8
 
-int	g_signal;
+extern int	g_signal;
 
 typedef struct s_input
 {
