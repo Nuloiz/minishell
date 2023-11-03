@@ -122,6 +122,7 @@ char		**dup_array(char **array);
 void		free_array(char **array);
 void		free_list(t_input **input);
 void		free_command(t_command **token, int j);
+void		free_in_command(t_command **token);
 int			ft_array_size(char **array);
 int			ft_echo(char *args);
 int			ft_env(char **envp);

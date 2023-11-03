@@ -50,19 +50,19 @@ static char	*is_cmd(t_input **input, t_array array, int count)
 	return (tmp);
 }
 
-static t_array	*fill_array(t_input **input, t_array *array, int *i, int *count)
+static t_array	*fill_array(t_input *input, t_array *array, int *i, int *count)
 {
 	char		*tmp;
 
-	while (*input)
+	while (input)
 	{
-		tmp = is_cmd(input, *array, *count);
-		*i = fill_tmp(input, *array, count, &tmp); //leaks
+		tmp = is_cmd(&input, *array, *count);
+		*i = fill_tmp(&input, *array, count, &tmp); //leaks
 		if (*i == 258)
 			return (NULL);
-		if (*input && (*input)->type == PIPE)
+		if (input && (input)->type == PIPE)
 		{
-			(*input) = (*input)->next;
+			(input) = (input)->next;
 			array->pipe[(*count) + 1] = 1;
 		}
 		else
@@ -73,18 +73,18 @@ static t_array	*fill_array(t_input **input, t_array *array, int *i, int *count)
 	return (array);
 }
 
-static t_array	*array_alloc(t_input **input, t_array *array)
+static t_array	*array_alloc(t_input *input, t_array *array)
 {
-	array->cmds = ft_calloc(count_alloc(*input) + 1, sizeof(char *));
+	array->cmds = ft_calloc(count_alloc(input) + 1, sizeof(char *)); //leaks
 	if (!array->cmds)
 		return (NULL);
-	array->type = malloc((count_alloc(*input) + 2) * sizeof(int));
+	array->type = malloc((count_alloc(input) + 2) * sizeof(int)); //leaks
 	if (!array->type)
 	{
 		free(array->cmds);
 		return (array);
 	}
-	array->pipe = malloc((count_alloc(*input) + 2) * sizeof(int));
+	array->pipe = malloc((count_alloc(input) + 2) * sizeof(int));
 	if (!array->pipe)
 	{
 		free(array->cmds);
@@ -102,12 +102,12 @@ int	sort_array(t_input *input, t_array	*array)
 	int			i;
 	int			r;
 
-	array = array_alloc(&input, array);
+	array = array_alloc(input, array);
 	if (!array)
 		return (-1);
 	count = 0;
 	i = 0;
-	array = fill_array(&input, array, &i, &count);
+	array = fill_array(input, array, &i, &count);
 	if (i == 258)
 		return (258);
 	if (!array)
@@ -116,9 +116,10 @@ int	sort_array(t_input *input, t_array	*array)
 	array->pipe[count] = 0;
 	print_cmds(array->cmds, array->type, array->pipe);
 	token = get_commands(&array);
+	free_list(&input);
+	if (!token)
+		return (-1);
 	print_commands(token);
 	r = execute(array->envp, token);
-	free(array->cmds);
-	free(array->type);
 	return (r);
 }
