@@ -74,37 +74,43 @@ static int	sort_commands(t_command **token, t_array **array, int *i, int j)
 	return (j);
 }
 
-t_command	**get_commands(t_array **array)
+static void	set_index(t_command **token, t_array **array)
 {
-	t_command	**token;
-	int			i;
-	int			j;
-	int			alloc;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
-	alloc = count_alloc(array) + 1;
-	token = ft_calloc(sizeof(t_command *), alloc + 1);
-	if (!token)
-		return (NULL);
-	while (i < alloc)
-	{
-		token[i] = ft_calloc(sizeof(t_command), 1);
-		if (!token[i])
-			return (free_command(token, i), NULL);
-		i++;
-	}
-	token[i] = NULL;
-	i = 0;
 	while ((*array)->cmds[j] != NULL)
 	{
 		token[i]->index = i;
 		j = sort_commands(token, array, &i, j);
 		if (j == -1)
-			return (free_token(token), NULL);
+			return (free_token(token));
 	}
+	free_array((*array)->cmds);
 	free((*array)->pipe);
 	free((*array)->type);
-	free_array((*array)->cmds);
+}
+
+t_command	**get_commands(t_array **array)
+{
+	t_command	**token;
+	int			i;
+	int			alloc;
+
+	i = -1;
+	alloc = count_alloc(array) + 1;
+	token = ft_calloc(sizeof(t_command *), alloc + 1);
+	if (!token)
+		return (NULL);
+	while (++i < alloc)
+	{
+		token[i] = ft_calloc(sizeof(t_command), 1);
+		if (!token[i])
+			return (free_command(token, i), NULL);
+	}
+	token[i] = NULL;
+	set_index(token, array);
 	return (token);
 }
