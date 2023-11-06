@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:25:50 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 15:39:31 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 15:52:29 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int	wait_return(t_execute *exec, int stin_backup, int sout_backup)
 			== 1 && exec->count_children == 1))
 		waitpid(exec->id[i], &status, 0);
 	restore_stfds(stin_backup, sout_backup);
-	ft_free_end(exec);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (g_signal)

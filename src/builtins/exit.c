@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:41:17 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 12:03:50 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 15:47:27 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	free_token(t_command **token)
 	int	i;
 
 	i = 0;
-	while (token[i])
+	while (token && token[i])
 	{
 		free(token[i]->command);
 		free(token[i]->input);
@@ -72,4 +72,5 @@ void	free_token(t_command **token)
 	}
 	free(token[i]);
 	free(token);
+	token = NULL;
 }
