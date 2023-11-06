@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:25:50 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 17:49:15 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 19:57:23 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,17 @@ void	loop_limiter(t_execute *exec)
 	int		i;
 	int		pipe;
 
+	dprintf(2, "count pipes: %i\n", exec->count_pipes);
 	i = -1;
 	while (exec->token[++i])
 	{
 		if (exec->token[i]->limiter)
 		{
-			if (exec->token[i]->index == 0)
+			if (i == 0)
 				pipe = exec->count_pipes - 1;
 			else
-				pipe = exec->token[i]->index - 1;
+				pipe = i - 1;
+			dprintf(2, "pipe: %i\n", pipe);
 			write_newline(pipe, i, exec);
 		}
 	}
