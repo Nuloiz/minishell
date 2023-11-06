@@ -6,7 +6,7 @@
 /*   By: nschutz <nschutz@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 09:14:06 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/19 09:18:59 by nschutz          ###   ########.fr       */
+/*   Updated: 2023/11/06 11:25:53 by nschutz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,49 +37,39 @@ static int	count_alloc(t_array **array)
 	return (i);
 }
 
+static void	fill_commands(t_command **token, t_array **array, int *i, int *j)
+{
+	char	**str;
+
+	if (token[*i]->type != 5 && token[*i]->type != 6)
+		token[*i]->type = (*array)->type[*j];
+	if ((*array)->type[*j] == 1)
+		str = &token[*i]->input;
+	else if ((*array)->type[*j] == 2)
+		str = &token[*i]->limiter;
+	else if ((*array)->type[*j] == 3)
+		str = &token[*i]->output;
+	else if ((*array)->type[*j] == 4)
+	{
+		str = &token[*i]->output;
+		token[*i]->append = 1;
+	}
+	else
+		str = &token[*i]->command;
+	*str = ft_strdup((*array)->cmds[*j]);
+	if (!*str)
+		*j = -2;
+	(*j)++;
+}
+
 static int	sort_commands(t_command **token, t_array **array, int *i, int j)
 {
 	if ((*array)->pipe[j] == 0)
-	{
-		if (token[*i]->type != 5 && token[*i]->type != 6)
-			token[*i]->type = (*array)->type[j];
-		if ((*array)->type[j] == 1)
-		{
-			token[*i]->input = ft_strdup((*array)->cmds[j]);
-			if (!token[*i]->input)
-				j = -2;
-		}
-		else if ((*array)->type[j] == 2)
-		{
-			token[*i]->limiter = ft_strdup((*array)->cmds[j]);
-			if (!token[*i]->limiter)
-				j = -2;
-		}
-		else if ((*array)->type[j] == 3)
-		{
-			token[*i]->output = ft_strdup((*array)->cmds[j]);
-			if (!token[*i]->output)
-				j = -2;
-		}
-		else if ((*array)->type[j] == 4)
-		{
-			token[*i]->output = ft_strdup((*array)->cmds[j]);
-			token[*i]->append = 1;
-			if (!token[*i]->output)
-				j = -2;
-		}
-		else
-		{
-			token[*i]->command = ft_strdup((*array)->cmds[j]);
-			if (!token[*i]->command)
-				j = -2;
-		}
-		j++;
-	}
+		fill_commands(token, array, i, &j);
 	else
 	{
 		(*array)->pipe[j] = 0;
-		*i = *i + 1;
+		(*i)++;
 	}
 	return (j);
 }
