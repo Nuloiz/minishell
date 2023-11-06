@@ -33,11 +33,25 @@ static char	*string_before_env(char *s, int *i, t_boollr *j)
 	return (dup);
 }
 
+static char	*found_env(char *s, int i, t_boollr *j, char **envp)
+{
+	char	*tmp;
+	int		k;
+
+	k = i;
+	while (s[k] && s[k] != 39)
+		k++;
+	tmp = mod_get_env(envp, &s[i + 1], j, &s[k]);
+	free(s);
+	if (!tmp)
+		return (NULL);
+	return (tmp);
+}
+
 char	*env_var(char *s, char **envp, int l_r)
 {
 	int			i;
 	t_boollr	j;
-	int			k;
 	char		*dup;
 	char		*tmp;
 
@@ -52,11 +66,7 @@ char	*env_var(char *s, char **envp, int l_r)
 	}
 	else
 		dup = NULL;
-	k = i;
-	while (s[k] && s[k] != 39)
-		k++;
-	tmp = mod_get_env(envp, &s[i + 1], &j, &s[k]);
-	free(s);
+	tmp = found_env(s, i, &j, envp);
 	if (!tmp)
 	{
 		if (dup)
@@ -64,7 +74,5 @@ char	*env_var(char *s, char **envp, int l_r)
 		return (NULL);
 	}
 	dup = mod_nocheck_strjoin(dup, tmp);
-	if (!dup)
-		return (NULL);
 	return (dup);
 }
