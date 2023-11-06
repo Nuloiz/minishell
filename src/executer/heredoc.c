@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:25:50 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 20:09:06 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 08:48:01 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	loop_limiter(t_execute *exec)
 				pipe = exec->token[i]->index - 1;
 			write_newline(pipe, i, exec);
 			close(exec->pipe_fd[pipe][1]);
+			close(exec->pipe_fd[pipe][0]);
 		}
 	}
 }

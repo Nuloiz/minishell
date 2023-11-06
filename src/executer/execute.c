@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 06:24:09 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 08:58:00 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ int	execute(char ***envp, t_command **token)
 		return (ft_free_end(&exec), 1);
 	error = ft_forking(&exec);
 	if (error)
-		return (error);
-	ft_free_data(&exec);
+		return (ft_free_end(&exec), error);
+	ft_free_end(&exec);
 	return (exec.error);
 }
 

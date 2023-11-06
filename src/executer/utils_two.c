@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_two.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 14:26:22 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 08:57:31 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,8 @@ char	*ft_remove_slash(char *deleted)
 
 void	ft_free_end(t_execute *exec)
 {
-	int		i;
-
-	i = 0;
-	while (exec->token[i])
-	{
-		free(exec->token[i]->command);
-		free(exec->token[i]->input);
-		free(exec->token[i]->output);
-		free(exec->token[i]->limiter);
-		free(exec->token[i]);
-		i++;
-	}
-	free(exec->token[i]);
-	free(exec->token);
-	// ft_close_all_fds(exec);
+	free_token(exec->token);
+	ft_free_data(exec);
 }
 
 //executes builtin
