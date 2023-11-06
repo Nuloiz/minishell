@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/06 05:58:37 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 19:15:53 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	main(int argc, char **argv, char **envp)
 	set_sig_handle_prompt();
 	turn_off_ctl_echo();
 	g_signal = 0;
-	if (argc && argv)
-		argc = 1;
+	(void) argc;
+	(void) argv;
 	new_env = dup_array(envp);
 	if (!new_env)
 		return (-1);
