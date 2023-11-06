@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:25:50 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 08:48:01 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 13:44:23 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	ft_here_doc(t_execute *exec)
 	{
 		signal(SIGINT, SIG_DFL);
 		loop_limiter(exec);
+		ft_free_end(exec);
 		exit(0);
 	}
 	waitpid(id, &status, 0);
@@ -95,7 +96,7 @@ int	wait_return(t_execute *exec, int stin_backup, int sout_backup)
 			== 1 && exec->count_children == 1))
 		waitpid(exec->id[i], &status, 0);
 	restore_stfds(stin_backup, sout_backup);
-	ft_free_end(exec);
+	// ft_free_end(exec);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (g_signal)
