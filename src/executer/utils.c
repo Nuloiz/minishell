@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:50:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/10/30 16:46:41 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 13:16:34 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	ft_free_data(t_execute *exec)
 	while (++i < exec->count_pipes)
 		free(exec->pipe_fd[i]);
 	free(exec->pipe_fd);
+	exec->pipe_fd = NULL;
 	free(exec->id);
+	exec->id = NULL;
 }
 
 void	ft_free_array(char **array)
