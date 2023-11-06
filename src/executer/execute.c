@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 08:58:00 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 15:39:12 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,17 @@ int	ft_parent(t_execute *exec)
 
 	stin_backup = dup(0);
 	sout_backup = dup(1);
-	// dprintf(2, "exec->count_builtins == %i && exec->count_children == %i && exec->count_pipes == %i\n",exec->count_builtins, exec->count_children, exec->count_pipes);
 	if (exec->count_builtins == 1 && exec->count_children == 1)
 	{
-		// dprintf(2, "one and only parent builtin\n");
 		if (ft_set_redirects(exec, 0))
 			return (ft_close_all_fds(exec), 1);
 		if (!ft_strncmp(exec->token[0]->command, "exit", 4))
 		{
-			dprintf(2, "hello im exit\n");
 			dup2(stin_backup, 0);
 			dup2(sout_backup, 1);
 			close(stin_backup);
 			close(sout_backup);
 		}
-		// dprintf(2, "executing builtin: %s in parent\n", exec->token[0]->command);
 		execute_builtin(0, exec);
 	}
 	ft_close_all_fds(exec);
@@ -61,12 +57,10 @@ int	ft_child(int i, t_execute *exec)
 	return_val = 0;
 	if (ft_set_redirects(exec, i))
 		ft_exit(exec, NULL);
-	// dprintf(2, "exec->token[i]->type: %i in child: %i and command: %s\n",exec->token[i]->type, i, exec->token[i]->command);
 	if (!(exec->token[i]->command))
 		ft_exit(exec, NULL);
 	if (exec->token[i]->type == 6)
 	{
-		// dprintf(2, "executing builtin: %s in child: %i\n", exec->token[i]->command, i);
 		execute_builtin(i, exec);
 		ft_close_all_fds(exec);
 		exit(0);
@@ -82,14 +76,11 @@ int	execute(char ***envp, t_command **token)
 	t_execute	exec;
 	int			error;
 
-	// dprintf(3, "hello im the execute function\n");
 	if (!token || !*token)
 		return (0);
 	error = 0;
 	if (ft_init(&exec, token, envp))
 		return (1);
-	// if (!token[0])
-	// 	return (ft_free_end(0, NULL, &exec));
 	if (exec.count_limiter && ft_here_doc(&exec) == -1)
 		return (ft_free_end(&exec), 1);
 	error = ft_forking(&exec);
@@ -122,7 +113,6 @@ int	ft_init(t_execute *exec, t_command **token, char ***envp)
 			ft_putstr_fd("Pipe Error!\n", 2);
 			return (1);
 		}
-		// // dprintf(2, "exec->pipe_fd[%i][0]:%i exec->pipe_fd[%i][1]: %i\n",i, exec->pipe_fd[i][0], i, exec->pipe_fd[i][1]);
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 08:33:55 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 15:42:13 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,7 @@ int	ft_export(char ***envp, char *string)
 	}
 	if (!found)
 		*envp = ft_append_string_to_array(*envp, string);
-	free_array(splitted);
-	return (0);
+	return (free_array(splitted), 0);
 }
 
 // int	main(int argc, char **argv, char **envp)

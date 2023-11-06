@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:25:50 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 08:48:01 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 15:39:31 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ void	write_newline(int pipe, int i, t_execute *exec)
 			len = ft_strlen(exec->token[i]->limiter);
 		else
 			len = ft_strlen(read_line);
-		dprintf(2, "len: %i\n", len);
 		if ((len != 0 && ft_strncmp(read_line,
 					exec->token[i]->limiter, len) == 0) || read_line == NULL)
 		{
-			dprintf(2, "im out!\n");
 			break ;
 		}
 		write(exec->pipe_fd[pipe][1],
