@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 13:37:31 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 08:33:55 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	ft_export(char ***envp, char *string)
 	if (!*envp)
 		ft_putstr_fd("NO ENVP\n", 2);
 	if (!splitted[1])
-		return (ft_sorted_print_array(*envp), 0);
+		return (free_array(splitted), ft_sorted_print_array(*envp), 0);
 	i = -1;
 	ft_memmove(string, &string[7], (ft_strlen(string) - 6));
 	while ((*envp)[++i])
@@ -124,6 +124,7 @@ int	ft_export(char ***envp, char *string)
 	}
 	if (!found)
 		*envp = ft_append_string_to_array(*envp, string);
+	free_array(splitted);
 	return (0);
 }
 
