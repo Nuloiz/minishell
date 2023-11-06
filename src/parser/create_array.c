@@ -62,6 +62,7 @@ static t_array	*fill_array(t_input *input, t_array *array, int *i, int *count)
 			return (NULL);
 		if (input && (input)->type == PIPE)
 		{
+			free((input)->word);
 			(input) = (input)->next;
 			array->pipe[(*count) + 1] = 1;
 		}
