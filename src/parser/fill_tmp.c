@@ -55,6 +55,7 @@ int	fill_tmp(t_input **input, t_array array, int *count, char **tmp)
 		{
 			redirect_after_param(array, count, tmp);
 			i = type_redirect(input, array, count);
+			free((*input)->word);
 		}
 		else
 		{
