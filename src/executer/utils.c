@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:50:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 13:16:34 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 17:08:25 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	ft_free_array(char **array)
 			free(array[i]);
 			i++;
 		}
-		// free(array[i]);
 	}
 	free(array);
 }
@@ -51,7 +50,6 @@ void	ft_close_all_fds(t_execute *exec)
 	{
 		close(exec->pipe_fd[i][0]);
 		close(exec->pipe_fd[i][1]);
-		// dprintf(2, "closed pipe_fd[%i][0]: %i pipe_fd[%i][1]: %i\n", i, exec->pipe_fd[i][0], i, exec->pipe_fd[i][1]);
 		i++;
 	}
 }
@@ -67,13 +65,11 @@ void	ft_close_fds(t_execute *exec, int current_child)
 				&& i == 0))
 		{
 			close(exec->pipe_fd[i][1]);
-			// dprintf(2, "child: %i closed pipe_fd[%i][1]: %i\n", current_child, i, exec->pipe_fd[i][1]);
 		}
 		if (i != current_child - 1 && !(current_child == 0
 				&& i == exec->count_pipes - 1))
 		{
 			close(exec->pipe_fd[i][0]);
-			// dprintf(2, "child: %i closed pipe_fd[%i][0]: %i \n", current_child, i, exec->pipe_fd[i][0]);
 		}
 		i++;
 	}
