@@ -6,11 +6,13 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/03 09:15:59 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 05:58:37 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_signal;
 
 int	main(int argc, char **argv, char **envp)
 {
