@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_two.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 08:57:31 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/06 13:48:01 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,14 @@ void	execute_builtin(int i, t_execute *exec)
 		ft_exit(exec, exec->token[i]->command);
 }
 
+static void	ft_free_end_execve(t_execute *exec)
+{
+	free_token(exec->token);
+	exec->token = NULL;
+	ft_free_data(exec);
+	exec = NULL;
+}
+
 int	execute_command(int i, t_execute *exec)
 {
 	char	**command_array;
@@ -102,6 +110,7 @@ int	execute_command(int i, t_execute *exec)
 		ft_free_array(command_array);
 		return (ft_print_command_error(exec->token[i]->command, 127));
 	}
+	ft_free_end_execve(exec);
 	execve(command, command_array, *exec->envp);
 	perror("Execve error");
 	if (command != command_array[0])
