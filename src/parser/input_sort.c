@@ -94,16 +94,19 @@ int	input_sort(char *line, char ***envp, int l_r)
 		return (0);
 	cmd = mod_split(line, ' ');
 	if (!cmd)
-		return (-1);
+		return (1);
+	if (!ft_strncmp(cmd[0], "|", 2))
+	{
+		free_array(cmd);
+		return (printf("minishell: syntax error near unexpected token `|'\n"), \
+		258);
+	}
 	linked_list_start(cmd, *envp, &input, l_r);
 	if (!input)
 	{
 		free_list(&input);
 		return (-1);
 	}
-	if (!ft_strncmp(input->word, "|", 2))
-		return (printf("minishell: syntax error near unexpected token `|'\n"), \
-		258);
 	r = sort_array(input, &array);
 	return (r);
 }

@@ -41,15 +41,25 @@ char	*string_before_quote(char *s, int *j, int *bool)
 	return (tmp);
 }
 
-void	mod_countsplitting(char *s, int *j, char c, int bool)
+void	mod_countsplitting(char *s, int *j, char c, int *bool)
 {
-	if (bool == 1)
+	int	k;
+
+	if ((*bool) == 1)
 	{
 		while (s[*j] != 34 && s[*j] != 39)
 			(*j)++;
+		if (!s[(*j) + 1])
+		{
+			*bool = -1;
+			return ;
+		}
 		*j = *j + mod_possplit(&s[*j] + 1, s[*j]) + 2;
 		if (s[*j] != ' ')
-			mod_countsplitting(s, j, c, qoute_or_space(s, c, *j));
+		{
+			k = qoute_or_space(s, c, *j);
+			mod_countsplitting(s, j, c, &k);
+		}
 	}
 	else
 		*j = *j + mod_possplit(&s[*j], c);
