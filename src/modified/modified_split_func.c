@@ -60,20 +60,59 @@ static int	mod_countsplit(char *s, char c)
 	return (i);
 }
 
-char	*mod_splitting(char *s, int *j, char c)
+int	qoute_or_space(char *s, char c, int j)
+{
+	while (s[j] && s[j] != c)
+	{
+		if (s[j] == 39 || s[j] == 34)
+			return (1);
+		j++;
+	}
+	return (0);
+}
+
+char	*string_before_quote(char *s, int *j, int *bool)
+{
+	int		i;
+	int		k;
+	char	*tmp;
+
+	i = 0;
+	k = *j;
+	while (s[*j] != 34 && s[*j] != 39)
+	{
+		i++;
+		(*j)++;
+	}
+	tmp = ft_substr(s, k, i);
+	*bool = 0;
+	return (tmp);
+}
+
+char	*mod_splitting(char *s, int *j, char c, int bool)
 {
 	char	*array;
+	char	*tmp;
 	int		i;
 
-	if (s[*j] == 34 || s[*j] == 39)
+	if (bool == 1)
 	{
+		if (s[*j] != 34 && s[*j] != 39)
+		{
+			tmp = string_before_quote(s, j, &bool);
+			if (!tmp)
+				return (NULL);
+		}
 		i = mod_possplit(&s[*j] + 1, s[*j]) + 2;
 		array = ft_substr(s, *j, i);
 		if (!array)
 			return (NULL);
 		*j = *j + i;
 		if (s[*j] != ' ')
-			array = modified_strjoin(array, mod_splitting(s, j, c));
+			array = modified_strjoin(array, \
+				mod_splitting(s, j, c, qoute_or_space(s, c, *j)));
+		if (bool == 0)
+			array = modified_strjoin(tmp, array);
 		if (!array)
 			return (NULL);
 	}
@@ -104,7 +143,7 @@ char	**mod_split(char *s, char c)
 			j++;
 		if (!s[j])
 			break ;
-		array[i] = mod_splitting(s, &j, c);
+		array[i] = mod_splitting(s, &j, c, qoute_or_space(s, c, j));
 		if (array[i] == NULL)
 			return (mod_allocfails(array));
 		i++;
