@@ -101,6 +101,9 @@ int	input_sort(char *line, char ***envp, int l_r)
 		free_list(&input);
 		return (-1);
 	}
+	if (!ft_strncmp(input->word, "|", 2))
+		return (printf("minishell: syntax error near unexpected token `|'\n"), \
+		258);
 	r = sort_array(input, &array);
 	return (r);
 }

@@ -60,24 +60,6 @@ static int	mod_countsplit(char *s, char c)
 	return (i);
 }
 
-char	*string_before_quote(char *s, int *j, int *bool)
-{
-	int		i;
-	int		k;
-	char	*tmp;
-
-	i = 0;
-	k = *j;
-	while (s[*j] != 34 && s[*j] != 39)
-	{
-		i++;
-		(*j)++;
-	}
-	tmp = ft_substr(s, k, i);
-	*bool = 0;
-	return (tmp);
-}
-
 char	*mod_splitting(char *s, int *j, char c, int bool)
 {
 	char	*array;
@@ -94,22 +76,16 @@ char	*mod_splitting(char *s, int *j, char c, int bool)
 		}
 		i = mod_possplit(&s[*j] + 1, s[*j]) + 2;
 		array = ft_substr(s, *j, i);
-		if (!array)
-			return (NULL);
 		*j = *j + i;
-		if (s[*j] != ' ')
+		if (s[*j] && s[*j] != ' ')
 			array = modified_strjoin(array, \
 				mod_splitting(s, j, c, qoute_or_space(s, c, *j)));
 		if (bool == 0)
 			array = modified_strjoin(tmp, array);
-		if (!array)
-			return (NULL);
 	}
 	else
 	{
 		array = ft_substr(s, *j, mod_possplit(&s[*j], c));
-		if (!array)
-			return (NULL);
 		*j = *j + mod_possplit(&s[*j], c);
 	}
 	return (array);

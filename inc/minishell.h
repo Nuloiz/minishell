@@ -113,6 +113,7 @@ char		**mod_split(char *s, char c);
 void		mod_countsplitting(char *s, int *j, char c, int bool);
 int			mod_possplit(const char *s, char c);
 int			qoute_or_space(char *s, char c, int j);
+char		*string_before_quote(char *s, int *j, int *bool);
 char		*mod_strjoin(char *s1, char *s2);
 char		*mod_nofree_strjoin(char *s1, char *s2);
 char		*mod_nocheck_strjoin(char *s1, char *s2);

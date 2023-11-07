@@ -23,6 +23,24 @@ int	qoute_or_space(char *s, char c, int j)
 	return (0);
 }
 
+char	*string_before_quote(char *s, int *j, int *bool)
+{
+	int		i;
+	int		k;
+	char	*tmp;
+
+	i = 0;
+	k = *j;
+	while (s[*j] != 34 && s[*j] != 39)
+	{
+		i++;
+		(*j)++;
+	}
+	tmp = ft_substr(s, k, i);
+	*bool = 0;
+	return (tmp);
+}
+
 void	mod_countsplitting(char *s, int *j, char c, int bool)
 {
 	if (bool == 1)
