@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:25:50 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 19:57:23 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/07 12:46:16 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	loop_limiter(t_execute *exec)
 	int		i;
 	int		pipe;
 
-	dprintf(2, "count pipes: %i\n", exec->count_pipes);
 	i = -1;
 	while (exec->token[++i])
 	{
@@ -53,7 +52,6 @@ void	loop_limiter(t_execute *exec)
 				pipe = exec->count_pipes - 1;
 			else
 				pipe = i - 1;
-			dprintf(2, "pipe: %i\n", pipe);
 			write_newline(pipe, i, exec);
 		}
 	}
@@ -92,7 +90,7 @@ int	wait_return(t_execute *exec, int stin_backup, int sout_backup)
 	status = 0;
 	i = -1;
 	while (++i < exec->count_children && !(exec->count_builtins
-			== 1 && exec->count_children == 1))
+		== 1 && exec->count_children == 1))
 		waitpid(exec->id[i], &status, 0);
 	restore_stfds(stin_backup, sout_backup);
 	if (WIFEXITED(status))
