@@ -54,21 +54,10 @@ static int	mod_countsplit(char *s, char c)
 			j++;
 		if (!s[j])
 			break ;
-		mod_countsplitting((char *)s, &j, c);
+		mod_countsplitting((char *)s, &j, c, qoute_or_space(s, c, j));
 		i++;
 	}
 	return (i);
-}
-
-int	qoute_or_space(char *s, char c, int j)
-{
-	while (s[j] && s[j] != c)
-	{
-		if (s[j] == 39 || s[j] == 34)
-			return (1);
-		j++;
-	}
-	return (0);
 }
 
 char	*string_before_quote(char *s, int *j, int *bool)
