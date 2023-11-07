@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 18:20:52 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 08:42:18 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/07 12:45:51 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_set_input(t_execute *exec, int i)
 	int	pipe;
 
 	if (exec->token[i]->limiter)
-		return (0);
+		return (close(exec->pipe_fd[pipe][1]), 0);
 	pipe = get_input_pipe(exec, i);
 	if (exec->token[i]->input)
 	{
