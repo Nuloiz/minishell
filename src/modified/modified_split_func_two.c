@@ -55,6 +55,11 @@ void	mod_countsplitting(char *s, int *j, char c, int *bool)
 			return ;
 		}
 		*j = *j + mod_possplit(&s[*j] + 1, s[*j]) + 2;
+		if (!s[(*j) - 1])
+		{
+			*bool = -1;
+			return ;
+		}
 		if (s[*j] != ' ')
 		{
 			k = qoute_or_space(s, c, *j);
