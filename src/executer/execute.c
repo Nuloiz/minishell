@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/08 11:55:41 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 12:39:50 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_parent(t_execute *exec)
 			close(stin_backup);
 			close(sout_backup);
 		}
-		execute_builtin(0, exec);
+		ret_value = execute_builtin(0, exec);
 	}
 	ft_close_all_fds(exec);
 	ret_value = wait_return(exec, stin_backup, sout_backup);
@@ -61,9 +61,9 @@ int	ft_child(int i, t_execute *exec)
 		ft_exit(exec, NULL);
 	if (exec->token[i]->type == 6)
 	{
-		execute_builtin(i, exec);
+		return_val = execute_builtin(i, exec);
 		ft_close_all_fds(exec);
-		exit(0);
+		exit(return_val);
 	}
 	else
 		return_val = execute_command(i, exec);

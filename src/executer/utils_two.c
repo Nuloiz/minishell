@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/08 11:47:36 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 12:40:41 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,22 +71,26 @@ void	ft_free_end(t_execute *exec)
 }
 
 //executes builtin
-void	execute_builtin(int i, t_execute *exec)
+int	execute_builtin(int i, t_execute *exec)
 {
+	int	return_val;
+
+	return_val = 0;
 	if (!ft_strncmp(exec->token[i]->command, "echo", 4))
-		ft_echo(exec->token[i]->command);
+		return_val = ft_echo(exec->token[i]->command);
 	else if (!ft_strncmp(exec->token[i]->command, "cd", 2))
-		ft_cd(exec->token[i]->command, exec->envp);
+		return_val = ft_cd(exec->token[i]->command, exec->envp);
 	else if (!ft_strncmp(exec->token[i]->command, "pwd", 3))
-		ft_pwd();
+		return_val = ft_pwd();
 	else if (!ft_strncmp(exec->token[i]->command, "export", 6))
-		ft_export(exec->envp, exec->token[i]->command);
+		return_val = ft_export(exec->envp, exec->token[i]->command);
 	else if (!ft_strncmp(exec->token[i]->command, "unset", 5))
-		ft_unset(exec->envp, exec->token[i]->command);
+		return_val = ft_unset(exec->envp, exec->token[i]->command);
 	else if (!ft_strncmp(exec->token[i]->command, "env", 3))
-		ft_env(*exec->envp);
+		return_val = ft_env(*exec->envp);
 	else if (!ft_strncmp(exec->token[i]->command, "exit", 4))
 		ft_exit(exec, exec->token[i]->command);
+	return (return_val);
 }
 
 static void	ft_free_end_execve(t_execute *exec)

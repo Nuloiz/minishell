@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/08 12:04:00 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 12:38:29 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void		ft_free_end(t_execute *exec);
 int			ft_set_redirects(t_execute *exec, int i);
 void		write_newline(int pipe, int i, t_execute *exec);
 int			execute_command(int i, t_execute *exec);
-void		execute_builtin(int i, t_execute *exec);
+int			execute_builtin(int i, t_execute *exec);
 void		set_output_fd(t_execute *exec, int i, int pipe);
 int			get_input_pipe(t_execute *exec, int i);
 void		set_sig_handle_prompt(void);
