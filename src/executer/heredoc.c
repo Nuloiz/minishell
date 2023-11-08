@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:25:50 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/08 12:58:20 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 13:04:03 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,14 @@ int	ft_here_doc(t_execute *exec)
 	return (1);
 }
 
-int	wait_return(t_execute *exec, int stin_backup, int sout_backup, int ret_val)
+int	wait_return(t_execute *exec, int stin_backup, int sout_backup)
 {
 	int	i;
 	int	status;
 
 	status = 0;
 	i = -1;
+	ft_close_all_fds(exec);
 	while (++i < exec->count_children && !(exec->count_builtins
 			== 1 && exec->count_children == 1))
 		waitpid(exec->id[i], &status, 0);
@@ -99,5 +100,5 @@ int	wait_return(t_execute *exec, int stin_backup, int sout_backup, int ret_val)
 	else if (g_signal)
 		return (g_signal + 128);
 	else
-		return (ret_val);
+		return (0);
 }
