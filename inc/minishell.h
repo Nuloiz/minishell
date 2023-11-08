@@ -111,7 +111,7 @@ int			nv_after_red(t_input **input, int i);
 t_command	**get_commands(t_array **array);
 char		*mod_get_env(char **envp, char *string, t_boollr *j, char *s);
 char		**mod_split(char *s, char c);
-void		mod_countsplitting(char *s, int *j, char c, int bool);
+void		mod_countsplitting(char *s, int *j, char c, int *bool);
 int			mod_possplit(const char *s, char c);
 int			qoute_or_space(char *s, char c, int j);
 char		*string_before_quote(char *s, int *j, int *bool);

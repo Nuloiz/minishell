@@ -45,6 +45,7 @@ static int	mod_countsplit(char *s, char c)
 {
 	int		i;
 	int		j;
+	int		k;
 
 	i = 0;
 	j = 0;
@@ -54,7 +55,10 @@ static int	mod_countsplit(char *s, char c)
 			j++;
 		if (!s[j])
 			break ;
-		mod_countsplitting((char *)s, &j, c, qoute_or_space(s, c, j));
+		k = qoute_or_space(s, c, j);
+		mod_countsplitting((char *)s, &j, c, &k);
+		if (k == -1)
+			return (-2);
 		i++;
 	}
 	return (i);
@@ -98,10 +102,13 @@ char	**mod_split(char *s, char c)
 	char	**array;
 
 	i = 0;
+	j = mod_countsplit(s, c) + 1;
+	if (j == -1)
+		return (NULL);
+	array = (char **)malloc(sizeof(char *) * j);
 	j = 0;
-	array = (char **)malloc(sizeof(char *) * (mod_countsplit(s, c) + 1));
 	if (!array)
-		return (0);
+		return (NULL);
 	while ((s[j] && s[j] != '\0'))
 	{
 		while (s[j] == c)
