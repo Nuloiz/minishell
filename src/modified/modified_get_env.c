@@ -88,6 +88,15 @@ static char	*mod_multiple_wo_quotes(char **envp, char *string, \
 			j->bool = 1;
 			break ;
 		}
+		if (string[i] == 39 && string[i + 1] == '$')
+		{
+			*s = mod_strjoin(mod_get_env(envp, ft_substr(string, \
+				i + 2, ft_strlen(string) - i - 3), j, NULL), NULL);
+			if (!*s)
+				return (free(string), NULL);
+			j->bool = 1;
+			break ;
+		}
 		i++;
 	}
 	string = ft_substr(string, 0, i);

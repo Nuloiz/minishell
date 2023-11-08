@@ -39,8 +39,13 @@ static char	*found_env(char *s, int i, t_boollr *j, char **envp)
 	int		k;
 
 	k = i;
-	while (s[k] && s[k] != 39)
-		k++;
+	if (s[k] == '$' && j->bool == 0)
+		k = 0;
+	else
+	{
+		while (s[k] && s[k] != 39)
+			k++;
+	}
 	tmp = mod_get_env(envp, &s[i + 1], j, &s[k]);
 	free(s);
 	if (!tmp)

@@ -31,13 +31,33 @@ static char	*end_of_quote(char *ret, int *i, int *j, char c)
 	return (ret);
 }
 
+
+static char	*string_after_quote(char *s, char c)
+{
+	char	*tmp;
+	int		i;
+	int		k;
+
+	i = ft_strlen(s);
+	k = i;
+	while (s[i] != c)
+		i--;
+	tmp = ft_substr(s, i + 1, k - i + 1);
+	return (tmp);
+}
+
 static char	*quotes(char *s, char c)
 {
 	char	*ret;
+	char	*tmp;
 	int		i;
 	int		j;
 
-	ret = ft_substr(s, 1, ft_strlen(s) - 2);
+	tmp = string_after_quote(s, c);
+	if (tmp)
+		ret = ft_substr(s, 1, ft_strlen(s) - ft_strlen(tmp) - 2);
+	else
+		ret = ft_substr(s, 1, ft_strlen(s) - 2);
 	if (!ret)
 		return (NULL);
 	i = 0;
@@ -50,10 +70,11 @@ static char	*quotes(char *s, char c)
 	}
 	if (j % 2 != 0)
 	{
-		ft_putstr_fd("Open Quotes", 0);
+		ft_putstr_fd("Open Quotes\n", 0);
 		free(ret);
 		return (NULL);
 	}
+	ret = mod_nocheck_strjoin(ret, tmp);
 	return (ret);
 }
 
