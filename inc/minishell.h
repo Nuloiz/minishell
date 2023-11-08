@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/08 13:04:14 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 13:19:59 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ typedef struct s_execute {
 	int			*id;
 	int			count_pipes;
 	int			**pipe_fd;
-	int			error;
 	int			garbage;
 	char		***envp;
 	t_command	**token;
@@ -170,7 +169,7 @@ void		turn_off_ctl_echo(void);
 void		free_token(t_command **token);
 void		set_sig_handle_ignore(void);
 int			ft_here_doc(t_execute *exec);
-int			wait_return(t_execute *exec, int stin_backup, int sout_backup);
+int			wait_return(t_execute *exec);
 void		restore_stfds(int stin_backup, int sout_backup);
 void		close_limiter_pipes(t_execute *exec);
 

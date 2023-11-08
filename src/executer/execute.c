@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/08 13:04:22 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 13:18:59 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	ft_parent(t_execute *exec)
 		ft_close_all_fds(exec);
 	}
 	else
-		ret_value = wait_return(exec, stin_backup, sout_backup);
+		ret_value = wait_return(exec);
+	restore_stfds(stin_backup, sout_backup);
 	return (ret_value);
 }
 
@@ -91,7 +92,7 @@ int	execute(char ***envp, t_command **token)
 	if (error)
 		return (ft_free_end(&exec), error);
 	ft_free_end(&exec);
-	return (exec.error);
+	return (error);
 }
 
 //call initialisation for struct, set here_doc and open pipes

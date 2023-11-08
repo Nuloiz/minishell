@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:16:52 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 15:39:35 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 13:20:10 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	ft_init_struct(t_execute *new, t_command **token, char ***envp)
 	if (new->count_pipes < 1)
 		new->count_pipes = 1;
 	new->pipe_fd = malloc(sizeof(int *) * (new->count_pipes));
-	new->error = 0;
 	new->envp = envp;
 	new->token = token;
 	return (1);
