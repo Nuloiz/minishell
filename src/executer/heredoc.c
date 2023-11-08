@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:25:50 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/08 12:04:59 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 12:58:20 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_here_doc(t_execute *exec)
 	return (1);
 }
 
-int	wait_return(t_execute *exec, int stin_backup, int sout_backup)
+int	wait_return(t_execute *exec, int stin_backup, int sout_backup, int ret_val)
 {
 	int	i;
 	int	status;
@@ -99,5 +99,5 @@ int	wait_return(t_execute *exec, int stin_backup, int sout_backup)
 	else if (g_signal)
 		return (g_signal + 128);
 	else
-		return (0);
+		return (ret_val);
 }
