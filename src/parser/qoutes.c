@@ -31,6 +31,7 @@ static char	*end_of_quote(char *ret, int *i, int *j, char c)
 	return (ret);
 }
 
+
 static char	*string_after_quote(char *s, char c)
 {
 	char	*tmp;
