@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 18:20:52 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/07 13:55:15 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 10:55:55 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,25 @@
 int	ft_pipe_normal(t_execute *exec, int i)
 {
 	if (i == 0)
-		dup2(exec->pipe_fd[exec->count_pipes - 1][0], 0);
+	{
+		if (dup2(exec->pipe_fd[exec->count_pipes - 1][0], 0) < 0)
+			perror("dup2 23");
+	}
 	else
-		dup2(exec->pipe_fd[i - 1][0], 0);
+	{
+		if (dup2(exec->pipe_fd[i - 1][0], 0) < 0)
+			perror("dup2 23");
+	}
 	if (i == exec->count_children - 1)
-		dup2(exec->pipe_fd[0][1], 1);
+	{
+		if (dup2(exec->pipe_fd[0][1], 1) < 0)
+			perror("dup2 23");
+	}
 	else
-		dup2(exec->pipe_fd[i][1], 1);
+	{
+		if (dup2(exec->pipe_fd[i][1], 1) < 0)
+			perror("dup2 23");
+	}
 	return (0);
 }
 
@@ -37,11 +49,11 @@ int	ft_set_output(t_execute *exec, int i)
 		pipe = 0;
 	else
 		pipe = i;
-	if (exec->token[pipe]->limiter)
-	{
-		close(exec->pipe_fd[pipe][1]);
-		exec->pipe_fd[pipe][1] = -1;
-	}
+	// if (exec->token[pipe]->limiter)
+	// {
+	// 	close(exec->pipe_fd[pipe][1]);
+	// 	exec->pipe_fd[pipe][1] = -1;
+	// }
 	if (exec->token[i]->output)
 	{
 		close(exec->pipe_fd[pipe][1]);
@@ -69,8 +81,8 @@ int	ft_set_input(t_execute *exec, int i)
 	int	pipe;
 
 	pipe = get_input_pipe(exec, i);
-	if (exec->token[0]->limiter)
-		close(exec->pipe_fd[0][1]);
+	// if (exec->token[0]->limiter)
+	// 	close(exec->pipe_fd[0][1]);
 	if (exec->token[i]->limiter)
 		return (0);
 	if (exec->token[i]->input)

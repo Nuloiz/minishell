@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:25:50 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/07 13:01:20 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 10:47:27 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,11 @@ void	loop_limiter(t_execute *exec)
 			else
 				pipe = i - 1;
 			write_newline(pipe, i, exec);
+			close(exec->pipe_fd[pipe][1]);
 		}
 	}
-	ft_close_all_fds(exec);
-	ft_free_end(exec);
+	// ft_close_all_fds(exec);
+	// ft_free_end(exec);
 }
 
 int	ft_here_doc(t_execute *exec)
@@ -65,19 +66,19 @@ int	ft_here_doc(t_execute *exec)
 	int		status;
 
 	set_sig_handle_ignore();
-	id = fork();
-	if (id == 0)
-	{
+	// id = fork();
+	// if (id == 0)
+	// {
 		signal(SIGINT, SIG_DFL);
 		loop_limiter(exec);
-		exit(0);
-	}
-	waitpid(id, &status, 0);
-	if (WTERMSIG(status) == SIGINT)
-	{
-		write(1, "\n", 1);
-		return (-1);
-	}
+	// 	exit(0);
+	// }
+	// waitpid(id, &status, 0);
+	// if (WTERMSIG(status) == SIGINT)
+	// {
+	// 	write(1, "\n", 1);
+	// 	return (-1);
+	// }
 	set_sig_handle_executer();
 	return (1);
 }
