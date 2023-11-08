@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 15:28:42 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 13:48:01 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 11:47:36 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ft_free_end(t_execute *exec)
 {
 	free_token(exec->token);
 	ft_free_data(exec);
+	unlink("gbg.tmp");
 }
 
 //executes builtin

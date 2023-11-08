@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/03 19:21:45 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 11:07:35 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_execute {
 	int			count_pipes;
 	int			**pipe_fd;
 	int			error;
+	int			garbage;
 	char		***envp;
 	t_command	**token;
 }	t_execute;

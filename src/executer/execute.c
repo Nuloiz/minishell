@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 15:39:12 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 11:13:43 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	execute(char ***envp, t_command **token)
 	error = 0;
 	if (ft_init(&exec, token, envp))
 		return (1);
+	exec.garbage = open("grb.tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	dprintf(2 ,"exec.garbage: %i\n", exec.garbage);
 	if (exec.count_limiter && ft_here_doc(&exec) == -1)
 		return (ft_free_end(&exec), 1);
 	error = ft_forking(&exec);

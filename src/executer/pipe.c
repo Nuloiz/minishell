@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 18:20:52 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/08 10:55:55 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 11:28:57 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,20 @@ int	ft_pipe_normal(t_execute *exec, int i)
 	else
 	{
 		if (dup2(exec->pipe_fd[i - 1][0], 0) < 0)
-			perror("dup2 23");
+			perror("dup2 28");
 	}
 	if (i == exec->count_children - 1)
 	{
 		if (dup2(exec->pipe_fd[0][1], 1) < 0)
-			perror("dup2 23");
+			perror("dup2 33");
 	}
 	else
 	{
 		if (dup2(exec->pipe_fd[i][1], 1) < 0)
-			perror("dup2 23");
+		{
+			perror("dup2 38");
+			dprintf(2, "exec->pipe_fd[%i][1]: %i\n", i, exec->pipe_fd[i][1]);
+		}
 	}
 	return (0);
 }
@@ -44,16 +47,16 @@ int	ft_pipe_normal(t_execute *exec, int i)
 int	ft_set_output(t_execute *exec, int i)
 {
 	int	pipe;
+	int	next_pipe;
 
 	if (i == exec->count_children - 1)
 		pipe = 0;
 	else
 		pipe = i;
-	// if (exec->token[pipe]->limiter)
-	// {
-	// 	close(exec->pipe_fd[pipe][1]);
-	// 	exec->pipe_fd[pipe][1] = -1;
-	// }
+	if (i == exec->count_children - 1)
+		next_pipe = 0;
+	else
+		next_pipe = pipe + 1;
 	if (exec->token[i]->output)
 	{
 		close(exec->pipe_fd[pipe][1]);
@@ -63,6 +66,12 @@ int	ft_set_output(t_execute *exec, int i)
 			perror("Error");
 			return (1);
 		}
+	}
+	else if (exec->token[next_pipe]->limiter && i != exec->count_children - 1)
+	{
+		dprintf(2, "next pipe: %i from child: %i is limiter setting to garb: %i\n", next_pipe, i, exec->garbage);
+		close(exec->pipe_fd[pipe][1]);
+		exec->pipe_fd[pipe][1] = exec->garbage;
 	}
 	else
 	{
