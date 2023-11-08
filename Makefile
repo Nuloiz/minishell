@@ -3,8 +3,8 @@ NAME := minishell
 CC := cc
 
 #CFLAGS := -g
-CFLAGS :=  -fsanitize=address -g
-#CFLAGS := -Wall -Wextra -Werror -g
+#CFLAGS :=  -fsanitize=address -g
+CFLAGS := -Wall -Wextra -Werror -g
 # find / -name libreadline.aCFLAGS := $(CFLAGS) -fsanitize=address
 SRC :=	free.c dup.c print.c \
         parser/input_sort.c parser/input_type.c parser/input_type_strncmp.c parser/qoutes.c parser/env_var.c parser/create_array.c parser/fill_tmp.c parser/error_msg.c parser/get_commands.c \

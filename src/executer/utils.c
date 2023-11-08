@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:50:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/08 11:50:28 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 12:06:14 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,24 @@ void	ft_close_fds(t_execute *exec, int current_child)
 			close(exec->pipe_fd[i][0]);
 		}
 		i++;
+	}
+}
+
+void	close_limiter_pipes(t_execute *exec)
+{
+	int	i;
+	int	pipe;
+
+	i = -1;
+	while (exec->token[++i])
+	{
+		if (exec->token[i]->limiter)
+		{
+			if (i == 0)
+				pipe = exec->count_pipes - 1;
+			else
+				pipe = i - 1;
+			close(exec->pipe_fd[pipe][1]);
+		}
 	}
 }

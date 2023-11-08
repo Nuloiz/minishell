@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/08 11:07:35 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/08 12:04:00 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,15 +158,12 @@ char		*ft_remove_slash(char *deleted);
 int			ft_strchr_count(const char *string, char c);
 int			ft_init(t_execute *exec, t_command **token, char ***envp);
 void		ft_free_end(t_execute *exec);
-// int			*ft_get_types_commands(t_execute *new);
 int			ft_set_redirects(t_execute *exec, int i);
 void		write_newline(int pipe, int i, t_execute *exec);
 int			execute_command(int i, t_execute *exec);
 void		execute_builtin(int i, t_execute *exec);
 void		set_output_fd(t_execute *exec, int i, int pipe);
 int			get_input_pipe(t_execute *exec, int i);
-// void		set_sig_handle_prompt(struct sigaction *sa);
-// void		set_sig_handle_executer(struct sigaction *sa);
 void		set_sig_handle_prompt(void);
 void		set_sig_handle_executer(void);
 void		turn_off_ctl_echo(void);
@@ -175,5 +172,6 @@ void		set_sig_handle_ignore(void);
 int			ft_here_doc(t_execute *exec);
 int			wait_return(t_execute *exec, int stin_backup, int sout_backup);
 void		restore_stfds(int stin_backup, int sout_backup);
+void		close_limiter_pipes(t_execute *exec);
 
 #endif
