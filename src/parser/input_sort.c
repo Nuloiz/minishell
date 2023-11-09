@@ -70,7 +70,7 @@ static t_input	**linked_list_start(char **cmd, char **envp, \
 	{
 		new = new_node (&cmd[i], envp, l_r);
 		if (!new)
-			return (input);
+			return (free(cmd), input);
 		mod_lstadd_back(input, new);
 		i++;
 	}
