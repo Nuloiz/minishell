@@ -62,7 +62,7 @@ static char	*mod_get_env_two(char **envp, char *string, t_boollr *j, char *s)
 	}
 	if (j->bool == 1)
 		env = ft_strdup(s);
-	return (free(string_equal), env);
+	return (free(string_equal), free(string), env);
 }
 
 static char	*mod_multiple_wo_quotes(char **envp, char *string, \
