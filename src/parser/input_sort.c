@@ -105,7 +105,7 @@ int	input_sort(char *line, char ***envp, int l_r)
 	if (!input)
 	{
 		free_list(&input);
-		return (-1);
+		return (0);
 	}
 	r = sort_array(input, &array);
 	return (r);
