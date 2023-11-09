@@ -95,7 +95,6 @@ int	input_sort(char *line, char ***envp, int l_r)
 	t_input	*input;
 	t_array	array;
 	char	**cmd;
-	int		r;
 
 	input = NULL;
 	array.envp = envp;
