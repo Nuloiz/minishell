@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/06 15:42:13 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/09 09:22:00 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ int	print_splitted(char **splitted)
 
 	i = 0;
 	once = 0;
-	ret_value = 0;
+	ret_value = 1;
 	while (splitted[i])
 	{
-		ret_value = 1;
 		ft_printf("%s", splitted[i]);
 		if (splitted[i + 1] && !once)
 		{
 			once = 1;
 			ft_printf("=\"");
+			ret_value = 0;
 		}
 		i++;
 	}
