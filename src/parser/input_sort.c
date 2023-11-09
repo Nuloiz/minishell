@@ -49,7 +49,7 @@ static t_input	*new_node(char **s, char **envp, int l_r)
 	{
 		new->word = env_var(new->word, envp, l_r);
 		if (!new->word)
-			return (NULL);
+			return (free(new), NULL);
 	}
 	new->next = NULL;
 	return (new);
@@ -70,7 +70,7 @@ static t_input	**linked_list_start(char **cmd, char **envp, \
 	{
 		new = new_node (&cmd[i], envp, l_r);
 		if (!new)
-			return (NULL);
+			return (input);
 		mod_lstadd_back(input, new);
 		i++;
 	}
