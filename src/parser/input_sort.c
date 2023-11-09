@@ -116,6 +116,5 @@ int	input_sort(char *line, char ***envp, int l_r)
 		free_list(&input);
 		return (0);
 	}
-	r = sort_array(input, &array);
-	return (r);
+	return (sort_array(input, &array));
 }
