@@ -115,12 +115,10 @@ int	sort_array(t_input *input, t_array	*array)
 		return (-1);
 	array->type[count] = 0;
 	array->pipe[count] = 0;
-	print_cmds(array->cmds, array->type, array->pipe);
 	token = get_commands(&array);
 	free_list(&input);
 	if (!token)
 		return (-1);
-	print_commands(token);
 	r = execute(array->envp, token);
 	return (r);
 }
