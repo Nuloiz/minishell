@@ -31,7 +31,6 @@ static char	*end_of_quote(char *ret, int *i, int *j, char c)
 	return (ret);
 }
 
-
 static char	*string_after_quote(char *s, char c)
 {
 	char	*tmp;
@@ -68,14 +67,7 @@ static char	*quotes(char *s, char c)
 		if (!ret)
 			return (NULL);
 	}
-	if (j % 2 != 0)
-	{
-		ft_putstr_fd("Open Quotes\n", 0);
-		free(ret);
-		return (NULL);
-	}
-	ret = mod_nocheck_strjoin(ret, tmp);
-	return (ret);
+	return (mod_nocheck_strjoin(ret, tmp));
 }
 
 t_input	*found_quote(t_input *new, char **s, char c)
