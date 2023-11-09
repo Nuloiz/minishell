@@ -12,30 +12,39 @@
 
 #include "minishell.h"
 
-static t_input	*new_node(char **s, char **envp, int l_r)
+static t_input	*quote_in_string(t_input *new, int *j, char **s)
 {
-	int		i;
-	int		j;
-	t_input	*new;
+	int	i;
 
 	i = 0;
-	j = 0;
-	new = ft_calloc(1, sizeof(t_input));
-	if (!new)
-		return (NULL);
-	new->type = input_type(*s, envp);
 	if (ft_strchr(*s, 39) || ft_strchr(*s, 34))
 	{
 		while ((*s)[i] != 39 && (*s)[i] != 34)
 			i++;
 		if ((*s)[i] == 39)
-			j = 1;
+			*j = 1;
 		new = found_quote(new, s, (*s)[i]);
 		if (!new)
 			return (NULL);
 	}
 	else
 		new->word = *s;
+	return (new);
+}
+
+static t_input	*new_node(char **s, char **envp, int l_r)
+{
+	int		j;
+	t_input	*new;
+
+	j = 0;
+	new = ft_calloc(1, sizeof(t_input));
+	if (!new)
+		return (NULL);
+	new->type = input_type(*s, envp);
+	new = quote_in_string(new, &j, s);
+	if (!new)
+		return (NULL);
 	if (new->type == 4 && j == 0)
 	{
 		new->word = env_var(new->word, envp, l_r);
@@ -86,7 +95,6 @@ int	input_sort(char *line, char ***envp, int l_r)
 	t_input	*input;
 	t_array	array;
 	char	**cmd;
-	int		r;
 
 	input = NULL;
 	array.envp = envp;
@@ -107,6 +115,5 @@ int	input_sort(char *line, char ***envp, int l_r)
 		free_list(&input);
 		return (0);
 	}
-	r = sort_array(input, &array);
-	return (r);
+	return (sort_array(input, &array));
 }

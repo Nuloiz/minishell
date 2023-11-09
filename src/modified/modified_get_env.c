@@ -32,6 +32,7 @@ static char	*mod_valid_env(char *envp, char *string, t_boollr *j, char *s)
 					(ft_strlen(env) - ft_strlen(string)));
 	if (j->bool == 1)
 		env = mod_nofree_strjoin(env, s);
+	free(string);
 	return (env);
 }
 
@@ -41,21 +42,15 @@ static char	*mod_get_env_two(char **envp, char *string, t_boollr *j, char *s)
 	char	*string_equal;
 	char	*env;
 
-	i = 0;
+	i = -1;
 	string_equal = ft_strjoin(string, "=");
 	env = NULL;
 	if (envp == NULL)
 		return (NULL);
-	while (envp[i])
+	while (envp[++i])
 	{
 		if (!ft_strncmp(envp[i], string_equal, ft_strlen(string_equal)))
-		{
-			env = mod_valid_env(envp[i], string, j, s);
-			free(string_equal);
-			free(string);
-			return (env);
-		}
-		i++;
+			return (free(string_equal), mod_valid_env(envp[i], string, j, s));
 	}
 	if (!ft_strncmp(string, "?", 2))
 	{
@@ -67,8 +62,7 @@ static char	*mod_get_env_two(char **envp, char *string, t_boollr *j, char *s)
 	}
 	if (j->bool == 1)
 		env = ft_strdup(s);
-	free(string_equal);
-	return (env);
+	return (free(string_equal), env);
 }
 
 static char	*mod_multiple_wo_quotes(char **envp, char *string, \
@@ -79,18 +73,13 @@ static char	*mod_multiple_wo_quotes(char **envp, char *string, \
 	i = 0;
 	while (string[i] != '\0')
 	{
-		if (string[i] == '$')
+		if (string[i] == '$' || (string[i] == 39 && string[i + 1] == '$'))
 		{
-			*s = mod_strjoin(mod_get_env(envp, ft_substr(string, \
+			if (string[i] == '$')
+				*s = mod_strjoin(mod_get_env(envp, ft_substr(string, \
 				i + 1, ft_strlen(string) - i), j, NULL), NULL);
-			if (!*s)
-				return (free(string), NULL);
-			j->bool = 1;
-			break ;
-		}
-		if (string[i] == 39 && string[i + 1] == '$')
-		{
-			*s = mod_strjoin(mod_get_env(envp, ft_substr(string, \
+			else
+				*s = mod_strjoin(mod_get_env(envp, ft_substr(string, \
 				i + 2, ft_strlen(string) - i - 3), j, NULL), NULL);
 			if (!*s)
 				return (free(string), NULL);
@@ -99,8 +88,7 @@ static char	*mod_multiple_wo_quotes(char **envp, char *string, \
 		}
 		i++;
 	}
-	string = ft_substr(string, 0, i);
-	return (string);
+	return (ft_substr(string, 0, i));
 }
 
 char	*mod_get_env(char **envp, char *string, t_boollr *j, char *s)
