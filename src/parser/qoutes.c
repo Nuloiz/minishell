@@ -54,7 +54,7 @@ static char	*quotes(char *s, char c)
 
 	tmp = string_after_quote(s, c);
 	if (tmp)
-		ret = ft_substr(s, 1, ft_strlen(s) - ft_strlen(tmp) - 2);
+		ret = ft_substr(s, 1, ft_strlen(s) - ft_strlen(tmp) - 3);
 	else
 		ret = ft_substr(s, 1, ft_strlen(s) - 2);
 	if (!ret)
