@@ -73,11 +73,7 @@ char	*mod_splitting(char *s, int *j, char c, int bool)
 	if (bool == 1)
 	{
 		if (s[*j] != 34 && s[*j] != 39)
-		{
 			tmp = string_before_quote(s, j, &bool);
-			if (!tmp)
-				return (NULL);
-		}
 		i = mod_possplit(&s[*j] + 1, s[*j]) + 2;
 		array = ft_substr(s, *j, i);
 		*j = *j + i;
