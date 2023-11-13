@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/09 09:22:00 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/13 16:59:37 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,30 +100,15 @@ void	ft_sorted_print_array(char **envp)
 //add or replace the value of the string in the 2D envp array
 int	ft_export(char ***envp, char *string)
 {
-	int		i;
-	int		found;
 	char	**splitted;
 
 	splitted = ft_split(string, ' ');
-	found = 0;
 	if (!*envp)
 		ft_putstr_fd("NO ENVP\n", 2);
 	if (!splitted[1])
 		return (free_array(splitted), ft_sorted_print_array(*envp), 0);
-	i = -1;
 	ft_memmove(string, &string[7], (ft_strlen(string) - 6));
-	while ((*envp)[++i])
-	{
-		if (!ft_strncmp((*envp)[i], string,
-			(ft_strchr(string, '=') - string + 1)))
-		{
-			free((*envp)[i]);
-			(*envp)[i] = ft_strdup(string);
-			found = 1;
-		}
-	}
-	if (!found)
-		*envp = ft_append_string_to_array(*envp, string);
+	find_and_set(envp, string);
 	return (free_array(splitted), 0);
 }
 

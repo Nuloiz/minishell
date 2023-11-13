@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/09 11:37:41 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/13 16:57:54 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,5 +169,6 @@ int			wait_return(t_execute *exec);
 void		restore_stfds(int stin_backup, int sout_backup);
 void		close_limiter_pipes(t_execute *exec);
 int			ft_set_pwd(char ***envp, char *path);
+void			find_and_set(char ***envp, char *string);
 
 #endif
