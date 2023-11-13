@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/13 16:59:37 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/13 18:05:07 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,26 @@ void	ft_sorted_print_array(char **envp)
 int	ft_export(char ***envp, char *string)
 {
 	char	**splitted;
+	int	i;
 
+	i = 0;
 	splitted = ft_split(string, ' ');
 	if (!*envp)
 		ft_putstr_fd("NO ENVP\n", 2);
 	if (!splitted[1])
 		return (free_array(splitted), ft_sorted_print_array(*envp), 0);
-	ft_memmove(string, &string[7], (ft_strlen(string) - 6));
-	find_and_set(envp, string);
+	//ft_memmove(string, &string[7], (ft_strlen(string) - 6));
+	while (splitted[++i])
+	{
+		if (!check_identifier(splitted[i]))
+		{
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(splitted[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			return (free_array(splitted), 1);
+		}
+	}
+	find_and_set(envp, splitted);
 	return (free_array(splitted), 0);
 }
 

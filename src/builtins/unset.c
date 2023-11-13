@@ -6,14 +6,31 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 19:57:58 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 09:07:25 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/13 18:10:57 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// returns position of the enviroment variable in the 2D array
+int	get_env_pos(char **envp, char *string)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	while (envp[i])
+	{
+		len = get_export_length(envp[i], string);
+		if (!ft_strncmp(envp[i], string, len))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
 //returns a new array with string appended, frees old array
-char	**ft_delete_from_array(char **array, char *string)
+char	**ft_delete_from_array(char **array, int env_pos)
 {
 	int		size;
 	char	**new_array;
@@ -26,7 +43,7 @@ char	**ft_delete_from_array(char **array, char *string)
 	new_array = malloc(sizeof(char *) * (size));
 	while (i < size)
 	{
-		if (!ft_strncmp(array[i], string, ft_strlen(string)))
+		if (i == env_pos)
 			i++;
 		else
 		{
@@ -43,28 +60,30 @@ char	**ft_delete_from_array(char **array, char *string)
 //add or replace the value of the string in the 2D envp array
 int	ft_unset(char ***envp, char *string)
 {
-	char	*string_equal;
 	char	**splitted;
-	char	*env;
+	int		env_pos;
+	int		i;
 
 	splitted = ft_split(string, ' ');
 	if (!splitted[1])
-	{
-		free_array(splitted);
-		return (0);
-	}
+		return (free_array(splitted), 0);
 	if (!*envp)
 		ft_putstr_fd("NO ENVP\n", 2);
-	env = ft_get_env(*envp, splitted[1]);
-	if (env == NULL)
+	i = 0;
+	while (splitted[++i])
 	{
-		free_array(splitted);
-		free(env);
-		return (0);
+		if (!check_identifier(splitted[i]))
+		{
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(splitted[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			return (free_array(splitted), 1);
+		}
+		env_pos = get_env_pos(*envp, splitted[i]);
+		if (env_pos < 0)
+			break ;
+		*envp = ft_delete_from_array(*envp, env_pos);
 	}
-	string_equal = ft_strjoin(splitted[1], "=");
-	*envp = ft_delete_from_array(*envp, string_equal);
-	free(string_equal);
 	ft_free_array(splitted);
 	return (0);
 }

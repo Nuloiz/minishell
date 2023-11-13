@@ -6,11 +6,26 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:51:34 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/13 16:57:49 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/13 18:45:29 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	check_identifier(char *string)
+{
+	int	i;
+
+	i = -1;
+	while (string[++i])
+	{
+		if (string[i] == '=' && i != 0)
+			return (1);
+		if (!ft_isalpha(string[i]) && string[i] != '_')
+			return (0);
+	}
+	return (1);
+}
 
 int	get_export_length(char *envp, char *string)
 {
@@ -19,7 +34,7 @@ int	get_export_length(char *envp, char *string)
 	int	len_envp;
 
 	if (ft_strchr(envp, '='))
-		return (ft_strchr(envp, '=') - envp);
+		len_envp = ft_strchr(envp, '=') - envp;
 	else
 		len_envp = ft_strlen(envp);
 	if (ft_strchr(string, '='))
@@ -33,16 +48,16 @@ int	get_export_length(char *envp, char *string)
 	return (len);
 }
 
-void	find_and_set(char ***envp, char *string)
+//finding the string in the 2D array and replacing
+// it with the new value or adding if not found
+void	find_and_set(char ***envp, char **splitted)
 {
-	char	**splitted;
 	int		i;
 	int		j;
 	int		found;
 	int		len;
 
-	splitted = ft_split(string, ' ');
-	j = -1;
+	j = 0;
 	while (splitted[++j])
 	{
 		found = 0;
@@ -50,8 +65,10 @@ void	find_and_set(char ***envp, char *string)
 		while ((*envp)[++i])
 		{
 			len = get_export_length((*envp)[i], splitted[j]);
+			// dprintf(2, "len: %d envp i: %s splitted: %s\n", len, (*envp)[i], splitted[j]);
 			if (!ft_strncmp((*envp)[i], splitted[j], len))
 			{
+				dprintf(2, "len: %d envp i: %s splitted: %s\n", len, ((*envp)[i]), splitted[j]);
 				free((*envp)[i]);
 				(*envp)[i] = ft_strdup(splitted[j]);
 				found = 1;
