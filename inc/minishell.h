@@ -78,6 +78,13 @@ typedef struct s_boollr
 	int		l_r;
 }	t_boollr;
 
+typedef struct s_quote
+{
+	char	c;
+	int		l_r;
+	char 	**envp;
+}	t_quote;
+
 typedef struct s_execute {
 	int			count_only_files;
 	int			count_limiter;
@@ -103,6 +110,7 @@ int			is_pipe(char *s);
 int			is_red(char s);
 int			is_file(char *s);
 t_input		*found_quote(t_input *new, char **s, char c);
+char		*new_quotes(char *s, int l_r, char **envp);
 char		*env_var(char *s, char **envp, int l_r);
 int			sort_array(t_input *input, t_array *array);
 int			fill_tmp(t_input **input, t_array array, int *count, char **tmp);

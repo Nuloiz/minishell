@@ -12,17 +12,6 @@
 
 #include "minishell.h"
 
-static int	mod_get_single(char *string, int i)
-{
-	int	j;
-
-	j = i;
-	while (string[j] != 39)
-		j++;
-	j = j - i;
-	return (j + 1);
-}
-
 static char	*mod_valid_env(char *envp, char *string, t_boollr *j, char *s)
 {
 	char	*env;
@@ -93,25 +82,7 @@ static char	*mod_multiple_wo_quotes(char **envp, char *string, \
 
 char	*mod_get_env(char **envp, char *string, t_boollr *j, char *s)
 {
-	int		i;
-
-	i = 0;
-	if (j->bool == 1)
-	{
-		while (string[i] != 39)
-		{
-			if (string[i] == '$')
-			{
-				s = mod_nofree_strjoin(mod_get_env(envp, ft_substr(string, \
-				i + 1, mod_get_single(string, i)), j, NULL), s);
-				break ;
-			}
-			i++;
-		}
-		string = ft_substr(string, 0, i);
-	}
-	else
-		string = mod_multiple_wo_quotes(envp, string, j, &s);
+	string = mod_multiple_wo_quotes(envp, string, j, &s);
 	if (!string)
 		return (NULL);
 	return (mod_get_env_two(envp, string, j, s));

@@ -12,20 +12,14 @@
 
 #include "minishell.h"
 
-static t_input	*quote_in_string(t_input *new, int *j, char **s)
+static t_input	*quote_in_string(t_input *new, int l_r, char **s, char **envp)
 {
-	int	i;
-
-	i = 0;
 	if (ft_strchr(*s, 39) || ft_strchr(*s, 34))
 	{
-		while ((*s)[i] != 39 && (*s)[i] != 34)
-			i++;
-		if ((*s)[i] == 39)
-			*j = 1;
-		new = found_quote(new, s, (*s)[i]);
-		if (!new)
+		new->word = new_quotes(*s, l_r, envp);
+		if (!new->word)
 			return (NULL);
+		new->type = 8;
 	}
 	else
 		new->word = *s;
@@ -34,18 +28,16 @@ static t_input	*quote_in_string(t_input *new, int *j, char **s)
 
 static t_input	*new_node(char **s, char **envp, int l_r)
 {
-	int		j;
 	t_input	*new;
 
-	j = 0;
 	new = ft_calloc(1, sizeof(t_input));
 	if (!new)
 		return (NULL);
 	new->type = input_type(*s, envp);
-	new = quote_in_string(new, &j, s);
+	new = quote_in_string(new, l_r, s, envp);
 	if (!new)
 		return (NULL);
-	if (new->type == 4 && j == 0)
+	if (new->type == 4)
 	{
 		new->word = env_var(new->word, envp, l_r);
 		if (!new->word)

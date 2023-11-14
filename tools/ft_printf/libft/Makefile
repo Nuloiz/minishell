@@ -50,7 +50,7 @@ OBJ := $(SRC:.c=.o)
 
 BNS_OBJ := $(BNS_SRC:.c=.o)
 CFIL := $(SRC:.c=)
-CCFLAGS := -Wall -Wextra -Werror
+CCFLAGS := -Wall -Wextra -Werror -g
 
 .PHONY: all bonus clean fclean re
 

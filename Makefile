@@ -4,10 +4,10 @@ CC := cc
 
 #CFLAGS := -g
 #CFLAGS :=  -fsanitize=address -g
-CFLAGS := -Wall -Wextra -Werror -g
+CFLAGS := -Wall -Wextra -Werror -g3
 # find / -name libreadline.aCFLAGS := $(CFLAGS) -fsanitize=address
 SRC :=	free.c dup.c print.c \
-        parser/input_sort.c parser/input_type.c parser/input_type_strncmp.c parser/qoutes.c parser/env_var.c parser/create_array.c parser/fill_tmp.c parser/error_msg.c parser/get_commands.c \
+        parser/input_sort.c parser/input_type.c parser/input_type_strncmp.c parser/new_quotes.c parser/env_var.c parser/create_array.c parser/fill_tmp.c parser/error_msg.c parser/get_commands.c \
         modified/modified_lst_func.c modified/modified_split_func.c modified/modified_split_func_two.c modified/modified_strjoin_func.c modified/modified_strjoin_nocheck.c modified/modified_get_env.c \
         main.c \
 		signals.c \

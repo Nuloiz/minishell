@@ -19,7 +19,7 @@ static char	*end_of_quote(char *ret, int *i, int *j, char c)
 	if (ret[*i] == c)
 	{
 		tmp = modified_strjoin(ft_substr(ret, 0, *i), \
-			ft_substr(ret, (*i) + 1, ft_strlen(ret) - *i));
+			ft_substr(ret, (*i) + 1, ft_strlen(ret) - *i - 1));
 		free(ret);
 		if (!tmp)
 			return (NULL);
@@ -54,7 +54,7 @@ static char	*quotes(char *s, char c)
 
 	tmp = string_after_quote(s, c);
 	if (tmp)
-		ret = ft_substr(s, 1, ft_strlen(s) - ft_strlen(tmp) - 3);
+		ret = ft_substr(s, 1, ft_strlen(s) - ft_strlen(tmp) - 2);
 	else
 		ret = ft_substr(s, 1, ft_strlen(s) - 2);
 	if (!ret)
