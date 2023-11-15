@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 15:51:34 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/13 18:45:29 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/15 11:32:09 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,19 @@
 int	check_identifier(char *string)
 {
 	int	i;
+	int	alpha;
 
 	i = -1;
+	alpha = 0;
 	while (string[++i])
 	{
 		if (string[i] == '=' && i != 0)
 			return (1);
-		if (!ft_isalpha(string[i]) && string[i] != '_')
+		if (ft_isalpha(string[i]))
+			alpha = 1;
+		if (!ft_isalpha(string[i]) && string[i] != '_' && alpha != 1)
+			return (0);
+		if (!ft_isalnum(string[i]) && string[i] != '_')
 			return (0);
 	}
 	return (1);
@@ -65,10 +71,8 @@ void	find_and_set(char ***envp, char **splitted)
 		while ((*envp)[++i])
 		{
 			len = get_export_length((*envp)[i], splitted[j]);
-			// dprintf(2, "len: %d envp i: %s splitted: %s\n", len, (*envp)[i], splitted[j]);
 			if (!ft_strncmp((*envp)[i], splitted[j], len))
 			{
-				dprintf(2, "len: %d envp i: %s splitted: %s\n", len, ((*envp)[i]), splitted[j]);
 				free((*envp)[i]);
 				(*envp)[i] = ft_strdup(splitted[j]);
 				found = 1;
