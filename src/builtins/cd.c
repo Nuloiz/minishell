@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:43:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/15 11:42:52 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/15 12:56:41 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,16 @@ int	ft_cd(char *command, char ***envp)
 	if (!splitted)
 		return (ft_putstr_fd("minishell: cd: error split\n", 2), 1);
 	if (ft_array_size(splitted) > 2)
-		return (free(splitted), ft_putstr_fd("minishell: cd: too many arguments\n", 2), 1);
+		return (free(splitted),
+			ft_putstr_fd("minishell: cd: too many arguments\n", 2), 1);
 	if (splitted[1])
 	{
 		old_pwd = ft_get_pwd();
 		if (chdir(splitted[1]) == -1)
 		{
-			ft_putstr_fd("cd: ", 2);
-			ft_putstr_fd(splitted[1], 2);
-			ft_putstr_fd(": ", 2);
-			ft_putstr_fd(strerror(errno), 2);
-			ft_putstr_fd("\n", 2);
+			print_cd_error(splitted);
 			free(old_pwd);
+			free_array(splitted);
 			return (1);
 		}
 		ft_set_old_pwd(envp, old_pwd);
