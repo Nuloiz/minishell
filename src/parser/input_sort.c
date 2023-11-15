@@ -20,6 +20,7 @@ static t_input	*quote_in_string(t_input *new, int l_r, char **s, char **envp)
 		if (!new->word)
 			return (NULL);
 		new->type = 8;
+		free(*s);
 	}
 	else
 		new->word = *s;

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   modified_split_func.c                              :+:      :+:    :+:   */
+/*   new_mod_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nschutz <nschutz@student.42wolfsburg.de>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 11:08:15 by nschutz           #+#    #+#             */
-/*   Updated: 2023/10/30 16:50:00 by dnebatz          ###   ########.fr       */
+/*   Created: 2023/11/15 13:30:19 by nschutz           #+#    #+#             */
+/*   Updated: 2023/11/15 13:30:19 by nschutz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**mod_allocfails(char **array)
+static char	**ft_allocfails(char **array)
 {
 	int	i;
 
@@ -26,26 +26,32 @@ static char	**mod_allocfails(char **array)
 	return (NULL);
 }
 
-int	mod_possplit(const char *s, char c)
+static int	mod_possplit(char *s, int *j, char c)
 {
-	int	i;
+	char	q;
 
-	i = 0;
-	while (s[i])
+	while (s[*j] != '\0' && s[*j] != c)
 	{
-		if (s[i] == c)
-			return (i);
-		else
-			i++;
+		if (s[*j] == 34 || s[*j] == 39)
+		{
+			q = s[*j];
+			(*j)++;
+			while (s[*j] != '\0' && s[*j] != q)
+				(*j)++;
+			if (s[*j] == '\0')
+				return(0);
+			(*j)++;
+		}
+		else (*j)++;
 	}
-	return (i);
+	return (1);
 }
 
 static int	mod_countsplit(char *s, char c)
 {
 	int		i;
 	int		j;
-	int		k;
+	int 	k;
 
 	i = 0;
 	j = 0;
@@ -55,31 +61,34 @@ static int	mod_countsplit(char *s, char c)
 			j++;
 		if (!s[j])
 			break ;
-		k = qoute_or_space(s, c, j);
-		mod_countsplitting((char *)s, &j, c, &k);
-		if (k == -1)
-			return (-2);
+		k = mod_possplit(s, &j, c);
+		if (k == 0)
+			return (-1);
 		i++;
 	}
 	return (i);
 }
 
-char	*mod_splitting(char *s, int *j, char c)
+static char	*mod_splitting(char *s, int *j, char c)
 {
 	char	*array;
-	char	*tmp;
-	int		i;
+	char 	q;
+	int 	start;
 
-	if (s[*j] != 34 && s[*j] != 39)
-		tmp = string_before_quote(s, j, &bool);
-	i = mod_possplit(&s[*j] + 1, s[*j]) + 2;
-	array = ft_substr(s, *j, i);
-	*j = *j + i;
-	if (s[*j] && s[*j] != ' ')
-		array = modified_strjoin(array, mod_splitting(s, j, c));
-	array = modified_strjoin(tmp, array);
-	array = ft_substr(s, *j, mod_possplit(&s[*j], c));
-	*j = *j + mod_possplit(&s[*j], c);
+	start = *j;
+	while (s[*j] != '\0' && s[*j] != c)
+	{
+		if (s[*j] == 34 || s[*j] == 39)
+		{
+			q = s[*j];
+			(*j)++;
+			while (s[*j] != q)
+				(*j)++;
+			(*j)++;
+		}
+		else (*j)++;
+	}
+	array = ft_substr(s, start, *j - start);
 	return (array);
 }
 
@@ -90,14 +99,14 @@ char	**mod_split(char *s, char c)
 	char	**array;
 
 	i = 0;
-	j = mod_countsplit(s, c) + 1;
+	j = mod_countsplit(s, c);
 	if (j == -1)
 		return (NULL);
-	array = (char **)malloc(sizeof(char *) * j);
+	array = (char **)malloc(sizeof(char *) * (j + 1));
 	j = 0;
 	if (!array)
-		return (NULL);
-	while ((s[j] && s[j] != '\0'))
+		return (0);
+	while ((s[j] != '\0'))
 	{
 		while (s[j] == c)
 			j++;
@@ -105,7 +114,7 @@ char	**mod_split(char *s, char c)
 			break ;
 		array[i] = mod_splitting(s, &j, c);
 		if (array[i] == NULL)
-			return (mod_allocfails(array));
+			return (ft_allocfails(array));
 		i++;
 	}
 	array[i] = NULL;
