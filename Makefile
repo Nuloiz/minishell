@@ -22,6 +22,7 @@ SRC :=	free.c dup.c print.c \
 		executer/utils_two.c \
 		executer/heredoc.c \
 		builtins/builtins_utils.c \
+		builtins/export_utils.c \
 		builtins/echo.c \
 		builtins/env.c \
 		builtins/export.c \

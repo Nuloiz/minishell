@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/09 12:10:50 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/13 14:03:21 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	**init_main(int *last_return, char **envp, int *argc, char **argv)
 
 	set_sig_handle_prompt();
 	turn_off_ctl_echo();
-	last_return = 0;
+	*last_return = 0;
 	g_signal = 0;
 	(void) argc;
 	(void) argv;

@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:33:33 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/09 09:22:00 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/13 18:05:07 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,30 +100,27 @@ void	ft_sorted_print_array(char **envp)
 //add or replace the value of the string in the 2D envp array
 int	ft_export(char ***envp, char *string)
 {
-	int		i;
-	int		found;
 	char	**splitted;
+	int	i;
 
+	i = 0;
 	splitted = ft_split(string, ' ');
-	found = 0;
 	if (!*envp)
 		ft_putstr_fd("NO ENVP\n", 2);
 	if (!splitted[1])
 		return (free_array(splitted), ft_sorted_print_array(*envp), 0);
-	i = -1;
-	ft_memmove(string, &string[7], (ft_strlen(string) - 6));
-	while ((*envp)[++i])
+	//ft_memmove(string, &string[7], (ft_strlen(string) - 6));
+	while (splitted[++i])
 	{
-		if (!ft_strncmp((*envp)[i], string,
-			(ft_strchr(string, '=') - string + 1)))
+		if (!check_identifier(splitted[i]))
 		{
-			free((*envp)[i]);
-			(*envp)[i] = ft_strdup(string);
-			found = 1;
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(splitted[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			return (free_array(splitted), 1);
 		}
 	}
-	if (!found)
-		*envp = ft_append_string_to_array(*envp, string);
+	find_and_set(envp, splitted);
 	return (free_array(splitted), 0);
 }
 

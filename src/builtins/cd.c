@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:43:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/03 14:32:49 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/15 11:42:52 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int	ft_cd(char *command, char ***envp)
 	splitted = ft_split(command, ' ');
 	if (!splitted)
 		return (ft_putstr_fd("minishell: cd: error split\n", 2), 1);
+	if (ft_array_size(splitted) > 2)
+		return (free(splitted), ft_putstr_fd("minishell: cd: too many arguments\n", 2), 1);
 	if (splitted[1])
 	{
 		old_pwd = ft_get_pwd();
