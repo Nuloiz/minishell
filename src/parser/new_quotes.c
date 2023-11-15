@@ -27,15 +27,15 @@ static char *string_vor_quote(char *s, int l_r, char **envp)
 		return (s);
 }
 
-static char *get_env_in_quotes(char *s, int i, t_quote info)
+static char *get_env_in_quotes(char *s, int *i, t_quote info)
 {
 	char	*tmp;
 	int		j;
 
-	j = i;
-	while (s[i] && s[i] != 34 && s[i] != 39)
-		i++;
-	tmp = env_var(ft_substr(s, j, i - j), info.envp, info.l_r);
+	j = *i;
+	while (s[*i] && s[*i] != 34 && s[*i] != 39)
+		(*i)++;
+	tmp = env_var(ft_substr(s, j, *i - j), info.envp, info.l_r);
 	return (tmp);
 }
 
@@ -45,11 +45,15 @@ static char *more_env(char *s, int *i, int *j, t_quote info)
 	char	*s2;
 
 	if (*i == *j)
-		return (get_env_in_quotes(s, *i, info));
+	{
+		s1 = get_env_in_quotes(s, i, info);
+		*j = *j + (int)ft_strlen(s1);
+		return (s1);
+	}
 	s1 = ft_substr(s, *j, (*i) - (*j));
 	if (!s1)
 		return (NULL);
-	s2 = get_env_in_quotes(s, *i, info);
+	s2 = get_env_in_quotes(s, i, info);
 	if (!s2)
 		return (NULL);
 	s2 = modified_strjoin(s1, s2);
@@ -75,10 +79,17 @@ static char	*get_quote(char *s, t_quote info, int *i)
 			if (!tmp)
 				return (NULL);
 			if (str)
+			{
 				str = ft_strjoin(str, tmp);
-			free(tmp);
+				if (!str)
+					return (NULL);
+				free(tmp);
+			}
+			else
+				str = tmp;
 		}
-		(*i)++;
+		else
+			(*i)++;
 	}
 	tmp = ft_substr(s, j, *i - j);
 	if (!tmp && *i != j)
