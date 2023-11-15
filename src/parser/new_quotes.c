@@ -47,7 +47,7 @@ static char *more_env(char *s, int *i, int *j, t_quote info)
 	if (*i == *j)
 	{
 		s1 = get_env_in_quotes(s, i, info);
-		*j = *j + (int)ft_strlen(s1);
+		*j = *j + (int)ft_strlen(s1) - 2;
 		return (s1);
 	}
 	s1 = ft_substr(s, *j, (*i) - (*j));
@@ -57,7 +57,7 @@ static char *more_env(char *s, int *i, int *j, t_quote info)
 	if (!s2)
 		return (NULL);
 	s2 = modified_strjoin(s1, s2);
-	*j = *j + (int)ft_strlen(s2);
+	*j = *j + (int)ft_strlen(s2) - 2;
 	return (s2);
 }
 
