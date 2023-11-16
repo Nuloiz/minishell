@@ -12,15 +12,13 @@
 
 #include "minishell.h"
 
-static char	*get_quote(char *s, t_quote info, int *i);
-
 static char *string_vor_quote(char *s, int l_r, char **envp)
 {
 	char	*tmp;
 
 	if (is_env_var(s))
 	{
-		tmp = env_var(s, envp, l_r);
+		tmp = env_var(ft_strdup(s), envp, l_r);
 		return (free(s), tmp);
 	}
 	else
@@ -101,6 +99,19 @@ static char	*get_quote(char *s, t_quote info, int *i)
 	return (str);
 }
 
+static char	*no_quotes(char *s, int l_r, char **envp)
+{
+	char	*tmp;
+
+	if (is_env_var(s))
+	{
+		tmp = env_var(ft_strdup(s), envp, l_r);
+	}
+	else
+		tmp = ft_strdup(s);
+	return (tmp);
+}
+
 char	*new_quotes(char *s, int l_r, char **envp)
 {
 	t_quote info;
@@ -115,16 +126,18 @@ char	*new_quotes(char *s, int l_r, char **envp)
 	j = 0;
 	while (s[i] && s[i] != 34 && s[i] != 39)
 		i++;
+	if (!s[i])
+		return (no_quotes(s, l_r, envp));
 	if (i > 0)
 	{
 		tmp = string_vor_quote(ft_substr(s, 0, i), l_r, envp);
 		j = 1;
 	}
 	if ((s)[i] == 34 || (s)[i] == 39)
-		quote = get_quote(&(s[i]), info, &i);
+		quote = get_quote((s), info, &i);
 	if ((s)[i] && (s)[i] != '\0')
-		quote = modified_strjoin(quote, new_quotes(&((s)[i - 1]), l_r, envp));
+		quote = modified_strjoin(quote, new_quotes(&((s)[i]), l_r, envp));
 	if (j == 1)
-		modified_strjoin(tmp, quote);
+		quote = modified_strjoin(tmp, quote);
 	return (quote);
 }
