@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:32:24 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/09 10:35:35 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/16 10:45:25 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,12 @@ int	ft_child(int i, t_execute *exec)
 	{
 		return_val = execute_builtin(i, exec);
 		ft_close_all_fds(exec);
-		ft_free_end(exec);
+		free_exit(exec, NULL);
 		exit(return_val);
 	}
 	else
 		return_val = execute_command(i, exec);
-	ft_close_all_fds(exec);
-	ft_free_end(exec);
+	ft_exit(exec, NULL);
 	exit(return_val);
 }
 

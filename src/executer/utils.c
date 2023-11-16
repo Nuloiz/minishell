@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 20:50:22 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/08 12:06:14 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/16 12:24:25 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_free_data(t_execute *exec)
 	exec->pipe_fd = NULL;
 	free(exec->id);
 	exec->id = NULL;
+	close(exec->garbage);
 	unlink("grb.tmp");
 }
 
@@ -53,7 +54,6 @@ void	ft_close_all_fds(t_execute *exec)
 		close(exec->pipe_fd[i][1]);
 		i++;
 	}
-	close(exec->garbage);
 }
 
 void	ft_close_fds(t_execute *exec, int current_child)
@@ -65,14 +65,10 @@ void	ft_close_fds(t_execute *exec, int current_child)
 	{
 		if (i != current_child && !(current_child == exec->count_children - 1
 				&& i == 0))
-		{
 			close(exec->pipe_fd[i][1]);
-		}
 		if (i != current_child - 1 && !(current_child == 0
 				&& i == exec->count_pipes - 1))
-		{
 			close(exec->pipe_fd[i][0]);
-		}
 		i++;
 	}
 }

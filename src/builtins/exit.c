@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:41:17 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/09 09:00:10 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/16 10:42:57 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	set_exit_return(char **splitted)
 	}
 }
 
-static void	free_exit(t_execute *exec, char **splitted)
+void	free_exit(t_execute *exec, char **splitted)
 {
 	free_array(splitted);
 	free_token(exec->token);
