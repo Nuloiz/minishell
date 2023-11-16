@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dnebatz <dnebatz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 19:57:58 by dnebatz           #+#    #+#             */
-/*   Updated: 2023/11/15 11:26:00 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/15 12:54:26 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ int	ft_unset(char ***envp, char *string)
 	{
 		if (!check_identifier(splitted[i]))
 		{
-			ft_putstr_fd("minishell: unset: `", 2);
-			ft_putstr_fd(splitted[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
+			print_unset_id_error(splitted, i);
 			return (free_array(splitted), 1);
 		}
 		env_pos = get_env_pos(*envp, splitted[i]);
