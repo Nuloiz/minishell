@@ -43,22 +43,42 @@ static char	*str_after_env(char *s, int *i, int l_r, char **envp)
 	return (tmp);
 }
 
+static int	mod_check_id(char string, int *alpha)
+{
+	if (ft_isalpha(string))
+		*alpha = 1;
+	if (!ft_isalpha(string) && string != '_' && *alpha != 1)
+		return (0);
+	if (!ft_isalnum(string) && string != '_')
+		return (0);
+	return (1);
+}
+
 static char	*found_env(char *s, int *i, int l_r, char **envp)
 {
 	char	*tmp;
 	char 	*str;
 	int		k;
 	int		j;
+	int 	alpha;
 
 	tmp = NULL;
 	k = *i;
 	j = 0;
+	alpha = 0;
 	while (s[k] != '\0')
 	{
-		if (s[k] == '$' || s[k] == 39)
+		if (mod_check_id(s[k], &alpha) == 0)
 		{
 			tmp = mod_get_env(envp, ft_substr(s, *i, k - *i), l_r);
-			if (s[k] == '$')
+			if (s[k] == '?' && k > 0 && s[k - 1] == '$')
+			{
+				str = mod_get_env(envp, ft_substr(s, k, 1), l_r);
+				k++;
+				if (s[k] != '\0')
+					str = modified_strjoin(str, found_env(s, &k, l_r, envp));
+			}
+			else if (s[k] == '$' && s[k + 1] != '\0')
 			{
 				k++;
 				str = found_env(s, &k, l_r, envp);

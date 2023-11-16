@@ -71,7 +71,7 @@ static char	*get_quote(char *s, t_quote info, int *i)
 	str = NULL;
 	while (s[*i] && s[*i] != info.c)
 	{
-		if (s[*i] == '$' && s[(*i)] != info.c && info.c == 34)
+		if (s[*i] == '$' && s[(*i) + 1] != info.c && info.c == 34)
 		{
 			tmp = more_env(s, i, &j, info);
 			if (!tmp)
