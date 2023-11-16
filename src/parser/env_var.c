@@ -12,42 +12,67 @@
 
 #include "minishell.h"
 
-static char	*string_before_env(char *s, int *i, t_boollr *j)
+static char	*string_before_env(char *s, int *i)
 {
+	int 	j;
 	char	*dup;
 
+	j = 0;
 	while (s[*i] != '$')
 		*i = *i + 1;
 	dup = ft_calloc(*i + 1, 1);
 	if (!dup)
 		return (NULL);
-	while (j->bool < *i)
+	while (j < *i)
 	{
-		dup[j->bool] = s[j->bool];
-		j->bool = j->bool + 1;
+		dup[j] = s[j];
+		j++;
 	}
-	if (j->bool > 0 && dup[j->bool - 1] == 39)
-		j->bool = 1;
-	else
-		j->bool = 0;
 	return (dup);
 }
 
-static char	*found_env(char *s, int i, t_boollr *j, char **envp)
+static char	*str_after_env(char *s, int *i, int l_r, char **envp)
 {
 	char	*tmp;
-	int		k;
 
-	k = i;
-	if (s[k] == '$' && j->bool == 0)
-		k = 0;
-	else
+	tmp = ft_substr(s, *i, ft_strlen(s) - *i);
+	if (!tmp)
+		return (NULL);
+	if (is_env_var(tmp))
+		tmp = env_var(tmp, envp, l_r);
+	return (tmp);
+}
+
+static char	*found_env(char *s, int *i, int l_r, char **envp)
+{
+	char	*tmp;
+	char 	*str;
+	int		k;
+	int		j;
+
+	tmp = NULL;
+	k = *i;
+	j = 0;
+	while (s[k] != '\0')
 	{
-		while (s[k] && s[k] != 39)
-			k++;
+		if (s[k] == '$' || s[k] == 39)
+		{
+			tmp = mod_get_env(envp, ft_substr(s, *i, k - *i), l_r);
+			if (s[k] == '$')
+			{
+				k++;
+				str = found_env(s, &k, l_r, envp);
+			}
+			else
+				str = str_after_env(s, &k, l_r, envp);
+			tmp = modified_strjoin(tmp, str);
+			j = 1;
+			break;
+		}
+		k++;
 	}
-	tmp = mod_get_env(envp, &s[i + 1], j, &s[k]);
-	free(s);
+	if (j == 0)
+		tmp = mod_get_env(envp, &s[*i], l_r);
 	if (!tmp)
 		return (NULL);
 	return (tmp);
@@ -56,22 +81,20 @@ static char	*found_env(char *s, int i, t_boollr *j, char **envp)
 char	*env_var(char *s, char **envp, int l_r)
 {
 	int			i;
-	t_boollr	j;
 	char		*dup;
 	char		*tmp;
 
 	i = 0;
-	j.l_r = l_r;
-	j.bool = 0;
 	if (s[0] != '$')
 	{
-		dup = string_before_env(s, &i, &j);
+		dup = string_before_env(s, &i);
 		if (!dup)
 			return (NULL);
 	}
 	else
 		dup = NULL;
-	tmp = found_env(s, i, &j, envp);
+	i++;
+	tmp = found_env(s, &i, l_r, envp);
 	if (!tmp)
 	{
 		if (dup)

@@ -72,12 +72,6 @@ typedef struct s_command
 	int		type;
 }				t_command;
 
-typedef struct s_boollr
-{
-	int		bool;
-	int		l_r;
-}	t_boollr;
-
 typedef struct s_quote
 {
 	char	c;
@@ -116,7 +110,7 @@ int			sort_array(t_input *input, t_array *array);
 int			fill_tmp(t_input **input, t_array array, int *count, char **tmp);
 int			nv_after_red(t_input **input, int i);
 t_command	**get_commands(t_array **array);
-char		*mod_get_env(char **envp, char *string, t_boollr *j, char *s);
+char		*mod_get_env(char **envp, char *string, int l_r);
 char		**mod_split(char *s, char c);
 char		*string_before_quote(char *s, int *j, int *bool);
 char		*mod_strjoin(char *s1, char *s2);

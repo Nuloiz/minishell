@@ -31,7 +31,7 @@ static char *get_env_in_quotes(char *s, int *i, t_quote info)
 	int		j;
 
 	j = *i;
-	while (s[*i] && s[*i] != 34 && s[*i] != 39)
+	while (s[*i] && s[*i] != info.c)
 		(*i)++;
 	tmp = env_var(ft_substr(s, j, *i - j), info.envp, info.l_r);
 	return (tmp);
