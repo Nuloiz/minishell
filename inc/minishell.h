@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 14:15:39 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/15 12:54:04 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/16 10:44:40 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,5 +179,6 @@ int			get_export_length(char *envp, char *string);
 int			check_identifier(char *string);
 void		print_unset_id_error(char **splitted, int i);
 void		print_cd_error(char **splitted);
+void		free_exit(t_execute *exec, char **splitted);
 
 #endif
