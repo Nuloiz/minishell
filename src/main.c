@@ -6,7 +6,7 @@
 /*   By: dnebatz <dnebatz@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:02:33 by nschutz           #+#    #+#             */
-/*   Updated: 2023/11/13 14:03:21 by dnebatz          ###   ########.fr       */
+/*   Updated: 2023/11/16 17:57:05 by dnebatz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	set_sh_path(char ***envp)
 	exports = ft_strdup("export SHLVL=1");
 	ft_export(envp, exports);
 	free(exports);
-	exports = ft_strdup("export PATH=/bin/ls");
+	exports = ft_strdup("export PATH=/bin/");
 	ft_export(envp, exports);
 	ft_set_pwd(envp, NULL);
 }
