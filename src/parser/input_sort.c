@@ -30,6 +30,7 @@ static t_input	*quote_in_string(t_input *new, int l_r, char **s, char **envp)
 static t_input	*new_node(char **s, char **envp, int l_r)
 {
 	t_input	*new;
+	char 	*tmp;
 
 	new = ft_calloc(1, sizeof(t_input));
 	if (!new)
@@ -40,9 +41,11 @@ static t_input	*new_node(char **s, char **envp, int l_r)
 		return (NULL);
 	if (new->type == 4)
 	{
-		new->word = env_var(new->word, envp, l_r);
-		if (!new->word)
+		tmp = env_var(new->word, envp, l_r);
+		free(new->word);
+		if (!tmp)
 			return (free(new), NULL);
+		new->word = tmp;
 	}
 	new->next = NULL;
 	return (new);
