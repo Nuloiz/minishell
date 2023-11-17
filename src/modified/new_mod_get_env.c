@@ -46,5 +46,5 @@ char	*mod_get_env(char **envp, char *string, int l_r)
 		return (free(string_equal), free(string), env);
 	}
 	env = ft_strdup("");
-	return (free(string_equal), free(string),  env);
+	return (free(string_equal), free(string), env);
 }

@@ -14,7 +14,7 @@
 
 static char	*string_before_env(char *s, int *i)
 {
-	int 	j;
+	int		j;
 	char	*dup;
 
 	j = 0;
@@ -34,7 +34,7 @@ static char	*string_before_env(char *s, int *i)
 static char	*str_after_env(char *s, int *i, int l_r, char **envp)
 {
 	char	*tmp;
-	char 	*str;
+	char	*str;
 
 	tmp = ft_substr(s, *i, ft_strlen(s) - *i);
 	if (!tmp)
@@ -63,10 +63,10 @@ static int	mod_check_id(char string, int *alpha)
 static char	*found_env(char *s, int *i, int l_r, char **envp)
 {
 	char	*tmp;
-	char 	*str;
+	char	*str;
 	int		k;
 	int		j;
-	int 	alpha;
+	int		alpha;
 
 	tmp = NULL;
 	k = *i;
@@ -93,7 +93,7 @@ static char	*found_env(char *s, int *i, int l_r, char **envp)
 				str = str_after_env(s, &k, l_r, envp);
 			tmp = modified_strjoin(tmp, str);
 			j = 1;
-			break;
+			break ;
 		}
 		k++;
 	}

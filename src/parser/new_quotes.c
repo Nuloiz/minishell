@@ -12,20 +12,7 @@
 
 #include "minishell.h"
 
-static char *string_vor_quote(char *s, int l_r, char **envp)
-{
-	char	*tmp;
-
-	if (is_env_var(s))
-	{
-		tmp = env_var(s, envp, l_r);
-		return (free(s), tmp);
-	}
-	else
-		return (s);
-}
-
-static char *get_env_in_quotes(char *s, int *i, t_quote info)
+static char	*get_env_in_quotes(char *s, int *i, t_quote info)
 {
 	char	*tmp;
 	char	*str;
@@ -41,7 +28,7 @@ static char *get_env_in_quotes(char *s, int *i, t_quote info)
 	return (free(str), tmp);
 }
 
-static char *more_env(char *s, int *i, int *j, t_quote info)
+static char	*more_env(char *s, int *i, int *j, t_quote info)
 {
 	char	*s1;
 	char	*s2;
@@ -67,7 +54,7 @@ static char	*get_quote(char *s, t_quote info, int *i)
 {
 	char	*tmp;
 	char	*str;
-	int 	j;
+	int		j;
 
 	info.c = s[*i];
 	(*i)++;
@@ -118,7 +105,7 @@ static char	*no_quotes(char *s, int l_r, char **envp)
 
 char	*new_quotes(char *s, int l_r, char **envp)
 {
-	t_quote info;
+	t_quote	info;
 	char	*tmp;
 	char	*quote;
 	int		i;

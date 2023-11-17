@@ -76,7 +76,7 @@ typedef struct s_quote
 {
 	char	c;
 	int		l_r;
-	char 	**envp;
+	char	**envp;
 }	t_quote;
 
 typedef struct s_execute {
@@ -104,6 +104,7 @@ int			is_pipe(char *s);
 int			is_red(char s);
 int			is_file(char *s);
 char		*new_quotes(char *s, int l_r, char **envp);
+char		*string_vor_quote(char *s, int l_r, char **envp);
 char		*env_var(char *s, char **envp, int l_r);
 int			sort_array(t_input *input, t_array *array);
 int			fill_tmp(t_input **input, t_array array, int *count, char **tmp);

@@ -39,10 +39,11 @@ static int	mod_possplit(char *s, int *j, char c)
 			while (s[*j] != '\0' && s[*j] != q)
 				(*j)++;
 			if (s[*j] == '\0')
-				return(0);
+				return (0);
 			(*j)++;
 		}
-		else (*j)++;
+		else
+			(*j)++;
 	}
 	return (1);
 }
@@ -51,7 +52,7 @@ static int	mod_countsplit(char *s, char c)
 {
 	int		i;
 	int		j;
-	int 	k;
+	int		k;
 
 	i = 0;
 	j = 0;
@@ -72,8 +73,8 @@ static int	mod_countsplit(char *s, char c)
 static char	*mod_splitting(char *s, int *j, char c)
 {
 	char	*array;
-	char 	q;
-	int 	start;
+	char	q;
+	int		start;
 
 	start = *j;
 	while (s[*j] != '\0' && s[*j] != c)
@@ -86,7 +87,8 @@ static char	*mod_splitting(char *s, int *j, char c)
 				(*j)++;
 			(*j)++;
 		}
-		else (*j)++;
+		else
+			(*j)++;
 	}
 	array = ft_substr(s, start, *j - start);
 	return (array);

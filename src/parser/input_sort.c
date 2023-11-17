@@ -30,7 +30,7 @@ static t_input	*quote_in_string(t_input *new, int l_r, char **s, char **envp)
 static t_input	*new_node(char **s, char **envp, int l_r)
 {
 	t_input	*new;
-	char 	*tmp;
+	char	*tmp;
 
 	new = ft_calloc(1, sizeof(t_input));
 	if (!new)
