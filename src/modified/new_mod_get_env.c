@@ -21,7 +21,7 @@ static char	*mod_valid_env(char *envp, char *string)
 		return (NULL);
 	ft_memmove(env, &env[ft_strlen(string) + 1], \
 					(ft_strlen(env) - ft_strlen(string)));
-	return (env);
+	return (free(string), env);
 }
 
 char	*mod_get_env(char **envp, char *string, int l_r)
@@ -43,9 +43,8 @@ char	*mod_get_env(char **envp, char *string, int l_r)
 	if (!ft_strncmp(string, "?", 2))
 	{
 		env = ft_itoa(l_r);
-		free(string_equal);
-		return (env);
+		return (free(string_equal), free(string), env);
 	}
 	env = ft_strdup("");
-	return (free(string_equal), env);
+	return (free(string_equal), free(string),  env);
 }

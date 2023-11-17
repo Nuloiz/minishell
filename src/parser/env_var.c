@@ -92,7 +92,7 @@ static char	*found_env(char *s, int *i, int l_r, char **envp)
 		k++;
 	}
 	if (j == 0)
-		tmp = mod_get_env(envp, &s[*i], l_r);
+		tmp = mod_get_env(envp, ft_strdup(&s[*i]), l_r);
 	if (!tmp)
 		return (NULL);
 	return (tmp);
