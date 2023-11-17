@@ -12,43 +12,6 @@
 
 #include "minishell.h"
 
-static char	*string_before_env(char *s, int *i)
-{
-	int		j;
-	char	*dup;
-
-	j = 0;
-	while (s[*i] != '$')
-		*i = *i + 1;
-	dup = ft_calloc(*i + 1, 1);
-	if (!dup)
-		return (NULL);
-	while (j < *i)
-	{
-		dup[j] = s[j];
-		j++;
-	}
-	return (dup);
-}
-
-static char	*str_after_env(char *s, int *i, int l_r, char **envp)
-{
-	char	*tmp;
-	char	*str;
-
-	tmp = ft_substr(s, *i, ft_strlen(s) - *i);
-	if (!tmp)
-		return (NULL);
-	if (is_env_var(tmp))
-	{
-		str = env_var(tmp, envp, l_r);
-		free(tmp);
-	}
-	else
-		str = tmp;
-	return (str);
-}
-
 static int	mod_check_id(char string, int *alpha)
 {
 	if (ft_isalpha(string))
@@ -60,10 +23,33 @@ static int	mod_check_id(char string, int *alpha)
 	return (1);
 }
 
-static char	*found_env(char *s, int *i, int l_r, char **envp)
+static char	*checked_id(char *s, int *i, int *k, t_quote info)
+{
+	char	*str;
+	char	*tmp;
+
+	tmp = mod_get_env(info.envp, ft_substr(s, *i, *k - *i), info.l_r);
+	if (s[*k] == '?' && k > 0 && s[*k - 1] == '$')
+	{
+		str = mod_get_env(info.envp, ft_substr(s, *k, 1), info.l_r);
+		(*k)++;
+		if (s[*k] != '\0')
+			str = modified_strjoin(str, found_env(s, k, info));
+	}
+	else if (s[*k] == '$' && s[*k + 1] != '\0')
+	{
+		(*k)++;
+		str = found_env(s, k, info);
+	}
+	else
+		str = str_after_env(s, k, info.l_r, info.envp);
+	tmp = modified_strjoin(tmp, str);
+	return (tmp);
+}
+
+char	*found_env(char *s, int *i, t_quote info)
 {
 	char	*tmp;
-	char	*str;
 	int		k;
 	int		j;
 	int		alpha;
@@ -76,29 +62,14 @@ static char	*found_env(char *s, int *i, int l_r, char **envp)
 	{
 		if (mod_check_id(s[k], &alpha) == 0)
 		{
-			tmp = mod_get_env(envp, ft_substr(s, *i, k - *i), l_r);
-			if (s[k] == '?' && k > 0 && s[k - 1] == '$')
-			{
-				str = mod_get_env(envp, ft_substr(s, k, 1), l_r);
-				k++;
-				if (s[k] != '\0')
-					str = modified_strjoin(str, found_env(s, &k, l_r, envp));
-			}
-			else if (s[k] == '$' && s[k + 1] != '\0')
-			{
-				k++;
-				str = found_env(s, &k, l_r, envp);
-			}
-			else
-				str = str_after_env(s, &k, l_r, envp);
-			tmp = modified_strjoin(tmp, str);
+			tmp = checked_id(s, i, &k, info);
 			j = 1;
 			break ;
 		}
 		k++;
 	}
 	if (j == 0)
-		tmp = mod_get_env(envp, ft_strdup(&s[*i]), l_r);
+		tmp = mod_get_env(info.envp, ft_strdup(&s[*i]), info.l_r);
 	if (!tmp)
 		return (NULL);
 	return (tmp);
@@ -107,10 +78,13 @@ static char	*found_env(char *s, int *i, int l_r, char **envp)
 char	*env_var(char *s, char **envp, int l_r)
 {
 	int			i;
+	t_quote		info;
 	char		*dup;
 	char		*tmp;
 
 	i = 0;
+	info.l_r = l_r;
+	info.envp = envp;
 	if (s[0] != '$')
 	{
 		dup = string_before_env(s, &i);
@@ -120,13 +94,12 @@ char	*env_var(char *s, char **envp, int l_r)
 	else
 		dup = NULL;
 	i++;
-	tmp = found_env(s, &i, l_r, envp);
+	tmp = found_env(s, &i, info);
 	if (!tmp)
 	{
 		if (dup)
 			free(dup);
 		return (NULL);
 	}
-	dup = mod_nocheck_strjoin(dup, tmp);
-	return (dup);
+	return (mod_nocheck_strjoin(dup, tmp));
 }
