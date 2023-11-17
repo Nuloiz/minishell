@@ -103,31 +103,28 @@ static char	*no_quotes(char *s, int l_r, char **envp)
 	return (tmp);
 }
 
-char	*new_quotes(char *s, int l_r, char **envp)
+char	*new_quotes(char *s, t_quote info)
 {
-	t_quote	info;
 	char	*tmp;
 	char	*quote;
 	int		i;
 	int		j;
 
-	info.l_r = l_r;
-	info.envp = envp;
 	i = 0;
 	j = 0;
 	while (s[i] && s[i] != 34 && s[i] != 39)
 		i++;
 	if (!s[i])
-		return (no_quotes(s, l_r, envp));
+		return (no_quotes(s, info.l_r, info.envp));
 	if (i > 0)
 	{
-		tmp = string_vor_quote(ft_substr(s, 0, i), l_r, envp);
+		tmp = string_vor_quote(ft_substr(s, 0, i), info.l_r, info.envp);
 		j = 1;
 	}
 	if ((s)[i] == 34 || (s)[i] == 39)
 		quote = get_quote((s), info, &i);
 	if ((s)[i] && (s)[i] != '\0')
-		quote = modified_strjoin(quote, new_quotes(&((s)[i]), l_r, envp));
+		quote = modified_strjoin(quote, new_quotes(&((s)[i]), info));
 	if (j == 1)
 		quote = modified_strjoin(tmp, quote);
 	return (quote);

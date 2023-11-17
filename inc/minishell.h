@@ -103,7 +103,7 @@ int			is_built_in(char *s);
 int			is_pipe(char *s);
 int			is_red(char s);
 int			is_file(char *s);
-char		*new_quotes(char *s, int l_r, char **envp);
+char		*new_quotes(char *s, t_quote info);
 char		*string_vor_quote(char *s, int l_r, char **envp);
 char		*env_var(char *s, char **envp, int l_r);
 char		*found_env(char *s, int *i, t_quote info);

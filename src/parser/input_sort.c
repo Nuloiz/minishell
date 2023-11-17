@@ -14,9 +14,13 @@
 
 static t_input	*quote_in_string(t_input *new, int l_r, char **s, char **envp)
 {
+	t_quote	info;
+
+	info.l_r = l_r;
+	info.envp = envp;
 	if (ft_strchr(*s, 39) || ft_strchr(*s, 34))
 	{
-		new->word = new_quotes(*s, l_r, envp);
+		new->word = new_quotes(*s, info);
 		if (!new->word)
 			return (NULL);
 		new->type = 8;
