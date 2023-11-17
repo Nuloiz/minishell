@@ -119,6 +119,7 @@ int	sort_array(t_input *input, t_array	*array)
 	free_list(&input);
 	if (!token)
 		return (-1);
+	print_commands(token);
 	r = execute(array->envp, token);
 	return (r);
 }

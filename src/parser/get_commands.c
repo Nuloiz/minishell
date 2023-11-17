@@ -56,7 +56,8 @@ static void	fill_commands(t_command **token, t_array **array, int *i, int *j)
 	}
 	else
 		str = &token[*i]->command;
-	*str = ft_strdup((*array)->cmds[*j]);
+	if (!(*str))
+		*str = ft_strdup((*array)->cmds[*j]);
 	if (!*str)
 		*j = -2;
 	(*j)++;
