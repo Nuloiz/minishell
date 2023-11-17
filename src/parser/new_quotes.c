@@ -50,21 +50,17 @@ static char	*more_env(char *s, int *i, int *j, t_quote info)
 	return (s2);
 }
 
-static char	*get_quote(char *s, t_quote info, int *i)
+static char	*env_in_quote(char *s, t_quote info, int *i, int *j)
 {
-	char	*tmp;
 	char	*str;
-	int		j;
+	char	*tmp;
 
-	info.c = s[*i];
-	(*i)++;
-	j = *i;
 	str = NULL;
 	while (s[*i] && s[*i] != info.c)
 	{
-		if (s[*i] == '$' && s[(*i) + 1] != info.c && info.c == 34)
+		if (s[*i] == '$' && s[(*i) + 1] != info.c && info.c == '"')
 		{
-			tmp = more_env(s, i, &j, info);
+			tmp = more_env(s, i, j, info);
 			if (!tmp)
 				return (NULL);
 			if (str)
@@ -80,6 +76,19 @@ static char	*get_quote(char *s, t_quote info, int *i)
 		else
 			(*i)++;
 	}
+	return (str);
+}
+
+static char	*get_quote(char *s, t_quote info, int *i)
+{
+	char	*tmp;
+	char	*str;
+	int		j;
+
+	info.c = s[*i];
+	(*i)++;
+	j = *i;
+	str = env_in_quote(s, info, i, &j);
 	tmp = ft_substr(s, j, *i - j);
 	if (!tmp && *i != j)
 		return (NULL);
