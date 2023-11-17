@@ -102,7 +102,7 @@ int	input_sort(char *line, char ***envp, int l_r)
 		return (0);
 	cmd = mod_split(line, ' ');
 	if (!cmd)
-		return (1);
+		return (printf("minishell: error due to open quotes\n"), 258);
 	if (!ft_strncmp(cmd[0], "|", 2))
 	{
 		free_array(cmd);
