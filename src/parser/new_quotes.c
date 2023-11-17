@@ -18,7 +18,7 @@ static char *string_vor_quote(char *s, int l_r, char **envp)
 
 	if (is_env_var(s))
 	{
-		tmp = env_var(ft_strdup(s), envp, l_r);
+		tmp = env_var(s, envp, l_r);
 		return (free(s), tmp);
 	}
 	else
